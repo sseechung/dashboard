@@ -179,26 +179,30 @@ let isUnlocked = false;
 
   let lockTimer;
 
-  function showDashboard() {
+ function showDashboard() {
 
-    document.getElementById("pinLock").style.display = "none";
+  document.getElementById("pinLock").style.display = "none";
 
-    document.getElementById("terminal").style.display = "block";
+  document.getElementById("terminal").style.display = "block";
 
-    resetAutoLock();
+  isUnlocked = true;
 
-  }
+  resetAutoLock();
 
-  function lockApp() {
+}
 
-    document.getElementById("terminal").style.display = "none";
+function lockApp() {
 
-    document.getElementById("pinLock").style.display = "flex";
+  document.getElementById("terminal").style.display = "none";
 
-    document.getElementById("pinInput").value = "";
+  document.getElementById("pinLock").style.display = "flex";
 
-  }
+  document.getElementById("pinInput").value = "";
 
+  isUnlocked = false;
+
+}
+ 
   function resetAutoLock() {
 
     clearTimeout(lockTimer);
@@ -235,6 +239,7 @@ let isUnlocked = false;
 </body>
 </html>
  
+
 
 
 
