@@ -1,58 +1,745 @@
+
+3 new notifications
+Has context menu
+Chat
+
+
+
+
+Unread
+Channels
+Chats
+
+Unread messageLast messageGroup chatMeeting chatChatPersonal at mentionEveryone at mentionImportantUrgentDraftDraftMutedMeeting in progressMeet now in progressYou can't send messages because you are not a member of the chat.PrivateSharedHas context menuChannel at mentionTeam at mentionPersonal at mentionUnreadUnreadMeeting in progressUnreadChannelTeamHas pinned messagesSee moreCommunityTemporarily shownHas context menu
+Has context menu
+
+Chat
+
+Shared
+
+Storyline
+Has context menu
+
+
+
+<!DOCTYPE html> <html lang="en"> <head> <me... by Stanley Seechung
+Wednesday 2:03 PM
+Stanley Seechung
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Matrix Rain</title>
+<style>
+ html, body {
+   margin: 0;
+   padding: 0;
+   background: black;
+   overflow: hidden;
+ }
+ canvas {
+   display: block;
+ }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<script>
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "アァカサタナハマヤャラワン0123456789";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+for (let x = 0; x < columns; x++) {
+ drops[x] = Math.random() * canvas.height;
+}
+
+function draw() {
+ ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+ ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+ ctx.fillStyle = "#00ff00";
+ ctx.font = fontSize + "px monospace";
+
+ for (let i = 0; i < drops.length; i++) {
+   const text = letters.charAt(Math.floor(Math.random() * letters.length));
+   ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+   if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+     drops[i] = 0;
+   }
+   drops[i]++;
+ }
+}
+
+setInterval(draw, 33);
+
+window.onresize = () => {
+ canvas.width = window.innerWidth;
+ canvas.height = window.innerHeight;
+};
+</script>
+
+</body>
+</html>
+
+<meta name="viewport" content="width=device... by Stanley Seechung
+Wednesday 2:38 PM
+Stanley Seechung
+
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+<!DOCTYPE html> <html> <body> <h1>Matrix is... by Stanley Seechung
+Sunday 8:37 PM
+Stanley Seechung
+
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Matrix is loading…</h1>
+</body>
+</html>
+
+matrix/ ├─ index.html ├─ style.css └─... by Stanley Seechung
+Sunday 9:48 PM
+Stanley Seechung
+
+matrix/
+├─ index.html
+├─ style.css
+└─ matrix.js
+
+<!DOCTYPE html> <html> <head> <title>My Pro... by Stanley Seechung
+Sunday 10:05 PM
+Stanley Seechung
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Project</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Hello World</h1>
+<script src="script.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html> <html lang="en"> <head> <me... by Stanley Seechung
+Sunday 10:35 PM
+Stanley Seechung
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Matrix</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="matrix"></canvas>
+<script src="matrix.js"></script>
+</body>
+</html>
+
+html, body {  margin: 0;  padding: 0;... by Stanley Seechung
+Sunday 10:40 PM
+Stanley Seechung
+
+html, body {
+ margin: 0;
+ padding: 0;
+ background: black;
+ overflow: hidden;
+}
+
+canvas {
+ display: block;
+}
+
+const canvas = document.getElementById("mat... by Stanley Seechung
+Sunday 10:41 PM
+Stanley Seechung
+
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZアカサタナ";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = Array.from({ length: columns }).fill(1);
+
+function draw() {
+ ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+ ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+ ctx.fillStyle = "#00ff00";
+ ctx.font = fontSize + "px monospace";
+
+ drops.forEach((y, i) => {
+   const text = letters.charAt(Math.floor(Math.random() * letters.length));
+   ctx.fillText(text, i * fontSize, y * fontSize);
+
+   if (y * fontSize > canvas.height && Math.random() > 0.975) {
+     drops[i] = 0;
+   }
+   drops[i]++;
+ });
+}
+
+setInterval(draw, 33);
+
+{  "name": "God Mode Dashboard",  "sh... by Stanley Seechung
+7:47 AM
+Stanley Seechung
+
+{
+ "name": "God Mode Dashboard",
+ "short_name": "Dashboard",
+ "start_url": "/dashboard/",
+ "display": "standalone",
+ "background_color": "#000000",
+ "theme_color": "#00ff99",
+ "icons": [
+   {
+     "src": "icon.png",
+     "sizes": "192x192",
+     "type": "image/png"
+   }
+ ]
+}
+
+self.addEventListener("install", () => { ... by Stanley Seechung
+7:52 AM
+Stanley Seechung
+
+self.addEventListener("install", () => {
+ self.skipWaiting();
+});
+
+self.addEventListener("fetch", event => {
+ event.respondWith(fetch(event.request));
+});
+
+<!-- PIN LOCK SCREEN --> <div id="pinLock">... by Stanley Seechung
+8:34 AM
+Stanley Seechung
+
+<!-- PIN LOCK SCREEN -->
+<div id="pinLock">
+<div class="pin-box">
+<h2>ENTER ACCESS PIN</h2>
+<input id="pinInput" type="password" maxlength="6" inputmode="numeric" />
+<button onclick="unlock()">UNLOCK</button>
+<p id="pinError"></p>
+</div>
+</div>
+
+<!-- PIN LOCK SCREEN --> <div id="pinLock">... by Stanley Seechung
+8:36 AM
+Stanley Seechung
+
+<!-- PIN LOCK SCREEN -->
+<div id="pinLock">
+<div class="pin-box">
+<h2>ENTER ACCESS PIN</h2>
+<input id="pinInput" type="password" maxlength="6" inputmode="numeric" />
+<button onclick="unlock()">UNLOCK</button>
+<p id="pinError"></p>
+</div>
+</div>
+
+#pinLock {  position: fixed;  inset: ... by Stanley Seechung
+8:48 AM
+Stanley Seechung
+
+#pinLock {
+ position: fixed;
+ inset: 0;
+ background: black;
+ z-index: 99999;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.pin-box {
+ border: 2px solid #00ff99;
+ padding: 30px;
+ text-align: center;
+ box-shadow: 0 0 25px #00ff99;
+}
+
+.pin-box h2 {
+ margin-bottom: 15px;
+}
+
+.pin-box input {
+ width: 160px;
+ font-size: 22px;
+ text-align: center;
+ padding: 8px;
+ background: black;
+ color: #00ff99;
+ border: 1px solid #00ff99;
+}
+
+.pin-box button {
+ margin-top: 15px;
+ padding: 8px 20px;
+ background: black;
+ color: #00ff99;
+ border: 1px solid #00ff99;
+ cursor: pointer;
+}
+
+.pin-box button:hover {
+ background: #00ff99;
+ color: black;
+}
+
+#pinError {
+ color: red;
+ margin-top: 10px;
+}
+
+<script>  const CORRECT_PIN = "123456"; ... by Stanley Seechung
+9:06 AM
+Stanley Seechung
+
+<script>
+ const CORRECT_PIN = "123456";
+ /* unlock logic */
+</script>
+
+<script> const CORRECT_PIN = "123456"; ... by Stanley Seechung
+9:28 AM
+Stanley Seechung
+
+<script>
+const CORRECT_PIN = "123456";
+
+function unlock() {
+ const input = document.getElementById("pinInput").value;
+ if (input === CORRECT_PIN) {
+   localStorage.setItem("unlocked", "yes");
+   document.getElementById("pinLock").style.display = "none";
+ } else {
+   document.getElementById("pinError").innerText = "INVALID PIN";
+ }
+}
+
+window.onload = () => {
+ if (localStorage.getItem("unlocked") === "yes") {
+   document.getElementById("pinLock").style.display = "none";
+ }
+};
+</script>
+
+<script> const CORRECT_PIN = "123456"; //... by Stanley Seechung
+9:52 AM
+Stanley Seechung
+
+<script>
+const CORRECT_PIN = "123456"; // your real PIN
+
+function unlock(e) {
+ if (e) e.stopPropagation();   // ⛔ stop click-through
+ const input = document.getElementById("pinInput").value;
+
+ if (input === CORRECT_PIN) {
+   localStorage.setItem("unlocked", "yes");
+   document.getElementById("pinLock").style.display = "none";
+ } else {
+   document.getElementById("pinError").innerText = "INVALID PIN";
+ }
+}
+
+window.onload = () => {
+ if (localStorage.getItem("unlocked") === "yes") {
+   document.getElementById("pinLock").style.display = "none";
+ }
+};
+</script>
+
+function unlock(e) {  if (e) e.stopPropa... by Stanley Seechung
+10:07 AM
+Stanley Seechung
+
+function unlock(e) {
+ if (e) e.stopPropagation();
+
+ const input = document.getElementById("pinInput").value;
+
+ if (input === CORRECT_PIN) {
+   localStorage.setItem("unlocked", "yes");
+   document.getElementById("pinLock").style.display = "none";
+   isLocked = false; // 🔓 unlock keyboard
+ } else {
+   document.getElementById("pinError").innerText = "INVALID PIN";
+ }
+}
+
+document.addEventListener("keydown", e => {... by Stanley Seechung
+10:16 AM
+Stanley Seechung
+
+document.addEventListener("keydown", e => {
+ if (isLocked) return; // ⛔ block shortcuts while locked
+
+ if (links[e.key]) {
+   window.open(links[e.key], "_blank");
+ }
+});
+
+<script> const CORRECT_PIN = "123456"; //... by Stanley Seechung
+10:26 AM
+Stanley Seechung
+
+<script>
+const CORRECT_PIN = "123456"; // ← keep your real PIN here
+let isLocked = true;
+
+function unlock(e) {
+ if (e) e.stopPropagation();
+
+ const input = document.getElementById("pinInput").value;
+
+ if (input === CORRECT_PIN) {
+   localStorage.setItem("unlocked", "yes");
+
+   // Hide PIN overlay
+   document.getElementById("pinLock").style.display = "none";
+
+   // 🔓 SHOW TERMINAL (THIS IS THE KEY FOR CASE A)
+   const terminal = document.getElementById("terminal");
+   terminal.classList.remove("hidden");
+   terminal.style.display = "block";
+
+   isLocked = false;
+ } else {
+   document.getElementById("pinError").innerText = "INVALID PIN";
+ }
+}
+
+window.onload = () => {
+ if (localStorage.getItem("unlocked") === "yes") {
+   document.getElementById("pinLock").style.display = "none";
+
+   const terminal = document.getElementById("terminal");
+   terminal.classList.remove("hidden");
+   terminal.style.display = "block";
+
+   isLocked = false;
+ }
+};
+</script>
+
+window.onload = () => {  const pin = doc... by Stanley Seechung
+10:47 AM
+Stanley Seechung
+
+window.onload = () => {
+ const pin = document.getElementById("pinLock");
+ const terminal = document.getElementById("terminal");
+
+ if (localStorage.getItem("unlocked") === "yes") {
+   pin.style.display = "none";
+   terminal.classList.remove("hidden");
+   terminal.style.display = "block";
+   isLocked = false;
+ } else {
+   // 🔒 LOCKED STATE — SHOW PIN, HIDE TERMINAL
+   pin.style.display = "flex";
+   terminal.style.display = "none";
+   isLocked = true;
+ }
+};
+
+<!-- 🔐 FORCE PIN LOCK (RECOVERY MODE) --> ... by Stanley Seechung
+10:59 AM
+Stanley Seechung
+
+<!-- 🔐 FORCE PIN LOCK (RECOVERY MODE) -->
+<div id="pinLock" style="
+ position: fixed;
+ inset: 0;
+ background: black;
+ z-index: 999999;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+">
+<div style="
+   border: 2px solid #00ff99;
+   padding: 30px;
+   text-align: center;
+   box-shadow: 0 0 25px #00ff99;
+   color: #00ff99;
+   font-family: monospace;
+ ">
+<h2>ENTER ACCESS PIN</h2>
+<input id="pinInput" type="password" maxlength="6"
+     style="
+       font-size: 22px;
+       text-align: center;
+       background: black;
+       color: #00ff99;
+       border: 1px solid #00ff99;
+       padding: 8px;
+     ">
+<br><br>
+<button onclick="unlock()"
+     style="
+       padding: 8px 20px;
+       background: black;
+       color: #00ff99;
+       border: 1px solid #00ff99;
+       cursor: pointer;
+     ">
+     UNLOCK
+</button>
+<p id="pinError" style="color:red;"></p>
+</div>
+</div>
+
+<script> const CORRECT_PIN = "123456"; //... by Stanley Seechung
+11:04 AM
+Stanley Seechung
+
+<script>
+const CORRECT_PIN = "123456"; // your real PIN
+
+function unlock() {
+ const input = document.getElementById("pinInput").value;
+ if (input === CORRECT_PIN) {
+   localStorage.setItem("unlocked", "yes");
+
+   document.getElementById("pinLock").remove();
+
+   const terminal = document.getElementById("terminal");
+   if (terminal) {
+     terminal.classList.remove("hidden");
+     terminal.style.display = "block";
+   }
+ } else {
+   document.getElementById("pinError").innerText = "INVALID PIN";
+ }
+}
+
+window.onload = () => {
+ if (localStorage.getItem("unlocked") === "yes") {
+   const pin = document.getElementById("pinLock");
+   if (pin) pin.remove();
+
+   const terminal = document.getElementById("terminal");
+   if (terminal) {
+     terminal.classList.remove("hidden");
+     terminal.style.display = "block";
+   }
+ }
+};
+</script>
+
+<!DOCTYPE html> <html> <head> <title>TEST</... by Stanley Seechung
+11:13 AM
+Stanley Seechung
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>TEST</title>
+</head>
+<body style="background:black;color:#00ff99;font-size:30px;">
+ IF YOU SEE THIS, HTML IS LOADING
+</body>
+</html>
+
+<!DOCTYPE html> <html lang="en"> <head> <me... by Stanley Seechung
+11:15 AM
+Stanley Seechung
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
+
 <style>
+ body {
+   margin: 0;
+   background: black;
+   color: #00ff99;
+   font-family: monospace;
+ }
 
-  body {
+ .terminal {
+   padding: 20px;
+ }
 
-    margin: 0;
+ .btn {
+   border: 1px solid #00ff99;
+   padding: 10px;
+   margin: 10px 0;
+   cursor: pointer;
+   width: fit-content;
+ }
 
-    background: black;
-
-    color: #00ff99;
-
-    font-family: monospace;
-
-  }
-
-  .terminal {
-
-    padding: 20px;
-
-  }
-
-  .btn {
-
-    border: 1px solid #00ff99;
-
-    padding: 10px;
-
-    margin: 10px 0;
-
-    cursor: pointer;
-
-    width: fit-content;
-
-  }
-
-  .btn:hover {
-
-    background: #00ff99;
-
-    color: black;
-
-  }
+ .btn:hover {
+   background: #00ff99;
+   color: black;
+ }
 </style>
 </head>
+
 <body>
+
 <div class="terminal" id="terminal">
 <h1>DASHBOARD ONLINE</h1>
 <div class="btn" onclick="window.open('https://google.com')">GOOGLE</div>
 <div class="btn" onclick="window.open('https://github.com')">GITHUB</div>
 </div>
+
 </body>
 </html>
- 
+
+<!DOCTYPE html> <html lang="en"> <head> <me... by Stanley Seechung
+11:19 AM
+Stanley Seechung
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+
+<style>
+ body {
+   margin: 0;
+   background: black;
+   color: #00ff99;
+   font-family: monospace;
+ }
+
+ /* ===== PIN LOCK ===== */
+ #pinLock {
+   position: fixed;
+   inset: 0;
+   background: black;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 9999;
+ }
+
+ .pin-box {
+   border: 2px solid #00ff99;
+   padding: 30px;
+   text-align: center;
+   box-shadow: 0 0 20px #00ff99;
+ }
+
+ .pin-box input {
+   font-size: 22px;
+   padding: 8px;
+   text-align: center;
+   background: black;
+   color: #00ff99;
+   border: 1px solid #00ff99;
+   width: 160px;
+ }
+
+ .pin-box button {
+   margin-top: 15px;
+   padding: 8px 20px;
+   background: black;
+   color: #00ff99;
+   border: 1px solid #00ff99;
+   cursor: pointer;
+ }
+
+ .pin-box button:hover {
+   background: #00ff99;
+   color: black;
+ }
+
+ #pinError {
+   color: red;
+   margin-top: 10px;
+ }
+
+ /* ===== DASHBOARD ===== */
+ .terminal {
+   padding: 20px;
+   display: none;
+ }
+
+ .btn {
+   border: 1px solid #00ff99;
+   padding: 10px;
+   margin: 10px 0;
+   cursor: pointer;
+   width: fit-content;
+ }
+
+ .btn:hover {
+   background: #00ff99;
+   color: black;
+ }
+</style>
+</head>
+
+<body>
+
+<!-- PIN SCREEN -->
+<div id="pinLock">
+<div class="pin-box">
+<h2>ENTER PIN</h2>
+<input id="pinInput" type="password" maxlength="6" inputmode="numeric">
+<br>
+<button onclick="unlock()">UNLOCK</button>
+<div id="pinError"></div>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="terminal" id="terminal">
+<h1>DASHBOARD ONLINE</h1>
+<div class="btn" onclick="window.open('https://google.com')">GOOGLE</div>
+<div class="btn" onclick="window.open('https://github.com')">GITHUB</div>
+</div>
+
+<script>
+ const CORRECT_PIN = "000111"; // ← CHANGE THIS
+
+ function unlock() {
+   const input = document.getElementById("pinInput").value;
+
+   if (input === CORRECT_PIN) {
+     document.getElementById("pinLock").style.display = "none";
+     document.getElementById("terminal").style.display = "block";
+   } else {
+     document.getElementById("pinError").innerText = "INVALID PIN";
+   }
+ }
+</script>
+
+</body>
+</html>
+
+
+
