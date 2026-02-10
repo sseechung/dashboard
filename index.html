@@ -1,79 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dashboard</title>
 <style>
 
   body {
 
     margin: 0;
+
     background: black;
+
     color: #00ff99;
+
     font-family: monospace;
 
+    overflow: hidden;
+
   }
-  /* ===== MATRIX BACKGROUND ===== */
 
-#matrix {
+  /* ===== MATRIX ===== */
 
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  #matrix {
 
-}
+    position: fixed;
 
-/* Make sure app stays above matrix */
+    inset: 0;
 
-#pinLock {
-  pointer-events: none;
+    z-index: 0;
 
-}
+    pointer-events: none;
 
-#terminal {
+  }
 
-  position: relative;
+  /* ===== LOADER ===== */
 
-  z-index: 1;
+  #loader {
 
-}
- /* ===== CENTER TITLE ===== */
-  .title {
+    position: fixed;
+
+    inset: 0;
+
+    background: black;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 10;
+
+  }
+
+  .loader-box {
+
+    width: 320px;
+
+    padding: 30px;
+
     text-align: center;
-    margin-button: 30px;
-    letter-spacing: 3px;
+
+    border-radius: 14px;
+
+    background: rgba(0,0,0,0.6);
+
+    backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(0,255,153,0.6);
+
+    box-shadow: 0 0 25px rgba(0,255,153,0.6);
+
   }
-  
+
+  .loader-title {
+
+    margin-bottom: 20px;
+
+    letter-spacing: 3px;
+
+    font-size: 14px;
+
+  }
+
+  .progress-bar {
+
+    width: 100%;
+
+    height: 10px;
+
+    border: 1px solid #00ff99;
+
+    border-radius: 6px;
+
+    overflow: hidden;
+
+  }
+
+  .progress {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: #00ff99;
+
+    animation: load 3s linear forwards;
+
+  }
+
+  @keyframes load {
+
+    from { width: 0%; }
+
+    to { width: 100%; }
+
+  }
+
+  /* ===== DASHBOARD ===== */
+
+  #terminal {
+
+    display: none;
+
+    position: relative;
+
+    z-index: 1;
+
+    padding: 40px;
+
+    text-align: center;
+
+  }
+
+  .title {
+
+    margin-bottom: 40px;
+
+    letter-spacing: 4px;
+
+  }
+
+  .button-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+
+    justify-items: center;
+
+  }
+
+  .btn {
+
+    width: 220px;
+
+    height: 52px;
+
+    border-radius: 10px;
+
+    border: 2px solid #ff3333;
+
+    color: #ff3333;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    box-shadow: 0 0 15px rgba(255,51,51,0.6);
+
+    animation: pulseRed 2s infinite;
+
+  }
+
+  .btn:hover {
+
+    background: #ff3333;
+
+    color: black;
+
+    box-shadow: 0 0 30px rgba(255,51,51,1);
+
+    animation: none;
+
+  }
+
+  @keyframes pulseRed {
+
+    0% { box-shadow: 0 0 10px rgba(255,51,51,0.4); }
+
+    50% { box-shadow: 0 0 22px rgba(255,51,51,0.9); }
+
+    100% { box-shadow: 0 0 10px rgba(255,51,51,0.4); }
+
+  }
+
+  @media (max-width: 600px) {
+
+    .button-grid {
+
+      grid-template-columns: 1fr;
+
+    }
+
+    .btn {
+
+      width: 90%;
+
+      height: 58px;
+
+      font-size: 18px;
+
+    }
+
+  }
 </style>
 </head>
 <body>
+<!-- MATRIX -->
 <canvas id="matrix"></canvas>
-
-  
-  <!-- DASHBOARD -->
-<div class="terminal" id="terminal">
-<h1 class="title">STANLEY ONLINE</h1> 
-
-<div class="btn" onclick="window.open('https://google.com')">[1] GOOGLE</div>
-<div class="btn" onclick="window.open('https://github.com')">[2] GITHUB</div> 
-<div class="btn" onclick="window.open('https://tesla.com') "> [3] TESLA</div> 
-
-
+<!-- LOADING -->
+<div id="loader">
+<div class="loader-box">
+<div class="loader-title" id="loaderText">INITIALIZING SYSTEM</div>
+<div class="progress-bar">
+<div class="progress"></div>
+</div>
+</div>
+</div>
+<!-- DASHBOARD -->
+<div id="terminal">
+<h1 class="title">STANLEY ONLINE</h1>
+<div class="button-grid">
+<div class="btn">[1] GOOGLE</div>
+<div class="btn">[2] GITHUB</div>
+<div class="btn">[3] TESLA</div>
+<div class="btn">[4] APPLE</div>
+</div>
 </div>
 <script>
-/* ===== MATRIX EFFECT ===== */
+
+/* ===== MATRIX ===== */
 
 const canvas = document.getElementById("matrix");
+
 const ctx = canvas.getContext("2d");
 
 function resizeMatrix() {
 
   canvas.width = window.innerWidth;
+
   canvas.height = window.innerHeight;
-  columns = Math.floor(canvas.width / fontsize);
-  drops = Array.from({ length: columns }, () => 0);
+
 }
 
 resizeMatrix();
@@ -117,73 +306,68 @@ function drawMatrix() {
 }
 
 setInterval(drawMatrix, 33);
- 
-  
-  const LINKS = {
 
-    1: "https://google.com",
+/* ===== LOADER ===== */
 
-    2: "https://github.com",
+const messages = [
 
-    3: "https://tesla.com",
+  "INITIALIZING SYSTEM",
 
-    4: "https://microsoft.com",
+  "LOADING MODULES",
 
-    5: "https://netflix.com",
+  "SYNCING INTERFACE",
 
-    6: "https://amazon.com",
+  "READY"
 
-    7: "https://tesla.com",
+];
 
-    8: "https://linkedin.com"
+let msgIndex = 0;
 
-  };
+const loaderText = document.getElementById("loaderText");
 
- 
+setInterval(() => {
+
+  loaderText.innerText = messages[msgIndex % messages.length];
+
+  msgIndex++;
+
+}, 700);
+
+window.onload = () => {
+
+  setTimeout(() => {
+
+    document.getElementById("loader").style.display = "none";
+
+    document.getElementById("terminal").style.display = "block";
+
+  }, 3000);
+
+};
+
+/* ===== SHORTCUTS ===== */
+
+const LINKS = {
+
+  1: "https://google.com",
+
+  2: "https://github.com",
+
+  3: "https://tesla.com",
+
+  4: "https://apple.com"
+
+};
+
+document.addEventListener("keydown", e => {
+
+  if (LINKS[e.key]) {
+
+    window.open(LINKS[e.key], "_blank");
+
   }
 
-}
- 
-
-   
-    }
-
-  }
-
-
-  });
+});
 </script>
- 
- 
 </body>
 </html>
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
