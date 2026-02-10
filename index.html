@@ -170,8 +170,7 @@ canvas {
 <canvas id="matrix"></canvas>
 
 <div class="terminal hidden" id="terminal">
-    <div class="header" id="typing"></div>
-
+   
     <div class="tabs">
 
         <div class="tab">
@@ -299,33 +298,47 @@ function type(){
 </script>
 
 <script>
-const CORRECT_PIN = "000999"; // your real PIN
+const CORRECT_PIN = "000999"; // ← keep your real PIN here
+let isLocked = true;
 
 function unlock(e) {
   if (e) e.stopPropagation();
- 
+
   const input = document.getElementById("pinInput").value;
-  
+
   if (input === CORRECT_PIN) {
     localStorage.setItem("unlocked", "yes");
+
+    // Hide PIN overlay
     document.getElementById("pinLock").style.display = "none";
-    isLocked = false; // 🔓 unlock keyboard
+
+    // 🔓 SHOW TERMINAL (THIS IS THE KEY FOR CASE A)
+    const terminal = document.getElementById("terminal");
+    terminal.classList.remove("hidden");
+    terminal.style.display = "block";
+
+    isLocked = false;
   } else {
     document.getElementById("pinError").innerText = "INVALID PIN";
   }
 }
- 
 
 window.onload = () => {
   if (localStorage.getItem("unlocked") === "yes") {
     document.getElementById("pinLock").style.display = "none";
+
+    const terminal = document.getElementById("terminal");
+    terminal.classList.remove("hidden");
+    terminal.style.display = "block";
+
     isLocked = false;
   }
 };
 </script>
-  
+ 
 </body>
 </html>
+
 
 
 
