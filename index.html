@@ -152,7 +152,39 @@
 </div>
 <script>
 
-  const CORRECT_PIN = "000111"; // ← CHANGE THIS
+  const CORRECT_PIN = "123456"; // ← your PIN
+
+  const AUTO_LOCK_MINUTES = 5;
+
+  let lockTimer;
+
+  function showDashboard() {
+
+    document.getElementById("pinLock").style.display = "none";
+
+    document.getElementById("terminal").style.display = "block";
+
+    resetAutoLock();
+
+  }
+
+  function lockApp() {
+
+    document.getElementById("terminal").style.display = "none";
+
+    document.getElementById("pinLock").style.display = "flex";
+
+    document.getElementById("pinInput").value = "";
+
+  }
+
+  function resetAutoLock() {
+
+    clearTimeout(lockTimer);
+
+    lockTimer = setTimeout(lockApp, AUTO_LOCK_MINUTES * 60 * 1000);
+
+  }
 
   function unlock() {
 
@@ -160,9 +192,7 @@
 
     if (input === CORRECT_PIN) {
 
-      document.getElementById("pinLock").style.display = "none";
-
-      document.getElementById("terminal").style.display = "block";
+      showDashboard();
 
     } else {
 
@@ -171,10 +201,18 @@
     }
 
   }
+
+  // reset timer on activity
+
+  ["click", "mousemove", "keydown", "touchstart"].forEach(evt =>
+
+    document.addEventListener(evt, resetAutoLock)
+
+  );
 </script>
+ 
 </body>
 </html>
-Google
-Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.
  
+
 
