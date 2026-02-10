@@ -230,6 +230,10 @@
 <body>
 <!-- MATRIX -->
 <canvas id="matrix"></canvas>
+<audio id="bootSound" preload="auto">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-tech-start-221.mp3" type="audio/mpeg">
+</audio>
+ 
 <!-- LOADING -->
 <div id="loader">
 <div class="loader-box">
@@ -250,7 +254,15 @@
 </div>
 </div>
 <script>
-
+const bootSound = document.getElementById("bootSound");
+let soundPlayed = false;
+function playBootSound() {
+  if (soundPlayed) return;
+  bootSound.volume = 0.5;
+  bootSound.play().catch(() => {});
+  soundPlayed = true;
+}
+ 
 /* ===== MATRIX ===== */
 
 const canvas = document.getElementById("matrix");
@@ -334,13 +346,26 @@ setInterval(() => {
 }, 700);
 
 window.onload = () => {
+  function playBootSound() {
+    if (soundPlayed) return;
+
+  bootSound.volume = 0;
+  bootSound.play().catch(() => {});
+  soundPlayed = true;
+
+  let v = 0;
+  const fade = setInterval(() => {
+    v += 0.05;
+    bootSound.volume = Math.min(v, 0.5);
+    if (v >= 0.5) clearInterval(fade);
+  }, 60);
+
+}
+ 
 
   setTimeout(() => {
-
     document.getElementById("loader").style.display = "none";
-
     document.getElementById("terminal").style.display = "block";
-
   }, 3000);
 
 };
@@ -360,7 +385,9 @@ const LINKS = {
 };
 
 document.addEventListener("keydown", e => {
-
+document.addEventListener("click", playBootSound, { once: true });
+document.addEventListener("touchstart", playBootSound, { once: true });
+ 
   if (LINKS[e.key]) {
 
     window.open(LINKS[e.key], "_blank");
@@ -371,3 +398,4 @@ document.addEventListener("keydown", e => {
 </script>
 </body>
 </html>
+
