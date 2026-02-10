@@ -12,7 +12,56 @@ html, body {
     overflow: hidden;
     font-family: "Courier New", monospace;
 }
+#pinLock {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.pin-box {
+  border: 2px solid #00ff99;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 25px #00ff99;
+}
+
+.pin-box h2 {
+  margin-bottom: 15px;
+}
+
+ .pin-box input {
+   width: 160px;
+   font-size: 22px;
+   text-align: center;
+   padding: 8px;
+   background: black;
+   color: #00ff99;
+   border: 1px solid #00ff99;
+}
+
+.pin-box button {
+   margin-top: 15px;
+   padding: 8px 20px;
+   background: black;
+   color: #00ff99;
+   border: 1px solid #00ff99;
+   cursor: pointer;
+}
+
+.pin-box button:hover {
+   background: #00ff99;
+   color: black;
+}
+
+#pinError {
+  ccolor: red;
+  margin-top: 10px;
+}
+ 
 /* MATRIX */
 canvas {
     position: fixed;
@@ -106,6 +155,16 @@ canvas {
 
 <body>
 
+    <!-- PIN LOCK SCREEN -->
+    <div id="pinLock">
+      <div class="pin-box">
+       <h2>ENTER ACCESS PIN</h2>
+       <input id="pinInput" type="password" maxlength="6" inputmode="numeric" />
+       <button onclick="unlock()">UNLOCK</button>
+       <p id="pinError"></p>
+      </div>
+     </div>
+ 
 <div id="boot"></div>
 <canvas id="matrix"></canvas>
 
@@ -228,9 +287,30 @@ function type(){
     setTimeout(type,40);
   }
 }
+
 </script>
 
+<script>
+const CORRECT_PIN = "121212"; 
+
+function unlock() {
+  const input = document.getElementById("pinInput").value;
+  if (input === CORRECT_PIN) {
+    localStorage.setItem("unlocked", "yes");
+    document.getElementById("pinLock").style.display = "none";
+  } else {
+    document.getElementById("pinError").innerText = "INVALID PIN";
+  }
+}
+ window.onload = () => {
+   if (localStorage.getItem("unlocked") === "yes") {
+    document.getElementById("pinLock").style.display = "none";
+   }
+};
+</script>
+ 
 </body>
 </html>
+
 
 
