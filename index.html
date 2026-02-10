@@ -33,6 +33,28 @@
     justify-content: center;
     z-index: 10;
 
+  #pinLock button {
+
+  border: 2px solid #ff3333;
+
+  color: #ff3333;
+
+  background: transparent;
+
+  box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+
+}
+
+#pinLock button:hover {
+
+  background: #ff3333;
+
+  color: black;
+
+  box-shadow: 0 0 30px rgba(255, 51, 51, 1);
+
+}
+ 
   }
 
   .pin-box {
@@ -106,9 +128,13 @@
     display: none;
 
   }
-
+   button,
   .btn {
-
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 20;
+    position: relative;
+  }
 .btn {
 
   width: 200px;              /* same size */
@@ -150,7 +176,10 @@
 
 /* Make sure app stays above matrix */
 
-#pinLock,
+#pinLock {
+  pointer-events: none;
+
+}
 
 #terminal {
 
@@ -307,6 +336,7 @@ setInterval(drawMatrix, 33);
 </body>
 </html>
  
+
 
 
 
