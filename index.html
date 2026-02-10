@@ -254,17 +254,8 @@
 </div>
 </div>
 <script>
-const bootSound = document.getElementById("bootSound");
-let soundPlayed = false;
-function playBootSound() {
-  if (soundPlayed) return;
-  bootSound.volume = 0.5;
-  bootSound.play().catch(() => {});
-  soundPlayed = true;
-}
  
 /* ===== MATRIX ===== */
-
 const canvas = document.getElementById("matrix");
 
 const ctx = canvas.getContext("2d");
@@ -272,9 +263,16 @@ const ctx = canvas.getContext("2d");
 function resizeMatrix() {
 
   canvas.width = window.innerWidth;
-
   canvas.height = window.innerHeight;
 
+}
+const bootSound = document.getElementById("bootSound");
+let soundPlayed = false;
+function playBootSound() {
+  if (soundPlayed) return;
+  bootSound.volume = 0.5;
+  bootSound.play().catch(() => {});
+  soundPlayed = true;
 }
 
 resizeMatrix();
@@ -398,4 +396,5 @@ document.addEventListener("touchstart", playBootSound, { once: true });
 </script>
 </body>
 </html>
+
 
