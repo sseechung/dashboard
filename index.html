@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GOD MODE TERMINAL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html, body {
+    margin: 0;
+    background: black;
+    overflow: hidden;
+    font-family: "Courier New", monospace;
+}
+
+/* MATRIX */
+canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+/* TERMINAL */
+.terminal {
+    position: relative;
+    z-index: 2;
+    width: 96%;
+    max-width: 1300px;
+    margin: 20px auto;
+    border: 2px solid #00ff99;
+    box-shadow: 0 0 30px #00ff99;
+    padding: 10px;
+    background: rgba(0,0,0,0.85);
+}
+
+.header {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* TABS */
+.tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.tab {
+    border: 1px solid #00ff99;
+    padding: 8px;
+    cursor: grab;
+    background: rgba(0,0,0,0.9);
+}
+
+.tab.max {
+    position: fixed;
+    inset: 5%;
+    z-index: 999;
+}
+
+.tab-title {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+}
+
+/* BUTTONS */
+.btn {
+    border: 1px solid #00ff99;
+    padding: 6px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #00ff99;
+    color: black;
+    box-shadow: 0 0 12px #00ff99;
+}
+
+/* BOOT SCREEN */
+#boot {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: #00ff99;
+    z-index: 9999;
+    padding: 20px;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .tabs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="boot"></div>
+<canvas id="matrix"></canvas>
+
+<div class="terminal hidden" id="terminal">
+    <div class="header" id="typing"></div>
+
+    <div class="tabs">
+
+        <div class="tab">
+            <div class="tab-title">[1][2] SYSTEM</div>
+            <div class="btn" onclick="launch(event,1)">1 ▮ GOOGLE</div>
+            <div class="btn" onclick="launch(event,2)">2 ▮ GITHUB</div>
+        </div>
+
+        <div class="tab">
+            <div class="tab-title">[3][4] TECH</div>
+            <div class="btn" onclick="launch(event,3)">3 ▮ APPLE</div>
+            <div class="btn" onclick="launch(event,4)">4 ▮ MICROSOFT</div>
+        </div>
+
+        <div class="tab">
+            <div class="tab-title">[5][6] MEDIA</div>
+            <div class="btn" onclick="launch(event,5)">5 ▮ NETFLIX</div>
+            <div class="btn" onclick="launch(event,6)">6 ▮ AMAZON</div>
+        </div>
+
+        <div class="tab">
+            <div class="tab-title">[7][8] AUTO</div>
+            <div class="btn" onclick="launch(event,7)">7 ▮ TESLA</div>
+            <div class="btn" onclick="launch(event,8)">8 ▮ LINKEDIN</div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+/* LINKS */
+const links = {
+  1:"https://google.com",
+  2:"https://github.com",
+  3:"https://apple.com",
+  4:"https://microsoft.com",
+  5:"https://netflix.com",
+  6:"https://amazon.com",
+  7:"https://tesla.com",
+  8:"https://linkedin.com"
+};
+
+/* LAUNCH */
+function launch(e,n){
+  e.stopPropagation();
+  window.open(links[n],"_blank");
+}
+
+/* KEYBOARD */
+document.addEventListener("keydown",e=>{
+  if(links[e.key]) window.open(links[e.key],"_blank");
+  if(e.key==="Escape")
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("max"));
+});
+
+/* MAXIMIZE */
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click",()=>tab.classList.toggle("max"));
+});
+
+/* DRAG */
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.draggable=true;
+  tab.ondragstart=e=>e.dataTransfer.setData("tab",tab.outerHTML);
+});
+
+/* MATRIX */
+const c=document.getElementById("matrix"),x=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+const letters="01アカサタナ";
+const cols=c.width/14;
+const drops=Array(Math.floor(cols)).fill(1);
+
+setInterval(()=>{
+  x.fillStyle="rgba(0,0,0,0.05)";
+  x.fillRect(0,0,c.width,c.height);
+  x.fillStyle="#00ff99";
+  x.font="14px monospace";
+  drops.forEach((y,i)=>{
+    const t=letters[Math.random()*letters.length|0];
+    x.fillText(t,i*14,y*14);
+    if(y*14>c.height&&Math.random()>0.98)drops[i]=0;
+    drops[i]++;
+  });
+},33);
+
+/* BOOT */
+const boot=document.getElementById("boot");
+const lines=[
+ "Initializing GOD MODE...",
+ "Loading kernel modules...",
+ "Bypassing limits...",
+ "Terminal unlocked."
+];
+let i=0;
+const interval=setInterval(()=>{
+  boot.innerHTML+=lines[i++]+"<br>";
+  if(i===lines.length){
+    clearInterval(interval);
+    setTimeout(()=>{
+      boot.classList.add("hidden");
+      document.getElementById("terminal").classList.remove("hidden");
+      type();
+    },800);
+  }
+},500);
+
+/* TYPE EFFECT */
+const text="user@godmode:~$ dashboard --online";
+let p=0;
+function type(){
+  if(p<text.length){
+    typing.innerHTML+=text[p++];
+    setTimeout(type,40);
+  }
+}
+</script>
+
+</body>
+</html>
+
+
