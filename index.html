@@ -9,167 +9,18 @@
   body {
 
     margin: 0;
-
     background: black;
-
     color: #00ff99;
-
     font-family: monospace;
 
   }
-
-  /* ===== PIN LOCK ===== */
-
-  #pinLock {
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-
-  #pinLock button {
-
-  border: 2px solid #ff3333;
-
-  color: #ff3333;
-
-  background: transparent;
-
-  box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
-
-}
-
-#pinLock button:hover {
-
-  background: #ff3333;
-
-  color: black;
-
-  box-shadow: 0 0 30px rgba(255, 51, 51, 1);
-
-}
- 
-  }
-
-  .pin-box {
-
-    border: 2px solid #00ff99;
-
-    padding: 30px;
-
-    text-align: center;
-
-    box-shadow: 0 0 20px #00ff88;
-
-  }
-
-  .pin-box input {
-
-    font-size: 22px;
-
-    padding: 8px;
-
-    text-align: center;
-
-    background: black;
-
-    color: #00ff99;
-
-    border: 1px solid #00ff99;
-
-    width: 160px;
-
-  }
-
-  .pin-box button {
-
-    margin-top: 15px;
-
-    padding: 8px 20px;
-
-    background: black;
-
-    color: #00ff99;
-
-    border: 1px solid #00ff99;
-
-    cursor: pointer;
-
-  }
-
-  .pin-box button:hover {
-
-    background: #00ff99;
-
-    color: black;
-
-  }
-
-  #pinError {
-
-    color: red;
-
-    margin-top: 10px;
-
-  }
-
-  /* ===== DASHBOARD ===== */
-
-  .terminal {
-
-    padding: 20px;
-
-    display: none;
-
-  }
-   button,
-  .btn {
-    pointer-events: auto;
-    cursor: pointer;
-    z-index: 20;
-    position: relative;
-  }
-.btn {
-
-  width: 200px;              /* same size */
-  height: 45px;
-  border: 2px solid #ff3333; /* red */
-  color: #ff3333;
-  margin: 12px auto;         /* center buttons */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-weight: bold;
-  letter-spacing: 1px;
-  box-shadow: 0 0 12px rgba(255, 51, 51, 0.6);
-
-}
-   
-
-  .btn:hover {
-
-    background: #ff3333;
-    color: black;
-    box-shadow: 0 0 25px rgba(255, 51, 51, 1);
-  }
-
   /* ===== MATRIX BACKGROUND ===== */
 
 #matrix {
 
   position: fixed;
-
   inset: 0;
-
   z-index: 0;
-
   pointer-events: none;
 
 }
@@ -200,16 +51,6 @@
 <body>
 <canvas id="matrix"></canvas>
 
-  <!-- PIN SCREEN -->
-<div id="pinLock">
-<div class="pin-box">
-<h2>ENTER PIN</h2>
-<input id="pinInput" type="password" maxlength="6" inputmode="numeric">
-<br>
-<button onclick="unlock()">UNLOCK</button>
-<div id="pinError"></div>
-</div>
-</div>
   
   <!-- DASHBOARD -->
 <div class="terminal" id="terminal">
@@ -277,8 +118,7 @@ function drawMatrix() {
 
 setInterval(drawMatrix, 33);
  
-  const CORRECT_PIN = "000111"; // ← your PIN
-
+  
   const LINKS = {
 
     1: "https://google.com",
@@ -299,41 +139,17 @@ setInterval(drawMatrix, 33);
 
   };
 
-  let isUnlocked = false;
-
-    function unlock() {
-
-  ("Unlock clicked"); // TEMP TEST
-
-  const input = document.getElementById("pinInput").value;
-
-  if (input === CORRECT_PIN) {
-
-    document.getElementById("pinLock").style.display = "none";
-
-    document.getElementById("terminal").style.display = "block";
-
+ 
   }
 
 }
  
-      isUnlocked = true;
 
-    } else {
-
-      document.getElementById("pinError").innerText = "INVALID PIN";
-
+   
     }
 
   }
 
-  document.addEventListener("keydown", e => {
-
-    if (!isUnlocked) return;
-
-    if (!LINKS[e.key]) return;
-
-    window.open(LINKS[e.key], "_blank");
 
   });
 </script>
@@ -342,6 +158,7 @@ setInterval(drawMatrix, 33);
 </body>
 </html>
  
+
 
 
 
