@@ -156,15 +156,48 @@ canvas {
 <body>
 
     <!-- PIN LOCK SCREEN -->
-    <div id="pinLock">
-      <div class="pin-box">
-       <h2>ENTER ACCESS PIN</h2>
-       <input id="pinInput" type="password" maxlength="6" inputmode="numeric" />
-       <button onclick="unlock()">UNLOCK</button>
-       <p id="pinError"></p>
-      </div>
-    <div class="terminal hidden" id="terminal">
-    </div>
+    <!-- 🔐 FORCE PIN LOCK (RECOVERY MODE) -->
+<div id="pinLock" style="
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+">
+<div style="
+    border: 2px solid #00ff99;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 0 25px #00ff99;
+    color: #00ff99;
+    font-family: monospace;
+  ">
+<h2>ENTER ACCESS PIN</h2>
+<input id="pinInput" type="password" maxlength="6"
+      style="
+        font-size: 22px;
+        text-align: center;
+        background: black;
+        color: #00ff99;
+        border: 1px solid #00ff99;
+        padding: 8px;
+      ">
+<br><br>
+<button onclick="unlock()"
+      style="
+        padding: 8px 20px;
+        background: black;
+        color: #00ff99;
+        border: 1px solid #00ff99;
+        cursor: pointer;
+      ">
+      UNLOCK
+    </button>
+    <p id="pinError" style="color:red;"></p>
+  </div>
+</div>
  
 <div id="boot"></div>
 <canvas id="matrix"></canvas>
@@ -295,54 +328,42 @@ function type(){
 </script>
 
 <script>
-const CORRECT_PIN = "000999"; // ← keep your real PIN here
-let isLocked = true;
+const CORRECT_PIN = "111000"; // your real PIN
 
-function unlock(e) {
-  if (e) e.stopPropagation();
-
+function unlock() {
   const input = document.getElementById("pinInput").value;
-
   if (input === CORRECT_PIN) {
     localStorage.setItem("unlocked", "yes");
-
-    // Hide PIN overlay
-    document.getElementById("pinLock").style.display = "none";
-
-    // 🔓 SHOW TERMINAL (THIS IS THE KEY FOR CASE A)
+   
+      document.getElementById("pinLock").remove();
+   
     const terminal = document.getElementById("terminal");
-    terminal.classList.remove("hidden");
-    terminal.style.display = "block";
-
-    isLocked = false;
+    if (terminal) {
+      terminal.classList.remove("hidden");
+      terminal.style.display = "block";
+    }
   } else {
     document.getElementById("pinError").innerText = "INVALID PIN";
   }
 }
 
-
-
 window.onload = () => {
-  const pin = document.getElementById("pinLock");
-  const terminal = document.getElementById("terminal");
-
   if (localStorage.getItem("unlocked") === "yes") {
-    pin.style.display = "none";
-    terminal.classList.remove("hidden");
-    terminal.style.display = "block";
-    isLocked = false;
-  } else {
-    // 🔒 LOCKED STATE — SHOW PIN, HIDE TERMINAL
-    pin.style.display = "flex";
-    terminal.style.display = "none";
-    isLocked = true;
+    const pin = document.getElementById("pinLock");
+    if (pin) pin.remove();
+
+    const terminal = document.getElementById("terminal");
+    if (terminal) {
+      terminal.classList.remove("hidden");
+      terminal.style.display = "block";
+    }
   }
 };
- 
 </script>
- 
+  
 </body>
 </html>
+
 
 
 
