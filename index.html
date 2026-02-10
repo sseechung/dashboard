@@ -155,103 +155,41 @@
 </div>
 <script>
 
-  const CORRECT_PIN = "000111"; // ← MAKE SURE THIS MATCHES WHAT YOU TYPE
+  const CORRECT_PIN = "000111"; // ← your PIN
+
+  const LINKS = {
+
+    1: "https://google.com",
+
+    2: "https://github.com",
+
+    3: "https://apple.com",
+
+    4: "https://microsoft.com",
+
+    5: "https://netflix.com",
+
+    6: "https://amazon.com",
+
+    7: "https://tesla.com",
+
+    8: "https://linkedin.com"
+
+  };
+
+  let isUnlocked = false;
+
   function unlock() {
 
     const input = document.getElementById("pinInput").value;
 
-    console.log("PIN entered:", input);
-
     if (input === CORRECT_PIN) {
-
-      console.log("PIN correct");
 
       document.getElementById("pinLock").style.display = "none";
 
-      const terminal = document.getElementById("terminal");
+      document.getElementById("terminal").style.display = "block";
 
-      terminal.style.display = "block";
-
-      terminal.style.visibility = "visible";
-
-      terminal.style.opacity = "1";
-
-    } else {
-
-      console.log("PIN wrong");
-
-      document.getElementById("pinError").innerText = "INVALID PIN";
-
-    }
-
-  }
-
- 
-const LINKS = {
-
-  1: "https://google.com",
-
-  2: "https://github.com",
-
-  3: "https://apple.com",
-
-  4: "https://microsoft.com",
-
-  5: "https://netflix.com",
-
-  6: "https://amazon.com",
-
-  7: "https://tesla.com",
-
-  8: "https://linkedin.com"
-
-};
-
-let isUnlocked = false;
- 
-  const AUTO_LOCK_MINUTES = 5;
-
-  let lockTimer;
-
- function showDashboard() {
-
-  document.getElementById("pinLock").style.display = "none";
-
-  document.getElementById("terminal").style.display = "block";
-
-  isUnlocked = true;
-
-  resetAutoLock();
-
-}
-
-function lockApp() {
-
-  document.getElementById("terminal").style.display = "none";
-
-  document.getElementById("pinLock").style.display = "flex";
-
-  document.getElementById("pinInput").value = "";
-
-  isUnlocked = false;
-
-}
- 
-  function resetAutoLock() {
-
-    clearTimeout(lockTimer);
-
-    lockTimer = setTimeout(lockApp, AUTO_LOCK_MINUTES * 60 * 1000);
-
-  }
-
-  function unlock() {
-
-    const input = document.getElementById("pinInput").value;
-
-    if (input === CORRECT_PIN) {
-
-      showDashboard();
+      isUnlocked = true;
 
     } else {
 
@@ -261,26 +199,22 @@ function lockApp() {
 
   }
 
-  // reset timer on activity
+  document.addEventListener("keydown", e => {
 
-  ["click", "mousemove", "keydown", "touchstart"].forEach(evt =>
+    if (!isUnlocked) return;
 
-   document.addEventListener("keydown", e => {
+    if (!LINKS[e.key]) return;
 
-  if (!isUnlocked) return;           // ⛔ locked = no shortcuts
+    window.open(LINKS[e.key], "_blank");
 
-  if (!LINKS[e.key]) return;         // not 1–8
-
-  window.open(LINKS[e.key], "_blank");
-
-});
- 
-  );
+  });
 </script>
+ 
  
 </body>
 </html>
  
+
 
 
 
