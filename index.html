@@ -247,8 +247,10 @@
 <div id="terminal">
 <h1 class="title">STANLEY ONLINE</h1>
 <div class="button-grid">
-<div class="btn">[1] GOOGLE</div>
-<div class="btn">[2] GITHUB</div>
+<div class="btn" onclick="window.open('https://google.com')">[1] GOOGLE</div>
+<div class="btn" onclick="window.open('https://github.com')">[2] GITHUB</div>
+
+  
 <div class="btn">[3] TESLA</div>
 <div class="btn">[4] APPLE</div>
 </div>
@@ -315,7 +317,7 @@ function drawMatrix() {
 
 }
 
-setInterval(drawMatrix, 33);
+setInterval(drawMatrix, 55);
 
 /* ===== LOADER ===== */
 
@@ -396,5 +398,6 @@ document.addEventListener("touchstart", playBootSound, { once: true });
 </script>
 </body>
 </html>
+
 
 
