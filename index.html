@@ -169,6 +169,7 @@
 </style>
 </head>
 <body>
+<canvas id="matrix"></canvas>
 
   <!-- PIN SCREEN -->
 <div id="pinLock">
@@ -180,8 +181,7 @@
 <div id="pinError"></div>
 </div>
 </div>
-  <canvas id="matrix"></canvas>
-
+  
   <!-- DASHBOARD -->
 <div class="terminal" id="terminal">
 <h1 class="title">STANLEY ONLINE</h1> 
@@ -196,7 +196,6 @@
 /* ===== MATRIX EFFECT ===== */
 
 const canvas = document.getElementById("matrix");
-
 const ctx = canvas.getContext("2d");
 
 function resizeMatrix() {
@@ -308,6 +307,7 @@ setInterval(drawMatrix, 33);
 </body>
 </html>
  
+
 
 
 
