@@ -13,6 +13,7 @@ html, body {
     font-family: "Courier New", monospace;
 }
 #pinLock {
+  pointer-events: all;  
   position: fixed;
   inset: 0;
   background: black;
@@ -291,9 +292,10 @@ function type(){
 </script>
 
 <script>
-const CORRECT_PIN = "121212"; 
+const CORRECT_PIN = "123456"; // your real PIN
 
-function unlock() {
+function unlock(e) {
+  if (e) e.stopPropagation();   // ⛔ stop click-through
   const input = document.getElementById("pinInput").value;
   if (input === CORRECT_PIN) {
     localStorage.setItem("unlocked", "yes");
@@ -302,15 +304,17 @@ function unlock() {
     document.getElementById("pinError").innerText = "INVALID PIN";
   }
 }
- window.onload = () => {
-   if (localStorage.getItem("unlocked") === "yes") {
+
+window.onload = () => {
+  if (localStorage.getItem("unlocked") === "yes") {
     document.getElementById("pinLock").style.display = "none";
-   }
+  }
 };
 </script>
- 
+  
 </body>
 </html>
+
 
 
 
