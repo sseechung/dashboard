@@ -202,7 +202,8 @@ canvas {
 </div>
 
 <script>
-/* LINKS */
+let isLocked =  true;
+    /* LINKS */
 const links = {
   1:"https://google.com",
   2:"https://github.com",
@@ -221,8 +222,14 @@ function launch(e,n){
 }
 
 /* KEYBOARD */
-document.addEventListener("keydown",e=>{
-  if(links[e.key]) window.open(links[e.key],"_blank");
+document.addEventListener("keydown", e => {
+  if (isLocked) return; // ⛔ block shortcuts while locked
+
+  if (links[e.key]) {
+    window.open(links[e.key], "_blank");
+  }
+});
+ 
   if(e.key==="Escape")
     document.querySelectorAll(".tab").forEach(t=>t.classList.remove("max"));
 });
@@ -295,25 +302,31 @@ function type(){
 const CORRECT_PIN = "123456"; // your real PIN
 
 function unlock(e) {
-  if (e) e.stopPropagation();   // ⛔ stop click-through
+  if (e) e.stopPropagation();
+ 
   const input = document.getElementById("pinInput").value;
+  
   if (input === CORRECT_PIN) {
     localStorage.setItem("unlocked", "yes");
     document.getElementById("pinLock").style.display = "none";
+    isLocked = false; // 🔓 unlock keyboard
   } else {
     document.getElementById("pinError").innerText = "INVALID PIN";
   }
 }
+ 
 
 window.onload = () => {
   if (localStorage.getItem("unlocked") === "yes") {
     document.getElementById("pinLock").style.display = "none";
+    isLocked = false;
   }
 };
 </script>
   
 </body>
 </html>
+
 
 
 
