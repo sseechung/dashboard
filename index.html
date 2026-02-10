@@ -1,11 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>TEST</title>
-</head>
-<body style="background:black;color:#00ff99;font-size:30px;">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<style>
 
-  IF YOU SEE THIS, HTML IS LOADING
+  body {
+
+    margin: 0;
+
+    background: black;
+
+    color: #00ff99;
+
+    font-family: monospace;
+
+  }
+
+  .terminal {
+
+    padding: 20px;
+
+  }
+
+  .btn {
+
+    border: 1px solid #00ff99;
+
+    padding: 10px;
+
+    margin: 10px 0;
+
+    cursor: pointer;
+
+    width: fit-content;
+
+  }
+
+  .btn:hover {
+
+    background: #00ff99;
+
+    color: black;
+
+  }
+</style>
+</head>
+<body>
+<div class="terminal" id="terminal">
+<h1>DASHBOARD ONLINE</h1>
+<div class="btn" onclick="window.open('https://google.com')">GOOGLE</div>
+<div class="btn" onclick="window.open('https://github.com')">GITHUB</div>
+</div>
 </body>
 </html>
  
