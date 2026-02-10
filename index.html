@@ -13,12 +13,11 @@ html, body {
     font-family: "Courier New", monospace;
 }
 #pinLock {
-  pointer-events: all;  
   position: fixed;
   inset: 0;
   background: black;
-  z-index: 99999;
-  display: flex;
+  z-index: 100000; /* higher than everything */
+  display: flex; !important; /* FORCE visible */
   align-items: center;
   justify-content: center;
 }
@@ -164,12 +163,11 @@ canvas {
        <button onclick="unlock()">UNLOCK</button>
        <p id="pinError"></p>
       </div>
-     </div>
+    <div class="terminal hidden" id="terminal">
+    </div>
  
 <div id="boot"></div>
 <canvas id="matrix"></canvas>
-
-<div class="terminal hidden" id="terminal">
    
     <div class="tabs">
 
@@ -323,22 +321,29 @@ function unlock(e) {
   }
 }
 
-window.onload = () => {
-  if (localStorage.getItem("unlocked") === "yes") {
-    document.getElementById("pinLock").style.display = "none";
 
-    const terminal = document.getElementById("terminal");
+
+window.onload = () => {
+  const pin = document.getElementById("pinLock");
+  const terminal = document.getElementById("terminal");
+
+  if (localStorage.getItem("unlocked") === "yes") {
+    pin.style.display = "none";
     terminal.classList.remove("hidden");
     terminal.style.display = "block";
-
     isLocked = false;
+  } else {
+    // 🔒 LOCKED STATE — SHOW PIN, HIDE TERMINAL
+    pin.style.display = "flex";
+    terminal.style.display = "none";
+    isLocked = true;
   }
 };
+ 
 </script>
  
 </body>
 </html>
-
 
 
 
