@@ -146,13 +146,19 @@
 </div>
 <!-- DASHBOARD -->
 <div class="terminal" id="terminal">
-<h1>DASHBOARD ONLINE</h1>
+<h1>STANLEY ONLINE</h1>
 <div class="btn" onclick="window.open('https://google.com')">GOOGLE</div>
 <div class="btn" onclick="window.open('https://github.com')">GITHUB</div>
+<div class="btn" onclick="window.open('https://TESLA.com')">GOOGLE</div>
+<div class="btn" onclick="window.open('https://CHROME.com')">GITHUB</div>
+
+
+
+
 </div>
 <script>
 
-  const CORRECT_PIN = "000111"; // ← your PIN
+const CORRECT_PIN = "000111"; // ← your PIN
 const LINKS = {
 
   1: "https://google.com",
@@ -231,14 +237,23 @@ function lockApp() {
 
   ["click", "mousemove", "keydown", "touchstart"].forEach(evt =>
 
-    document.addEventListener(evt, resetAutoLock)
+   document.addEventListener("keydown", e => {
 
+  if (!isUnlocked) return;           // ⛔ locked = no shortcuts
+
+  if (!LINKS[e.key]) return;         // not 1–8
+
+  window.open(LINKS[e.key], "_blank");
+
+});
+ 
   );
 </script>
  
 </body>
 </html>
  
+
 
 
 
