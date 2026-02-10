@@ -155,7 +155,38 @@
 </div>
 <script>
 
-const CORRECT_PIN = "000111"; // ← your PIN
+  const CORRECT_PIN = "000111"; // ← MAKE SURE THIS MATCHES WHAT YOU TYPE
+  function unlock() {
+
+    const input = document.getElementById("pinInput").value;
+
+    console.log("PIN entered:", input);
+
+    if (input === CORRECT_PIN) {
+
+      console.log("PIN correct");
+
+      document.getElementById("pinLock").style.display = "none";
+
+      const terminal = document.getElementById("terminal");
+
+      terminal.style.display = "block";
+
+      terminal.style.visibility = "visible";
+
+      terminal.style.opacity = "1";
+
+    } else {
+
+      console.log("PIN wrong");
+
+      document.getElementById("pinError").innerText = "INVALID PIN";
+
+    }
+
+  }
+</script>
+ 
 const LINKS = {
 
   1: "https://google.com",
@@ -250,6 +281,7 @@ function lockApp() {
 </body>
 </html>
  
+
 
 
 
