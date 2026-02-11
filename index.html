@@ -1,455 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stanley Cyber Dashboard</title>
+<title>Stanley Console</title>
 <style>
 
-:root{
+body {
 
-  --neon:#00ff99;
+  margin: 0;
 
-  --neon2:#ffff00;
+  background: black;
 
-}
-
-body{
-
-  margin:0;
-
-  overflow:hidden;
-
-  background:black;
-
-  font-family:Arial;
+  font-family: Arial, sans-serif;
 
 }
 
-canvas{
+/* Main Menu Button */
 
-  position:fixed;
+.menu-btn {
 
-  top:0;
+  position: fixed;
 
-  left:0;
+  bottom: 40px;
 
-  z-index:-2;
+  left: 50%;
 
-}
+  transform: translateX(-50%);
 
-/* BOOT */
+  width: 120px;
 
-#boot{
+  height: 50px;
 
-  position:fixed;
+  background: rgba(255,255,255,0.1);
 
-  inset:0;
+  border: 2px solid #00ff99;
 
-  background:black;
+  color: #00ff99;
 
-  color:var(--neon);
+  font-size: 18px;
 
-  display:flex;
+  border-radius: 10px;
 
-  justify-content:center;
+  cursor: pointer;
 
-  align-items:center;
-
-  font-size:22px;
-
-  letter-spacing:4px;
-
-  z-index:100;
-
-  animation:bootfade 3s forwards;
+  backdrop-filter: blur(10px);
 
 }
 
-@keyframes bootfade{
+/* Container */
 
-  0%{opacity:1}
+.fly-container {
 
-  80%{opacity:1}
+  position: fixed;
 
-  100%{opacity:0;visibility:hidden}
+  bottom: 110px;
 
-}
+  left: 50%;
 
-/* LOGIN */
+  transform: translateX(-50%);
 
-#login{
+  width: 500px;
 
-  position:fixed;
-
-  inset:0;
-
-  backdrop-filter:blur(10px);
-
-  background:rgba(0,0,0,0.8);
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  z-index:90;
+  height: 380px;
 
 }
 
-.login-box{
+/* Base fly button style */
 
-  padding:40px;
+.fly-btn {
 
-  border:2px solid var(--neon);
+  position: absolute;
 
-  box-shadow:0 0 20px var(--neon);
+  width: 100px;
 
-}
+  height: 40px;
 
-.login-box input{
+  border-radius: 8px;
 
-  padding:10px;
+  background: rgba(0,255,150,0.1);
 
-  background:black;
+  border: 1px solid #00ff99;
 
-  border:1px solid var(--neon);
+  color: #00ff99;
 
-  color:var(--neon);
+  cursor: pointer;
 
-}
+  opacity: 0;
 
-.login-box button{
+  transform: scale(0);
 
-  margin-top:10px;
-
-  padding:10px 20px;
-
-  background:black;
-
-  border:1px solid var(--neon);
-
-  color:var(--neon);
-
-  cursor:pointer;
+  transition: 0.3s ease;
 
 }
 
-/* TITLE */
+/* Show buttons when open */
 
-.title{
+.open .fly-btn {
 
-  position:absolute;
+  opacity: 1;
 
-  top:20px;
-
-  width:100%;
-
-  text-align:center;
-
-  font-size:48px;
-
-  color:white;
-
-  text-shadow:0 0 20px var(--neon);
+  transform: scale(1);
 
 }
 
-/* GRID */
+/* Row 1 */
 
-.dashboard{
+.fly1  { top: 0px; left: 0px; }
 
-  position:absolute;
+.fly2  { top: 0px; left: 120px; }
 
-  top:60%;
+.fly3  { top: 0px; left: 240px; }
 
-  left:50%;
+.fly4  { top: 0px; left: 360px; }
 
-  transform:translate(-50%,-50%);
+/* Row 2 */
 
-  display:grid;
+.fly5  { top: 60px; left: 0px; }
 
-  grid-template-columns:repeat(4,160px);
+.fly6  { top: 60px; left: 120px; }
 
-  gap:90px;
+.fly7  { top: 60px; left: 240px; }
 
-}
+.fly8  { top: 60px; left: 360px; }
 
-.menu{
+/* Row 3 */
 
-  position:relative;
+.fly9  { top: 120px; left: 0px; }
 
-  width:160px;
+.fly10 { top: 120px; left: 120px; }
 
-  height:160px;
+.fly11 { top: 120px; left: 240px; }
 
-}
+.fly12 { top: 120px; left: 360px; }
 
-.main-btn{
+/* Row 4 */
 
-  width:160px;
+.fly13 { top: 180px; left: 0px; }
 
-  height:160px;
+.fly14 { top: 180px; left: 120px; }
 
-  border-radius:15px;
+.fly15 { top: 180px; left: 240px; }
 
-  border:2px solid var(--neon);
+.fly16 { top: 180px; left: 360px; }
 
-  background:rgba(255,255,255,0.08);
+/* Row 5 */
 
-  backdrop-filter:blur(15px);
+.fly17 { top: 240px; left: 0px; }
 
-  color:var(--neon);
+.fly18 { top: 240px; left: 120px; }
 
-  cursor:pointer;
+.fly19 { top: 240px; left: 240px; }
 
-  box-shadow:0 0 20px var(--neon);
+.fly20 { top: 240px; left: 360px; }
 
-}
+/* Row 6 */
 
-.sub-btn{
+.fly21 { top: 300px; left: 0px; }
 
-  position:absolute;
+.fly22 { top: 300px; left: 120px; }
 
-  left:0;
+.fly23 { top: 300px; left: 240px; }
 
-  width:160px;
-
-  height:45px;
-
-  border-radius:8px;
-
-  border:2px solid var(--neon2);
-
-  background:rgba(255,255,255,0.1);
-
-  color:var(--neon2);
-
-  opacity:0;
-
-  transition:0.3s ease;
-
-}
-
-/* TOP 4 fly UP */
-
-.menu.top .sub-btn{ bottom:160px; }
-
-.menu.top.active .btn1{ opacity:1; transform:translateY(-10px); }
-
-.menu.top.active .btn2{ opacity:1; transform:translateY(-60px); }
-
-.menu.top.active .btn3{ opacity:1; transform:translateY(-110px); }
-
-/* BOTTOM 4 fly DOWN */
-
-.menu.bottom .sub-btn{ top:160px; }
-
-.menu.bottom.active .btn1{ opacity:1; transform:translateY(10px); }
-
-.menu.bottom.active .btn2{ opacity:1; transform:translateY(60px); }
-
-.menu.bottom.active .btn3{ opacity:1; transform:translateY(110px); }
-
-@media(max-width:768px){
-
-  .dashboard{
-
-    grid-template-columns:repeat(2,160px);
-
-  }
-
-}
+.fly24 { top: 300px; left: 360px; }
 </style>
 </head>
 <body>
-<canvas id="matrix"></canvas>
-<div id="boot">INITIALIZING FUCKING SYSTEM...</div>
-<div id="login">
-<div class="login-box">
-<div>ACCESS TERMINAL</div>
-<input type="password" id="pass" placeholder="Enter Passcode">
-<br>
-<button type="button" id="loginBtn">ENTER</button>
+<button class="menu-btn" onclick="toggleMenu()">MENU</button>
+<div class="fly-container" id="flyContainer">
+<button class="fly-btn fly1">App 1</button>
+<button class="fly-btn fly2">App 2</button>
+<button class="fly-btn fly3">App 3</button>
+<button class="fly-btn fly4">App 4</button>
+<button class="fly-btn fly5">App 5</button>
+<button class="fly-btn fly6">App 6</button>
+<button class="fly-btn fly7">App 7</button>
+<button class="fly-btn fly8">App 8</button>
+<button class="fly-btn fly9">App 9</button>
+<button class="fly-btn fly10">App 10</button>
+<button class="fly-btn fly11">App 11</button>
+<button class="fly-btn fly12">App 12</button>
+<button class="fly-btn fly13">App 13</button>
+<button class="fly-btn fly14">App 14</button>
+<button class="fly-btn fly15">App 15</button>
+<button class="fly-btn fly16">App 16</button>
+<button class="fly-btn fly17">App 17</button>
+<button class="fly-btn fly18">App 18</button>
+<button class="fly-btn fly19">App 19</button>
+<button class="fly-btn fly20">App 20</button>
+<button class="fly-btn fly21">App 21</button>
+<button class="fly-btn fly22">App 22</button>
+<button class="fly-btn fly23">App 23</button>
+<button class="fly-btn fly24">App 24</button>
 </div>
-</div>
-<div class="title">S.T.A.N.L.E.Y</div>
-<div class="dashboard" id="dashboard"></div>
 <script>
 
-const names=["G.A.4","L.OO.K","T.ES.L.A","Q.U.ALI.TY","N.C","S.E.RV.E","M.E.DYA","TU.UL.S"];
+function toggleMenu() {
 
-const links=[
-
-"https://uph.mo.tesla.services/ncs-traveller?which=GA4_MY_NV&vinseq=vin&show=2,3,4,5,6,7
-","https://factorystreaming.ca.tesla.com/uph-goals/(day:0,panels:!((name:PRE_IN),(name:GA4),(name:GA4_OUT),(name:WAHA_Exit)),showingGoals:!t,showingWeekMetrics:!f)","https://teslamotorsinc.sharepoint.com/:x:/r/sites/GA4Trim3Team/_layouts/15/Doc.aspx?sourcedoc=%7BE63CF88D-BA6B-493E-85BC-9AE03FEC5A08%7D&file=Week%20of%201.31.2026.xlsx&action=default&mobileredirect=true&wdOrigin=OUTLOOKGROUPS.FILEBROWSER.DOCUMENTLIBRARY
-",
-
-"https://google.com","https://bing.com","https://duckduckgo.com",
-
-"https://facebook.com","https://instagram.com","https://x.com",
-
-"https://youtube.com","https://vimeo.com","https://twitch.tv",
-
-"https://chat.openai.com","https://claude.ai","https://gemini.google.com",
-
-"https://aws.amazon.com","https://azure.microsoft.com","https://cloud.google.com",
-
-"https://spotify.com","https://netflix.com","https://hulu.com",
-
-"https://canva.com","https://figma.com","https://vercel.com"
-
-];
-
-const dashboard=document.getElementById("dashboard");
-
-/* BUILD MENUS */
-
-for(let i=0;i<8;i++){
-
-  const menu=document.createElement("div");
-
-  menu.className=i<4?"menu top":"menu bottom";
-
-  const link1=links[i*3];
-
-  const link2=links[i*3+1];
-
-  const link3=links[i*3+2];
-
-  menu.innerHTML=`
-<button type="button" class="main-btn">${names[i]}</button>
-<button type="button" class="sub-btn btn1">Link 1</button>
-<button type="button" class="sub-btn btn2">Link 2</button>
-<button type="button" class="sub-btn btn3">Link 3</button>
-
-  `;
-
-  const mainBtn=menu.querySelector(".main-btn");
-
-  const btn1=menu.querySelector(".btn1");
-
-  const btn2=menu.querySelector(".btn2");
-
-  const btn3=menu.querySelector(".btn3");
-
-  /* MAIN BUTTON ONLY TOGGLE */
-
-  mainBtn.addEventListener("click",function(e){
-
-    e.stopPropagation();
-
-    menu.classList.toggle("active");
-
-  });
-
-  /* SUB BUTTONS OPEN LINKS */
-
-  btn1.addEventListener("click",function(e){
-
-    e.stopPropagation();
-
-    window.open(link1,"_blank");
-
-  });
-
-  btn2.addEventListener("click",function(e){
-
-    e.stopPropagation();
-
-    window.open(link2,"_blank");
-
-  });
-
-  btn3.addEventListener("click",function(e){
-
-    e.stopPropagation();
-
-    window.open(link3,"_blank");
-
-  });
-
-  dashboard.appendChild(menu);
+  document.getElementById("flyContainer").classList.toggle("open");
 
 }
-
-/* LOGIN */
-
-document.getElementById("loginBtn").addEventListener("click",function(){
-
-  if(document.getElementById("pass").value==="stanley"){
-
-    document.getElementById("login").style.display="none";
-
-  }
-
-});
-
-/* NEON CHANGE */
-
-const colors=["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
-
-let cIndex=0;
-
-document.body.addEventListener("click",function(){
-
-  cIndex=(cIndex+1)%colors.length;
-
-  document.documentElement.style.setProperty("--neon",colors[cIndex]);
-
-  document.documentElement.style.setProperty("--neon2",colors[(cIndex+2)%colors.length]);
-
-});
-
-/* MATRIX */
-
-const canvas=document.getElementById("matrix");
-
-const ctx=canvas.getContext("2d");
-
-canvas.height=window.innerHeight;
-
-canvas.width=window.innerWidth;
-
-const letters="01";
-
-const fontSize=14;
-
-const columns=canvas.width/fontSize;
-
-const drops=[];
-
-for(let x=0;x<columns;x++) drops[x]=1;
-
-function draw(){
-
-  ctx.fillStyle="rgba(0,0,0,0.05)";
-
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--neon");
-
-  ctx.font=fontSize+"px monospace";
-
-  for(let i=0;i<drops.length;i++){
-
-    const text=letters[Math.floor(Math.random()*letters.length)];
-
-    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-
-    if(drops[i]*fontSize>canvas.height&&Math.random()>0.975) drops[i]=0;
-
-    drops[i]++;
-
-  }
-
-}
-
-setInterval(draw,33);
 </script>
 </body>
 </html>
-
-
-
+ 
