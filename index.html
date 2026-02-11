@@ -3,252 +3,399 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stanley Console</title>
+<title>Stanley Cyber Console</title>
 <style>
 
-body{
+:root {
 
-  margin:0;
+  --neon: #00ff99;
 
-  background:black;
+  --neon2: #ffff00;
 
-  overflow:hidden;
+}
 
-  font-family:monospace;
+body {
+
+  margin: 0;
+
+  overflow: hidden;
+
+  background: black;
+
+  font-family: Arial, sans-serif;
 
 }
 
 /* MATRIX */
 
-canvas{
+canvas {
 
-  position:fixed;
+  position: fixed;
 
-  top:0;
+  top: 0;
 
-  left:0;
+  left: 0;
 
-  z-index:-1;
-
-}
-
-/* MENU BUTTONS */
-
-.menu{
-
-  position:fixed;
-
-  width:120px;
-
-  height:45px;
-
-  border:2px solid #00ff99;
-
-  background:rgba(0,255,150,0.1);
-
-  color:#00ff99;
-
-  border-radius:8px;
-
-  cursor:pointer;
-
-  transition:0.3s;
+  z-index: -2;
 
 }
 
-/* ACTIVE GLOW */
+/* BOOT SCREEN */
 
-.menu.active{
+#boot {
 
-  box-shadow:0 0 15px #00ff99, 0 0 30px #00ff99;
+  position: fixed;
 
-  background:#00ff99;
+  inset: 0;
 
-  color:black;
+  background: black;
 
-}
+  color: var(--neon);
 
-/* TOP MENUS */
+  display: flex;
 
-#menu1{top:100px;left:10%;}
+  justify-content: center;
 
-#menu2{top:100px;left:30%;}
+  align-items: center;
 
-#menu3{top:100px;left:50%;}
+  font-size: 22px;
 
-#menu4{top:100px;left:70%;}
+  letter-spacing: 4px;
 
-/* BOTTOM MENUS */
+  z-index: 10;
 
-#menu5{bottom:100px;left:10%;}
-
-#menu6{bottom:100px;left:30%;}
-
-#menu7{bottom:100px;left:50%;}
-
-#menu8{bottom:100px;left:70%;}
-
-/* FLY GROUP */
-
-.fly-group{
-
-  position:fixed;
-
-  width:130px;
-
-  pointer-events:none;
+  animation: bootFade 4s forwards;
 
 }
 
-.fly-btn{
+@keyframes bootFade {
 
-  display:block;
+  0% {opacity:1}
 
-  width:130px;
+  80% {opacity:1}
 
-  margin:6px 0;
-
-  padding:6px;
-
-  border:1px solid #00ff99;
-
-  background:rgba(0,255,150,0.1);
-
-  color:#00ff99;
-
-  border-radius:6px;
-
-  cursor:pointer;
-
-  transform:translateY(0);
-
-  opacity:0;
-
-  transition:0.4s ease;
+  100% {opacity:0; visibility:hidden;}
 
 }
 
-.fly-group.open{
+/* LOGIN */
 
-  pointer-events:auto;
+#login {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0,0,0,0.7);
+
+  backdrop-filter: blur(10px);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 9;
 
 }
 
-.fly-group.open .fly-btn{
+.login-box {
 
-  opacity:1;
+  padding: 40px;
+
+  border: 2px solid var(--neon);
+
+  border-radius: 15px;
+
+  box-shadow: 0 0 20px var(--neon);
+
+  text-align: center;
 
 }
 
-/* TOP GROUP → UP */
+.login-box input {
 
-.top-group .fly-btn:nth-child(1){transform:translateY(-60px);}
+  padding: 10px;
 
-.top-group .fly-btn:nth-child(2){transform:translateY(-120px);}
+  margin-top: 10px;
 
-.top-group .fly-btn:nth-child(3){transform:translateY(-180px);}
+  background: black;
 
-/* BOTTOM GROUP → DOWN */
+  border: 1px solid var(--neon);
 
-.bottom-group .fly-btn:nth-child(1){transform:translateY(60px);}
+  color: var(--neon);
 
-.bottom-group .fly-btn:nth-child(2){transform:translateY(120px);}
+}
 
-.bottom-group .fly-btn:nth-child(3){transform:translateY(180px);}
+.login-box button {
+
+  margin-top: 15px;
+
+  padding: 10px 20px;
+
+  background: black;
+
+  border: 1px solid var(--neon);
+
+  color: var(--neon);
+
+  cursor: pointer;
+
+}
+
+/* TITLE */
+
+.title {
+
+  position: absolute;
+
+  top: 20px;
+
+  width: 100%;
+
+  text-align: center;
+
+  font-size: 40px;
+
+  letter-spacing: 8px;
+
+  color: white;
+
+  text-shadow: 0 0 20px var(--neon);
+
+}
+
+/* GRID */
+
+.dashboard {
+
+  position: absolute;
+
+  top: 55%;
+
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 140px);
+
+  gap: 60px;
+
+}
+
+.menu {
+
+  position: relative;
+
+  perspective: 1000px;
+
+}
+
+/* MAIN BUTTON */
+
+.main-btn {
+
+  width: 140px;
+
+  height: 140px;
+
+  border-radius: 20px;
+
+  border: 2px solid var(--neon);
+
+  background: rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(15px);
+
+  color: var(--neon);
+
+  cursor: pointer;
+
+  box-shadow: 0 0 20px var(--neon);
+
+  transition: 0.6s ease, transform 0.2s ease;
+
+  overflow: hidden;
+
+}
+
+/* GLASS SHINE */
+
+.main-btn::before {
+
+  content:"";
+
+  position:absolute;
+
+  top:-100%;
+
+  left:-100%;
+
+  width:200%;
+
+  height:200%;
+
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.4), transparent 70%);
+
+  transform: rotate(25deg);
+
+  animation: shine 4s infinite;
+
+}
+
+@keyframes shine {
+
+  0% {transform: translateX(-100%) rotate(25deg);}
+
+  100% {transform: translateX(100%) rotate(25deg);}
+
+}
+
+/* RADIAL FLY OUT */
+
+.sub-btn {
+
+  position: absolute;
+
+  width: 70px;
+
+  height: 70px;
+
+  border-radius: 50%;
+
+  border: 2px solid var(--neon2);
+
+  background: rgba(255,255,255,0.1);
+
+  color: var(--neon2);
+
+  opacity: 0;
+
+  transition: 0.5s ease;
+
+}
+
+.menu.active .btn1 { transform: rotate(0deg) translate(150px) rotate(0deg); opacity:1;}
+
+.menu.active .btn2 { transform: rotate(120deg) translate(150px) rotate(-120deg); opacity:1;}
+
+.menu.active .btn3 { transform: rotate(240deg) translate(150px) rotate(-240deg); opacity:1;}
 </style>
 </head>
 <body>
 <canvas id="matrix"></canvas>
-<!-- OPEN SOUND -->
-<audio id="menuSound">
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4e7d8dba0e.mp3?filename=matrix-entrance-110624.mp3" type="audio/mpeg">
-</audio>
-<!-- MENUS -->
-<button class="menu" id="menu1" onclick="toggleMenu(this,'group1')">SEARCH</button>
-<button class="menu" id="menu2" onclick="toggleMenu(this,'group2')">SOCIAL</button>
-<button class="menu" id="menu3" onclick="toggleMenu(this,'group3')">DEV</button>
-<button class="menu" id="menu4" onclick="toggleMenu(this,'group4')">MEDIA</button>
-<button class="menu" id="menu5" onclick="toggleMenu(this,'group5')">CAR</button>
-<button class="menu" id="menu6" onclick="toggleMenu(this,'group6')">TOOLS</button>
-<button class="menu" id="menu7" onclick="toggleMenu(this,'group7')">SHOP</button>
-<button class="menu" id="menu8" onclick="toggleMenu(this,'group8')">BANK</button>
-<!-- TOP GROUPS -->
-<div class="fly-group top-group" id="group1" style="top:100px; left:10%;">
-<button class="fly-btn" onclick="openLink('https://google.com')">Google</button>
-<button class="fly-btn" onclick="openLink('https://bing.com')">Bing</button>
-<button class="fly-btn" onclick="openLink('https://yahoo.com')">Yahoo</button>
+<div id="boot">SYSTEM INITIALIZING...</div>
+<div id="login">
+<div class="login-box">
+<div>ACCESS TERMINAL</div>
+<input type="password" id="pass" placeholder="Enter Passcode">
+<br>
+<button onclick="login()">ENTER</button>
 </div>
-<div class="fly-group top-group" id="group2" style="top:100px; left:30%;">
-<button class="fly-btn" onclick="openLink('https://facebook.com')">Facebook</button>
-<button class="fly-btn" onclick="openLink('https://instagram.com')">Instagram</button>
-<button class="fly-btn" onclick="openLink('https://x.com')">X</button>
 </div>
-<div class="fly-group top-group" id="group3" style="top:100px; left:50%;">
-<button class="fly-btn" onclick="openLink('https://github.com')">GitHub</button>
-<button class="fly-btn" onclick="openLink('https://stackoverflow.com')">StackOverflow</button>
-<button class="fly-btn" onclick="openLink('https://codepen.io')">CodePen</button>
-</div>
-<div class="fly-group top-group" id="group4" style="top:100px; left:70%;">
-<button class="fly-btn" onclick="openLink('https://youtube.com')">YouTube</button>
-<button class="fly-btn" onclick="openLink('https://netflix.com')">Netflix</button>
-<button class="fly-btn" onclick="openLink('https://spotify.com')">Spotify</button>
-</div>
-<!-- BOTTOM GROUPS -->
-<div class="fly-group bottom-group" id="group5" style="bottom:100px; left:10%;">
-<button class="fly-btn" onclick="openLink('https://lexus.com')">Lexus</button>
-<button class="fly-btn" onclick="openLink('https://dmv.ca.gov')">CA DMV</button>
-<button class="fly-btn" onclick="openLink('https://statefarm.com')">State Farm</button>
-</div>
-<div class="fly-group bottom-group" id="group6" style="bottom:100px; left:30%;">
-<button class="fly-btn" onclick="openLink('https://chat.openai.com')">ChatGPT</button>
-<button class="fly-btn" onclick="openLink('https://dropbox.com')">Dropbox</button>
-<button class="fly-btn" onclick="openLink('https://wetransfer.com')">WeTransfer</button>
-</div>
-<div class="fly-group bottom-group" id="group7" style="bottom:100px; left:50%;">
-<button class="fly-btn" onclick="openLink('https://amazon.com')">Amazon</button>
-<button class="fly-btn" onclick="openLink('https://ebay.com')">eBay</button>
-<button class="fly-btn" onclick="openLink('https://bestbuy.com')">BestBuy</button>
-</div>
-<div class="fly-group bottom-group" id="group8" style="bottom:100px; left:70%;">
-<button class="fly-btn" onclick="openLink('https://paypal.com')">PayPal</button>
-<button class="fly-btn" onclick="openLink('https://chase.com')">Chase</button>
-<button class="fly-btn" onclick="openLink('https://bankofamerica.com')">Bank of America</button>
+<div class="title">STANLEY</div>
+<div class="dashboard">
+<script>
+
+const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
+
+const links=[
+
+"https://github.com","https://gitlab.com","https://bitbucket.org",
+
+"https://google.com","https://bing.com","https://duckduckgo.com",
+
+"https://facebook.com","https://instagram.com","https://x.com",
+
+"https://youtube.com","https://vimeo.com","https://twitch.tv",
+
+"https://chat.openai.com","https://claude.ai","https://gemini.google.com",
+
+"https://aws.amazon.com","https://azure.microsoft.com","https://cloud.google.com",
+
+"https://spotify.com","https://netflix.com","https://hulu.com",
+
+"https://canva.com","https://figma.com","https://vercel.com"
+
+];
+
+let index=0;
+
+for(let i=0;i<8;i++){
+
+  document.write(`
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">${names[i]}</button>
+<button class="sub-btn btn1" onclick="openLink('${links[index++]}')">1</button>
+<button class="sub-btn btn2" onclick="openLink('${links[index++]}')">2</button>
+<button class="sub-btn btn3" onclick="openLink('${links[index++]}')">3</button>
+</div>`);
+
+}
+</script>
 </div>
 <script>
 
-/* TOGGLE WITH GLOW + SOUND */
+/* LOGIN */
 
-function toggleMenu(button,id){
+function login(){
 
-  const group=document.getElementById(id);
+  if(document.getElementById("pass").value==="stanley"){
 
-  const sound=document.getElementById("menuSound");
-
-  group.classList.toggle("open");
-
-  if(group.classList.contains("open")){
-
-    button.classList.add("active");
-
-    sound.currentTime=0;
-
-    sound.play();
-
-  }else{
-
-    button.classList.remove("active");
+    document.getElementById("login").style.display="none";
 
   }
 
 }
 
-/* OPEN LINKS */
+/* MENU */
+
+function toggleMenu(btn){
+
+  playClick();
+
+  btn.parentElement.classList.toggle("active");
+
+}
 
 function openLink(url){
 
-  window.open(url,'_blank');
+  playClick();
+
+  window.open(url,"_blank");
 
 }
+
+/* SOUND */
+
+const clickSound=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
+
+function playClick(){ clickSound.currentTime=0; clickSound.play(); }
+
+/* NEON */
+
+const colors=["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
+
+let cIndex=0;
+
+document.body.addEventListener("click",e=>{
+
+  if(!e.target.classList.contains("main-btn") &&
+
+     !e.target.classList.contains("sub-btn")){
+
+    cIndex=(cIndex+1)%colors.length;
+
+    document.documentElement.style.setProperty("--neon",colors[cIndex]);
+
+    document.documentElement.style.setProperty("--neon2",colors[(cIndex+2)%colors.length]);
+
+  }
+
+});
 
 /* MATRIX */
 
@@ -260,37 +407,37 @@ canvas.height=window.innerHeight;
 
 canvas.width=window.innerWidth;
 
-const letters="01STANLEY";
+const letters="01";
 
-const fontSize=16;
+const fontSize=14;
 
 const columns=canvas.width/fontSize;
 
 const drops=[];
 
-for(let x=0;x<columns;x++) drops[x]=1;
+for(let x=0;x<columns;x++)drops[x]=1;
 
 function draw(){
 
-  ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillStyle="rgba(0,0,0,0.05)";
 
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  ctx.fillStyle="#00ff99";
+ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--neon");
 
-  ctx.font=fontSize+"px monospace";
+ctx.font=fontSize+"px monospace";
 
-  for(let i=0;i<drops.length;i++){
+for(let i=0;i<drops.length;i++){
 
-    const text=letters.charAt(Math.floor(Math.random()*letters.length));
+const text=letters[Math.floor(Math.random()*letters.length)];
 
-    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
 
-    if(drops[i]*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
 
-    drops[i]++;
+drops[i]++;
 
-  }
+}
 
 }
 
@@ -298,4 +445,6 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
+GitHub · Change is constant. GitHub keeps you ahead.
+Join the world's most widely adopted, AI-powered developer platform where millions of developers, businesses, and the largest open source community build software that advances humanity.
  
