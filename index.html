@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stanley Cyber OS</title>
+<title>Stanley Cyber Dashboard</title>
 <style>
 
-:root {
+:root{
 
-  --neon: #00ff99;
+  --neon:#00ff99;
 
-  --neon2: #ffff00;
+  --neon2:#ffff00;
 
 }
 
@@ -38,7 +38,7 @@ canvas{
 
 }
 
-/* BOOT */
+/* BOOT SCREEN */
 
 #boot{
 
@@ -156,7 +156,7 @@ canvas{
 
 }
 
-/* DASHBOARD */
+/* DASHBOARD GRID */
 
 .dashboard{
 
@@ -172,7 +172,7 @@ canvas{
 
   grid-template-columns:repeat(4,140px);
 
-  gap:60px;
+  gap:70px;
 
 }
 
@@ -181,6 +181,8 @@ canvas{
   position:relative;
 
 }
+
+/* MAIN BUTTON */
 
 .main-btn{
 
@@ -202,9 +204,12 @@ canvas{
 
   box-shadow:0 0 20px var(--neon);
 
-  transition:0.5s;
+  transition:0.4s;
 
 }
+
+/* SUB BUTTON */
+
 .sub-btn{
 
   position:absolute;
@@ -233,7 +238,7 @@ canvas{
 
 }
 
-/* FARTHER DISTANCE (was 140px) */
+/* FAR RADIAL EXPLOSION */
 
 .menu.active .btn1{
 
@@ -258,83 +263,14 @@ canvas{
   transform:translate(-50%,-50%) rotate(240deg) translate(200px) rotate(-240deg);
 
 }
-  
 
-/* WINDOWS */
+@media(max-width:768px){
 
-.window{
+  .dashboard{
 
-  position:absolute;
+    grid-template-columns:repeat(2,140px);
 
-  width:500px;
-
-  height:350px;
-
-  background:rgba(0,0,0,0.8);
-
-  backdrop-filter:blur(10px);
-
-  border:2px solid var(--neon);
-
-  box-shadow:0 0 20px var(--neon);
-
-  display:none;
-
-  z-index:50;
-
-  resize:both;
-
-  overflow:hidden;
-
-}
-
-.titlebar{
-
-  height:30px;
-
-  background:rgba(255,255,255,0.1);
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  padding:0 10px;
-
-  cursor:move;
-
-  color:var(--neon);
-
-}
-
-.window iframe{
-
-  width:100%;
-
-  height:calc(100% - 30px);
-
-  border:none;
-
-}
-
-.loader{
-
-  position:absolute;
-
-  inset:30px 0 0 0;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  color:var(--neon);
-
-  font-size:14px;
-
-  background:black;
+  }
 
 }
 </style>
@@ -358,13 +294,13 @@ const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
 
 const links=[
 
-"https://example.com","https://example.org","https://example.net",
+"https://github.com","https://gitlab.com","https://bitbucket.org",
 
-"https://wikipedia.org","https://openai.com","https://github.com/explore",
+"https://google.com","https://bing.com","https://duckduckgo.com",
 
-"https://news.ycombinator.com","https://reddit.com","https://producthunt.com",
+"https://facebook.com","https://instagram.com","https://x.com",
 
-"https://developer.mozilla.org","https://css-tricks.com","https://stackoverflow.com",
+"https://youtube.com","https://vimeo.com","https://twitch.tv",
 
 "https://chat.openai.com","https://claude.ai","https://gemini.google.com",
 
@@ -393,11 +329,6 @@ document.write(`
 }
 </script>
 </div>
-<!-- 4 WINDOWS -->
-<div class="window" id="win1"><div class="titlebar">Window 1 <span onclick="closeWin('win1')">✖</span></div><div class="loader">Loading...</div><iframe></iframe></div>
-<div class="window" id="win2"><div class="titlebar">Window 2 <span onclick="closeWin('win2')">✖</span></div><div class="loader">Loading...</div><iframe></iframe></div>
-<div class="window" id="win3"><div class="titlebar">Window 3 <span onclick="closeWin('win3')">✖</span></div><div class="loader">Loading...</div><iframe></iframe></div>
-<div class="window" id="win4"><div class="titlebar">Window 4 <span onclick="closeWin('win4')">✖</span></div><div class="loader">Loading...</div><iframe></iframe></div>
 <script>
 
 /* LOGIN */
@@ -416,83 +347,33 @@ document.getElementById("login").style.display="none";
 
 function toggleMenu(btn){
 
+playClick();
+
 btn.parentElement.classList.toggle("active");
 
 }
 
-/* WINDOWS */
-
-let wIndex=1;
+/* OPEN LINK */
 
 function openLink(url){
 
-let win=document.getElementById("win"+wIndex);
+playClick();
 
-win.style.display="block";
-
-let frame=win.querySelector("iframe");
-
-let loader=win.querySelector(".loader");
-
-loader.style.display="flex";
-
-frame.style.display="none";
-
-frame.src=url;
-
-frame.onload=function(){
-
-loader.style.display="none";
-
-frame.style.display="block";
-
-};
-
-wIndex++;
-
-if(wIndex>4)wIndex=1;
+window.open(url,"_blank");
 
 }
 
-function closeWin(id){
+/* CLICK SOUND */
 
-document.getElementById(id).style.display="none";
+const clickSound=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
 
-}
+function playClick(){
 
-/* DRAG */
+clickSound.currentTime=0;
 
-document.querySelectorAll(".window").forEach(win=>{
-
-let header=win.querySelector(".titlebar");
-
-let offsetX=0,offsetY=0,isDown=false;
-
-header.addEventListener("mousedown",e=>{
-
-isDown=true;
-
-offsetX=e.clientX-win.offsetLeft;
-
-offsetY=e.clientY-win.offsetTop;
-
-});
-
-document.addEventListener("mouseup",()=>isDown=false);
-
-document.addEventListener("mousemove",e=>{
-
-if(isDown){
-
-win.style.left=(e.clientX-offsetX)+"px";
-
-win.style.top=(e.clientY-offsetY)+"px";
+clickSound.play();
 
 }
-
-});
-
-});
 
 /* NEON CHANGE */
 
@@ -564,7 +445,6 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
-Example Domain
+GitHub · Change is constant. GitHub keeps you ahead.
+Join the world's most widely adopted, AI-powered developer platform where millions of developers, businesses, and the largest open source community build software that advances humanity.
  
-
-
