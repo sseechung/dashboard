@@ -156,7 +156,7 @@ canvas{
 
   text-align:center;
 
-  font-size:48px;
+  font-size:38px;
 
   color:white;
 
@@ -186,8 +186,6 @@ canvas{
 
 }
 
-/* MAIN BUTTON */
-
 .main-btn{
 
   width:160px;
@@ -212,8 +210,6 @@ canvas{
 
 }
 
-/* ACTIVE GLOW */
-
 .menu.active .main-btn{
 
   box-shadow:
@@ -227,8 +223,6 @@ canvas{
   transform:scale(1.05);
 
 }
-
-/* SUB BUTTONS */
 
 .sub-btn{
 
@@ -254,8 +248,6 @@ canvas{
 
 }
 
-/* TOP ROW fly UP */
-
 .menu.top .sub-btn{ bottom:160px; }
 
 .menu.top.active .btn1{ opacity:1; transform:translateY(-10px); }
@@ -263,8 +255,6 @@ canvas{
 .menu.top.active .btn2{ opacity:1; transform:translateY(-60px); }
 
 .menu.top.active .btn3{ opacity:1; transform:translateY(-110px); }
-
-/* BOTTOM ROW fly DOWN */
 
 .menu.bottom .sub-btn{ top:160px; }
 
@@ -296,9 +286,53 @@ canvas{
 <button type="button" id="loginBtn">ENTER</button>
 </div>
 </div>
-<div class="title">S T A N L E Y</div>
+<div class="title">STANLEY</div>
 <div class="dashboard" id="dashboard"></div>
 <script>
+
+/* ===== SOUND SYSTEM ===== */
+
+const tickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-ticking-clock-1059.mp3");
+
+tickSound.loop = true;
+
+const clickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
+
+const matrixSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-digital-ambient-1111.mp3");
+
+matrixSound.loop = true;
+
+const explosionSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3");
+
+/* Boot ticking */
+
+window.addEventListener("load",()=>{
+
+  tickSound.volume=0.5;
+
+  tickSound.play().catch(()=>{});
+
+});
+
+setTimeout(()=>{
+
+  tickSound.pause();
+
+  tickSound.currentTime=0;
+
+},3000);
+
+function playClick(){
+
+  clickSound.currentTime=0;
+
+  clickSound.volume=0.7;
+
+  clickSound.play();
+
+}
+
+/* ===== MENU DATA ===== */
 
 const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
 
@@ -366,9 +400,11 @@ for(let i=0;i<8;i++){
 
   const mainBtn=menu.querySelector(".main-btn");
 
-  mainBtn.addEventListener("click",function(e){
+  mainBtn.addEventListener("click",(e)=>{
 
     e.stopPropagation();
+
+    playClick();
 
     document.querySelectorAll(".menu").forEach(m=>{
 
@@ -380,11 +416,11 @@ for(let i=0;i<8;i++){
 
   });
 
-  menu.querySelector(".btn1").addEventListener("click",e=>{e.stopPropagation();window.open(link1,"_blank");});
+  menu.querySelector(".btn1").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(link1,"_blank");});
 
-  menu.querySelector(".btn2").addEventListener("click",e=>{e.stopPropagation();window.open(link2,"_blank");});
+  menu.querySelector(".btn2").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(link2,"_blank");});
 
-  menu.querySelector(".btn3").addEventListener("click",e=>{e.stopPropagation();window.open(link3,"_blank");});
+  menu.querySelector(".btn3").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(link3,"_blank");});
 
   dashboard.appendChild(menu);
 
@@ -394,15 +430,23 @@ for(let i=0;i<8;i++){
 
 document.getElementById("loginBtn").addEventListener("click",function(){
 
+  playClick();
+
   if(document.getElementById("pass").value==="stanley"){
 
+    explosionSound.play();
+
     document.getElementById("login").style.display="none";
+
+    matrixSound.volume=0.3;
+
+    matrixSound.play().catch(()=>{});
 
   }
 
 });
 
-/* MATRIX */
+/* MATRIX VISUAL */
 
 const canvas=document.getElementById("matrix");
 
@@ -450,4 +494,4 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
-
+ 
