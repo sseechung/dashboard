@@ -261,7 +261,7 @@ canvas{
 </head>
 <body>
 <canvas id="matrix"></canvas>
-<div id="boot">SYSTEM FUCKING...</div>
+<div id="boot">SYSTEM INITIALIZING...</div>
 <div id="login">
 <div class="login-box">
 <div>ACCESS TERMINAL</div>
@@ -269,76 +269,58 @@ canvas{
 <br>
 <button type="button" id="loginBtn">ENTER</button>
 </div>
-</div>  
-<div class="title">S  T  A  N  L  E  Y</div>
+</div>
+<div class="title">STANLEY</div>
 <div class="dashboard" id="dashboard"></div>
 <script>
 
-/* ===== SOUND SYSTEM ===== */
+/* ===== EDGE SAFE SOUND SYSTEM ===== */
 
 const tickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-ticking-clock-1059.mp3");
-
-tickSound.loop = true;
 
 const clickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
 
 const matrixSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-digital-ambient-1111.mp3");
 
-matrixSound.loop = true;
-
 const explosionSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3");
 
-let audioUnlocked = false;
+matrixSound.loop = true;
 
-/* Unlock audio on first interaction */
+tickSound.loop = true;
 
-function unlockAudio(){
+/* Start ticking on first user interaction */
 
-  if(audioUnlocked) return;
+document.addEventListener("pointerdown", function startTick(){
 
-  tickSound.play().then(()=>{tickSound.pause();tickSound.currentTime=0;}).catch(()=>{});
-
-  clickSound.play().then(()=>{clickSound.pause();clickSound.currentTime=0;}).catch(()=>{});
-
-  matrixSound.play().then(()=>{matrixSound.pause();matrixSound.currentTime=0;}).catch(()=>{});
-
-  explosionSound.play().then(()=>{explosionSound.pause();explosionSound.currentTime=0;}).catch(()=>{});
-
-  audioUnlocked = true;
-
-  tickSound.volume=0.5;
+  tickSound.volume = 0.5;
 
   tickSound.play().catch(()=>{});
 
-}
+  setTimeout(()=>{
 
-document.addEventListener("click", unlockAudio, { once:true });
+    tickSound.pause();
 
-setTimeout(()=>{
+    tickSound.currentTime = 0;
 
-  tickSound.pause();
+  },3000);
 
-  tickSound.currentTime=0;
-
-},3000);
+}, { once:true });
 
 function playClick(){
 
-  clickSound.currentTime=0;
+  clickSound.currentTime = 0;
 
-  clickSound.volume=0.7;
-
-  clickSound.play();
+  clickSound.play().catch(()=>{});
 
 }
 
 /* MENU DATA */
 
-const names=["GA_4","FIND","TESLA","QUALITY","N.C","SERBIS","MIDYA","TULS"];
+const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
 
 const subNames=[
 
-  ["Live","U P H","m r b"],
+  ["GitHub","GitLab","Bitbucket"],
 
   ["Google","Bing","DuckDuckGo"],
 
@@ -358,10 +340,7 @@ const subNames=[
 
 const links=[
 
-"https://uph.mo.tesla.services/ncs-traveller?which=GA4_MY_NV&vinseq=vin&show=2,3,4,5,6,7",
-"https://factorystreaming.ca.tesla.com/uph-goals/(day:0,panels:!((name:PRE_IN),(name:GA4),(name:GA4_OUT),(name:WAHA_Exit)),showingGoals:!t,showingWeekMetrics:!f)",
-"https://frem-quality.tesla.com/one-mrb/create",
-
+"https://github.com","https://gitlab.com","https://bitbucket.org",
 
 "https://google.com","https://bing.com","https://duckduckgo.com",
 
@@ -429,15 +408,19 @@ document.getElementById("loginBtn").addEventListener("click",function(){
 
   playClick();
 
-  if(document.getElementById("pass").value==="stanley"){
+  if(document.getElementById("pass").value.trim()==="stanley"){
 
-    explosionSound.play();
+    explosionSound.play().catch(()=>{});
 
     document.getElementById("login").style.display="none";
 
     matrixSound.volume=0.3;
 
     matrixSound.play().catch(()=>{});
+
+  } else {
+
+    alert("Wrong password");
 
   }
 
@@ -492,7 +475,3 @@ setInterval(draw,33);
 </body>
 </html>
  
-
-
-
-
