@@ -1,206 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stanley Console</title>
 <style>
 
-body {
+body{
 
-  margin: 0;
+  margin:0;
 
-  background: black;
+  background:black;
 
-  font-family: Arial, sans-serif;
+  overflow:hidden;
 
-}
-
-/* Main Menu Button */
-
-.menu-btn {
-
-  position: fixed;
-
-  bottom: 40px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  width: 120px;
-
-  height: 50px;
-
-  background: rgba(255,255,255,0.1);
-
-  border: 2px solid #00ff99;
-
-  color: #00ff99;
-
-  font-size: 18px;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  backdrop-filter: blur(10px);
+  font-family:monospace;
 
 }
 
-/* Container */
+/* MATRIX */
 
-.fly-container {
+canvas{
 
-  position: fixed;
+  position:fixed;
 
-  bottom: 110px;
+  top:0;
 
-  left: 50%;
+  left:0;
 
-  transform: translateX(-50%);
-
-  width: 500px;
-
-  height: 380px;
+  z-index:-1;
 
 }
 
-/* Base fly button style */
+/* MENU BUTTONS */
 
-.fly-btn {
+.menu{
 
-  position: absolute;
+  position:fixed;
 
-  width: 100px;
+  width:120px;
 
-  height: 40px;
+  height:45px;
 
-  border-radius: 8px;
+  border:2px solid #00ff99;
 
-  background: rgba(0,255,150,0.1);
+  background:rgba(0,255,150,0.1);
 
-  border: 1px solid #00ff99;
+  color:#00ff99;
 
-  color: #00ff99;
+  border-radius:8px;
 
-  cursor: pointer;
-
-  opacity: 0;
-
-  transform: scale(0);
-
-  transition: 0.3s ease;
+  cursor:pointer;
 
 }
 
-/* Show buttons when open */
+/* TOP MENUS */
 
-.open .fly-btn {
+#menu1{top:100px;left:10%;}
 
-  opacity: 1;
+#menu2{top:100px;left:30%;}
 
-  transform: scale(1);
+#menu3{top:100px;left:50%;}
+
+#menu4{top:100px;left:70%;}
+
+/* BOTTOM MENUS */
+
+#menu5{bottom:100px;left:10%;}
+
+#menu6{bottom:100px;left:30%;}
+
+#menu7{bottom:100px;left:50%;}
+
+#menu8{bottom:100px;left:70%;}
+
+/* FLY GROUP BASE */
+
+.fly-group{
+
+  position:fixed;
+
+  width:130px;
+
+  pointer-events:none;
 
 }
 
-/* Row 1 */
+.fly-btn{
 
-.fly1  { top: 0px; left: 0px; }
+  display:block;
 
-.fly2  { top: 0px; left: 120px; }
+  width:130px;
 
-.fly3  { top: 0px; left: 240px; }
+  margin:6px 0;
 
-.fly4  { top: 0px; left: 360px; }
+  padding:6px;
 
-/* Row 2 */
+  border:1px solid #00ff99;
 
-.fly5  { top: 60px; left: 0px; }
+  background:rgba(0,255,150,0.1);
 
-.fly6  { top: 60px; left: 120px; }
+  color:#00ff99;
 
-.fly7  { top: 60px; left: 240px; }
+  border-radius:6px;
 
-.fly8  { top: 60px; left: 360px; }
+  cursor:pointer;
 
-/* Row 3 */
+  transform:translateY(0);
 
-.fly9  { top: 120px; left: 0px; }
+  opacity:0;
 
-.fly10 { top: 120px; left: 120px; }
+  transition:0.4s ease;
 
-.fly11 { top: 120px; left: 240px; }
+}
 
-.fly12 { top: 120px; left: 360px; }
+/* OPEN STATE */
 
-/* Row 4 */
+.fly-group.open{
 
-.fly13 { top: 180px; left: 0px; }
+  pointer-events:auto;
 
-.fly14 { top: 180px; left: 120px; }
+}
 
-.fly15 { top: 180px; left: 240px; }
+.fly-group.open .fly-btn{
 
-.fly16 { top: 180px; left: 360px; }
+  opacity:1;
 
-/* Row 5 */
+}
 
-.fly17 { top: 240px; left: 0px; }
+/* TOP MENUS → SLIDE UP */
 
-.fly18 { top: 240px; left: 120px; }
+.top-group .fly-btn:nth-child(1){transform:translateY(-60px);}
 
-.fly19 { top: 240px; left: 240px; }
+.top-group .fly-btn:nth-child(2){transform:translateY(-120px);}
 
-.fly20 { top: 240px; left: 360px; }
+.top-group .fly-btn:nth-child(3){transform:translateY(-180px);}
 
-/* Row 6 */
+/* BOTTOM MENUS → SLIDE DOWN */
 
-.fly21 { top: 300px; left: 0px; }
+.bottom-group .fly-btn:nth-child(1){transform:translateY(60px);}
 
-.fly22 { top: 300px; left: 120px; }
+.bottom-group .fly-btn:nth-child(2){transform:translateY(120px);}
 
-.fly23 { top: 300px; left: 240px; }
-
-.fly24 { top: 300px; left: 360px; }
+.bottom-group .fly-btn:nth-child(3){transform:translateY(180px);}
 </style>
 </head>
 <body>
-<button class="menu-btn" onclick="toggleMenu()">MENU</button>
-<div class="fly-container" id="flyContainer">
-<button class="fly-btn fly1">App 1</button>
-<button class="fly-btn fly2">App 2</button>
-<button class="fly-btn fly3">App 3</button>
-<button class="fly-btn fly4">App 4</button>
-<button class="fly-btn fly5">App 5</button>
-<button class="fly-btn fly6">App 6</button>
-<button class="fly-btn fly7">App 7</button>
-<button class="fly-btn fly8">App 8</button>
-<button class="fly-btn fly9">App 9</button>
-<button class="fly-btn fly10">App 10</button>
-<button class="fly-btn fly11">App 11</button>
-<button class="fly-btn fly12">App 12</button>
-<button class="fly-btn fly13">App 13</button>
-<button class="fly-btn fly14">App 14</button>
-<button class="fly-btn fly15">App 15</button>
-<button class="fly-btn fly16">App 16</button>
-<button class="fly-btn fly17">App 17</button>
-<button class="fly-btn fly18">App 18</button>
-<button class="fly-btn fly19">App 19</button>
-<button class="fly-btn fly20">App 20</button>
-<button class="fly-btn fly21">App 21</button>
-<button class="fly-btn fly22">App 22</button>
-<button class="fly-btn fly23">App 23</button>
-<button class="fly-btn fly24">App 24</button>
+<canvas id="matrix"></canvas>
+<!-- ===== MENUS ===== -->
+<button class="menu" id="menu1" onclick="toggle('group1')">SEARCH</button>
+<button class="menu" id="menu2" onclick="toggle('group2')">SOCIAL</button>
+<button class="menu" id="menu3" onclick="toggle('group3')">DEV</button>
+<button class="menu" id="menu4" onclick="toggle('group4')">MEDIA</button>
+<button class="menu" id="menu5" onclick="toggle('group5')">CAR</button>
+<button class="menu" id="menu6" onclick="toggle('group6')">TOOLS</button>
+<button class="menu" id="menu7" onclick="toggle('group7')">SHOP</button>
+<button class="menu" id="menu8" onclick="toggle('group8')">BANK</button>
+<!-- ===== TOP GROUPS (Fly UP) ===== -->
+<div class="fly-group top-group" id="group1" style="top:100px; left:10%;">
+<button class="fly-btn" onclick="openLink('https://google.com')">Google</button>
+<button class="fly-btn" onclick="openLink('https://bing.com')">Bing</button>
+<button class="fly-btn" onclick="openLink('https://yahoo.com')">Yahoo</button>
+</div>
+<div class="fly-group top-group" id="group2" style="top:100px; left:30%;">
+<button class="fly-btn" onclick="openLink('https://facebook.com')">Facebook</button>
+<button class="fly-btn" onclick="openLink('https://instagram.com')">Instagram</button>
+<button class="fly-btn" onclick="openLink('https://x.com')">X</button>
+</div>
+<div class="fly-group top-group" id="group3" style="top:100px; left:50%;">
+<button class="fly-btn" onclick="openLink('https://github.com')">GitHub</button>
+<button class="fly-btn" onclick="openLink('https://stackoverflow.com')">StackOverflow</button>
+<button class="fly-btn" onclick="openLink('https://codepen.io')">CodePen</button>
+</div>
+<div class="fly-group top-group" id="group4" style="top:100px; left:70%;">
+<button class="fly-btn" onclick="openLink('https://youtube.com')">YouTube</button>
+<button class="fly-btn" onclick="openLink('https://netflix.com')">Netflix</button>
+<button class="fly-btn" onclick="openLink('https://spotify.com')">Spotify</button>
+</div>
+<!-- ===== BOTTOM GROUPS (Fly DOWN) ===== -->
+<div class="fly-group bottom-group" id="group5" style="bottom:100px; left:10%;">
+<button class="fly-btn" onclick="openLink('https://lexus.com')">Lexus</button>
+<button class="fly-btn" onclick="openLink('https://dmv.ca.gov')">CA DMV</button>
+<button class="fly-btn" onclick="openLink('https://statefarm.com')">State Farm</button>
+</div>
+<div class="fly-group bottom-group" id="group6" style="bottom:100px; left:30%;">
+<button class="fly-btn" onclick="openLink('https://chat.openai.com')">ChatGPT</button>
+<button class="fly-btn" onclick="openLink('https://dropbox.com')">Dropbox</button>
+<button class="fly-btn" onclick="openLink('https://wetransfer.com')">WeTransfer</button>
+</div>
+<div class="fly-group bottom-group" id="group7" style="bottom:100px; left:50%;">
+<button class="fly-btn" onclick="openLink('https://amazon.com')">Amazon</button>
+<button class="fly-btn" onclick="openLink('https://ebay.com')">eBay</button>
+<button class="fly-btn" onclick="openLink('https://bestbuy.com')">BestBuy</button>
+</div>
+<div class="fly-group bottom-group" id="group8" style="bottom:100px; left:70%;">
+<button class="fly-btn" onclick="openLink('https://paypal.com')">PayPal</button>
+<button class="fly-btn" onclick="openLink('https://chase.com')">Chase</button>
+<button class="fly-btn" onclick="openLink('https://bankofamerica.com')">Bank of America</button>
 </div>
 <script>
 
-function toggleMenu() {
+/* TOGGLE */
 
-  document.getElementById("flyContainer").classList.toggle("open");
+function toggle(id){
+
+  document.getElementById(id).classList.toggle("open");
 
 }
+
+/* OPEN LINK */
+
+function openLink(url){
+
+  window.open(url,'_blank');
+
+}
+
+/* MATRIX EFFECT */
+
+const canvas=document.getElementById("matrix");
+
+const ctx=canvas.getContext("2d");
+
+canvas.height=window.innerHeight;
+
+canvas.width=window.innerWidth;
+
+const letters="01STANLEY";
+
+const fontSize=16;
+
+const columns=canvas.width/fontSize;
+
+const drops=[];
+
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle="#00ff99";
+
+  ctx.font=fontSize+"px monospace";
+
+  for(let i=0;i<drops.length;i++){
+
+    const text=letters.charAt(Math.floor(Math.random()*letters.length));
+
+    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+    if(drops[i]*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+
+    drops[i]++;
+
+  }
+
+}
+
+setInterval(draw,33);
 </script>
 </body>
 </html>
+Google
+Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.
  
