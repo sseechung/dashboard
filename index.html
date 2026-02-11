@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stanley Matrix Console</title>
+<title>Stanley Cyber Console</title>
 <style>
 
 :root {
 
   --neon: #00ff99;
 
-  --neon2: yellow;
+  --neon2: #ffff00;
 
 }
 
@@ -20,9 +20,9 @@ body {
 
   overflow: hidden;
 
-  font-family: Arial, sans-serif;
-
   background: black;
+
+  font-family: Arial, sans-serif;
 
 }
 
@@ -44,7 +44,7 @@ canvas {
 
   position: absolute;
 
-  top: 30px;
+  top: 20px;
 
   width: 100%;
 
@@ -52,17 +52,19 @@ canvas {
 
   font-size: 42px;
 
-  letter-spacing: 10px;
+  letter-spacing: 8px;
 
   color: white;
+
+  transition: 0.6s ease;
 
   text-shadow:
 
     0 0 10px var(--neon),
 
-    0 0 20px var(--neon),
+    0 0 25px var(--neon),
 
-    0 0 40px var(--neon);
+    0 0 50px var(--neon);
 
 }
 
@@ -80,7 +82,7 @@ canvas {
 
   display: grid;
 
-  grid-template-columns: repeat(4, 130px);
+  grid-template-columns: repeat(4, 140px);
 
   gap: 60px;
 
@@ -90,15 +92,17 @@ canvas {
 
   position: relative;
 
+  perspective: 1000px;
+
 }
 
 /* MAIN BUTTON */
 
 .main-btn {
 
-  width: 130px;
+  width: 140px;
 
-  height: 130px;
+  height: 140px;
 
   border-radius: 20px;
 
@@ -112,11 +116,11 @@ canvas {
 
   cursor: pointer;
 
-  font-size: 14px;
-
   box-shadow: 0 0 20px var(--neon);
 
-  transition: 0.3s;
+  transition: 0.6s ease, transform 0.2s ease;
+
+  transform-style: preserve-3d;
 
 }
 
@@ -132,9 +136,9 @@ canvas {
 
   position: absolute;
 
-  width: 80px;
+  width: 85px;
 
-  height: 80px;
+  height: 85px;
 
   border-radius: 15px;
 
@@ -148,27 +152,23 @@ canvas {
 
   cursor: pointer;
 
-  transition: 0.4s ease;
+  transition: 0.6s ease;
 
   opacity: 0;
 
 }
 
-/* FLY OUT POSITIONS */
+/* FLY OUT */
 
-.menu.active .btn1 { transform: translate(-150px, -110px); opacity: 1; }
+.menu.active .btn1 { transform: translate(-160px, -110px); opacity: 1; }
 
-.menu.active .btn2 { transform: translate(150px, -110px); opacity: 1; }
+.menu.active .btn2 { transform: translate(160px, -110px); opacity: 1; }
 
 .menu.active .btn3 { transform: translate(0px, -170px); opacity: 1; }
 
 @media(max-width:768px){
 
-  .dashboard {
-
-    grid-template-columns: repeat(2, 130px);
-
-  }
+  .dashboard { grid-template-columns: repeat(2, 140px); }
 
 }
 </style>
@@ -177,25 +177,61 @@ canvas {
 <canvas id="matrix"></canvas>
 <div class="title">STANLEY</div>
 <div class="dashboard">
-<!-- 8 MENUS -->
-<script>
-
-    const menuNames = ["GA-4","SEARCH","SOCIAL","TOOLS","MEDIA","AI","CLOUD","SYSTEM"];
-
-    document.write(menuNames.map(name => `
+<!-- 8 MENUS (24 UNIQUE LINKS) -->
 <div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">${name}</button>
-<button class="sub-btn btn1" onclick="openLink('https://github.com')">Link1</button>
-<button class="sub-btn btn2" onclick="openLink('https://google.com')">Link2</button>
-<button class="sub-btn btn3" onclick="openLink('https://youtube.com')">Link3</button>
+<button class="main-btn" onclick="toggleMenu(this)">DEV</button>
+<button class="sub-btn btn1" onclick="openLink('https://github.com')">GitHub</button>
+<button class="sub-btn btn2" onclick="openLink('https://gitlab.com')">GitLab</button>
+<button class="sub-btn btn3" onclick="openLink('https://bitbucket.org')">Bitbucket</button>
 </div>
-
-    `).join(""));
-</script>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">SEARCH</button>
+<button class="sub-btn btn1" onclick="openLink('https://google.com')">Google</button>
+<button class="sub-btn btn2" onclick="openLink('https://bing.com')">Bing</button>
+<button class="sub-btn btn3" onclick="openLink('https://duckduckgo.com')">Duck</button>
+</div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">SOCIAL</button>
+<button class="sub-btn btn1" onclick="openLink('https://facebook.com')">Facebook</button>
+<button class="sub-btn btn2" onclick="openLink('https://instagram.com')">Instagram</button>
+<button class="sub-btn btn3" onclick="openLink('https://x.com')">X</button>
+</div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">VIDEO</button>
+<button class="sub-btn btn1" onclick="openLink('https://youtube.com')">YouTube</button>
+<button class="sub-btn btn2" onclick="openLink('https://vimeo.com')">Vimeo</button>
+<button class="sub-btn btn3" onclick="openLink('https://twitch.tv')">Twitch</button>
+</div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">AI</button>
+<button class="sub-btn btn1" onclick="openLink('https://chat.openai.com')">ChatGPT</button>
+<button class="sub-btn btn2" onclick="openLink('https://claude.ai')">Claude</button>
+<button class="sub-btn btn3" onclick="openLink('https://gemini.google.com')">Gemini</button>
+</div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">CLOUD</button>
+<button class="sub-btn btn1" onclick="openLink('https://aws.amazon.com')">AWS</button>
+<button class="sub-btn btn2" onclick="openLink('https://azure.microsoft.com')">Azure</button>
+<button class="sub-btn btn3" onclick="openLink('https://cloud.google.com')">GCP</button>
+</div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">MEDIA</button>
+<button class="sub-btn btn1" onclick="openLink('https://spotify.com')">Spotify</button>
+<button class="sub-btn btn2" onclick="openLink('https://netflix.com')">Netflix</button>
+<button class="sub-btn btn3" onclick="openLink('https://hulu.com')">Hulu</button>
+</div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">TOOLS</button>
+<button class="sub-btn btn1" onclick="openLink('https://canva.com')">Canva</button>
+<button class="sub-btn btn2" onclick="openLink('https://figma.com')">Figma</button>
+<button class="sub-btn btn3" onclick="openLink('https://vercel.com')">Vercel</button>
+</div>
 </div>
 <script>
 
 function toggleMenu(button) {
+
+  playClick();
 
   button.parentElement.classList.toggle("active");
 
@@ -203,15 +239,27 @@ function toggleMenu(button) {
 
 function openLink(url){
 
+  playClick();
+
   window.open(url, "_blank");
 
 }
 
-/* NEON TAP CHANGE */
+/* SMOOTH NEON COLOR */
 
 const colors = ["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
 
 let index = 0;
+
+function changeNeon() {
+
+  index = (index + 1) % colors.length;
+
+  document.documentElement.style.setProperty("--neon", colors[index]);
+
+  document.documentElement.style.setProperty("--neon2", colors[(index+2)%colors.length]);
+
+}
 
 document.body.addEventListener("click", function(e){
 
@@ -219,13 +267,67 @@ document.body.addEventListener("click", function(e){
 
      !e.target.classList.contains("sub-btn")) {
 
-    index = (index + 1) % colors.length;
-
-    document.documentElement.style.setProperty("--neon", colors[index]);
-
-    document.documentElement.style.setProperty("--neon2", colors[(index+2)%colors.length]);
+    changeNeon();
 
   }
+
+});
+
+/* 3D TILT */
+
+document.querySelectorAll(".main-btn").forEach(btn => {
+
+  btn.addEventListener("mousemove", e => {
+
+    const rect = btn.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+
+    const centerY = rect.height / 2;
+
+    const rotateX = -(y - centerY) / 10;
+
+    const rotateY = (x - centerX) / 10;
+
+    btn.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  });
+
+  btn.addEventListener("mouseleave", () => {
+
+    btn.style.transform = "rotateX(0) rotateY(0)";
+
+  });
+
+});
+
+/* SOUND */
+
+const clickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
+
+const hoverSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-fast-small-sweep-transition-166.mp3");
+
+function playClick(){
+
+  clickSound.currentTime = 0;
+
+  clickSound.play();
+
+}
+
+document.querySelectorAll(".main-btn, .sub-btn").forEach(btn=>{
+
+  btn.addEventListener("mouseenter", ()=>{
+
+    hoverSound.currentTime = 0;
+
+    hoverSound.play();
+
+  });
 
 });
 
@@ -255,7 +357,7 @@ function draw(){
 
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  ctx.fillStyle = colors[index];
+  ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--neon");
 
   ctx.font = fontSize + "px monospace";
 
@@ -280,4 +382,3 @@ setInterval(draw, 33);
 </body>
 </html>
  
-
