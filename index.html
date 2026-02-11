@@ -212,13 +212,7 @@ canvas{
 
 .menu.active .main-btn{
 
-  box-shadow:
-
-    0 0 20px var(--neon),
-
-    0 0 40px var(--neon),
-
-    0 0 60px var(--neon);
+  box-shadow:0 0 20px var(--neon),0 0 40px var(--neon),0 0 60px var(--neon);
 
   transform:scale(1.05);
 
@@ -263,21 +257,11 @@ canvas{
 .menu.bottom.active .btn2{ opacity:1; transform:translateY(60px); }
 
 .menu.bottom.active .btn3{ opacity:1; transform:translateY(110px); }
-
-@media(max-width:768px){
-
-  .dashboard{
-
-    grid-template-columns:repeat(2,160px);
-
-  }
-
-}
 </style>
 </head>
 <body>
 <canvas id="matrix"></canvas>
-<div id="boot">FUCKING SYSTEM INITIALIZING...</div>
+<div id="boot">SYSTEM INITIALIZING...</div>
 <div id="login">
 <div class="login-box">
 <div>ACCESS TERMINAL</div>
@@ -286,7 +270,7 @@ canvas{
 <button type="button" id="loginBtn">ENTER</button>
 </div>
 </div>
-<div class="title">S.T.A.N.L.E.Y</div>
+<div class="title">STANLEY</div>
 <div class="dashboard" id="dashboard"></div>
 <script>
 
@@ -304,15 +288,31 @@ matrixSound.loop = true;
 
 const explosionSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3");
 
-/* Boot ticking */
+let audioUnlocked = false;
 
-window.addEventListener("load",()=>{
+/* Unlock audio on first interaction */
+
+function unlockAudio(){
+
+  if(audioUnlocked) return;
+
+  tickSound.play().then(()=>{tickSound.pause();tickSound.currentTime=0;}).catch(()=>{});
+
+  clickSound.play().then(()=>{clickSound.pause();clickSound.currentTime=0;}).catch(()=>{});
+
+  matrixSound.play().then(()=>{matrixSound.pause();matrixSound.currentTime=0;}).catch(()=>{});
+
+  explosionSound.play().then(()=>{explosionSound.pause();explosionSound.currentTime=0;}).catch(()=>{});
+
+  audioUnlocked = true;
 
   tickSound.volume=0.5;
 
   tickSound.play().catch(()=>{});
 
-});
+}
+
+document.addEventListener("click", unlockAudio, { once:true });
 
 setTimeout(()=>{
 
@@ -332,7 +332,7 @@ function playClick(){
 
 }
 
-/* ===== MENU DATA ===== */
+/* MENU DATA */
 
 const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
 
@@ -384,12 +384,6 @@ for(let i=0;i<8;i++){
 
   menu.className=i<4?"menu top":"menu bottom";
 
-  const link1=links[i*3];
-
-  const link2=links[i*3+1];
-
-  const link3=links[i*3+2];
-
   menu.innerHTML=`
 <button type="button" class="main-btn">${names[i]}</button>
 <button type="button" class="sub-btn btn1">${subNames[i][0]}</button>
@@ -416,11 +410,11 @@ for(let i=0;i<8;i++){
 
   });
 
-  menu.querySelector(".btn1").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(link1,"_blank");});
+  menu.querySelector(".btn1").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(links[i*3],"_blank");});
 
-  menu.querySelector(".btn2").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(link2,"_blank");});
+  menu.querySelector(".btn2").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(links[i*3+1],"_blank");});
 
-  menu.querySelector(".btn3").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(link3,"_blank");});
+  menu.querySelector(".btn3").addEventListener("click",e=>{e.stopPropagation();playClick();window.open(links[i*3+2],"_blank");});
 
   dashboard.appendChild(menu);
 
@@ -495,4 +489,3 @@ setInterval(draw,33);
 </body>
 </html>
  
-
