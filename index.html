@@ -186,8 +186,6 @@ canvas{
 
 }
 
-/* MAIN BUTTON */
-
 .main-btn{
 
   width:160px;
@@ -211,8 +209,6 @@ canvas{
   transition:0.3s;
 
 }
-
-/* RECTANGLE SUB BUTTONS */
 
 .sub-btn{
 
@@ -240,15 +236,15 @@ canvas{
 
 }
 
-/* TOP ROW (UP) */
+/* TOP 4 FLY UP */
 
 .menu.top.active .btn1{ opacity:1; transform:translateY(-60px); }
 
 .menu.top.active .btn2{ opacity:1; transform:translateY(-115px); }
 
-.menu.top.active .btn3{ opacity:1; transform:translateY(-190px); }
+.menu.top.active .btn3{ opacity:1; transform:translateY(-170px); }
 
-/* BOTTOM ROW (DOWN) */
+/* BOTTOM 4 FLY DOWN */
 
 .menu.bottom.active .btn1{ opacity:1; transform:translateY(60px); }
 
@@ -275,14 +271,12 @@ canvas{
 <div>ACCESS TERMINAL</div>
 <input type="password" id="pass" placeholder="Enter Passcode">
 <br>
-<button onclick="login()">ENTER</button>
+<button type="button" onclick="login()">ENTER</button>
 </div>
 </div>
 <div class="title">STANLEY</div>
 <div class="dashboard" id="dashboard"></div>
 <script>
-
-/* DATA */
 
 const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
 
@@ -308,27 +302,33 @@ const links=[
 
 const dashboard=document.getElementById("dashboard");
 
-let linkIndex=0;
-
 for(let i=0;i<8;i++){
 
   const menu=document.createElement("div");
 
-  // Top 4 = fly up, Bottom 4 = fly down
-
   menu.className = i < 4 ? "menu top" : "menu bottom";
 
+  const link1=links[i*3];
+
+  const link2=links[i*3+1];
+
+  const link3=links[i*3+2];
+
   menu.innerHTML=`
-<button class="main-btn">${names[i]}</button>
-<button class="sub-btn btn1">Link 1</button>
-<button class="sub-btn btn2">Link 2</button>
-<button class="sub-btn btn3">Link 3</button>
+<button type="button" class="main-btn">${names[i]}</button>
+<button type="button" class="sub-btn btn1">Link 1</button>
+<button type="button" class="sub-btn btn2">Link 2</button>
+<button type="button" class="sub-btn btn3">Link 3</button>
 
   `;
 
   const mainBtn=menu.querySelector(".main-btn");
 
-  const subs=menu.querySelectorAll(".sub-btn");
+  const btn1=menu.querySelector(".btn1");
+
+  const btn2=menu.querySelector(".btn2");
+
+  const btn3=menu.querySelector(".btn3");
 
   mainBtn.addEventListener("click",(e)=>{
 
@@ -340,27 +340,39 @@ for(let i=0;i<8;i++){
 
   });
 
-  subs.forEach(btn=>{
+  btn1.addEventListener("click",(e)=>{
 
-    const url=links[linkIndex++];
+    e.stopPropagation();
 
-    btn.addEventListener("click",(e)=>{
+    playClick();
 
-      e.stopPropagation();
+    window.open(link1,"_blank");
 
-      playClick();
+  });
 
-      window.open(url,"_blank");
+  btn2.addEventListener("click",(e)=>{
 
-    });
+    e.stopPropagation();
+
+    playClick();
+
+    window.open(link2,"_blank");
+
+  });
+
+  btn3.addEventListener("click",(e)=>{
+
+    e.stopPropagation();
+
+    playClick();
+
+    window.open(link3,"_blank");
 
   });
 
   dashboard.appendChild(menu);
 
 }
-
-/* LOGIN */
 
 function login(){
 
@@ -372,8 +384,6 @@ function login(){
 
 }
 
-/* SOUND */
-
 const clickSound=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
 
 function playClick(){
@@ -383,8 +393,6 @@ function playClick(){
   clickSound.play();
 
 }
-
-/* NEON CHANGE */
 
 const colors=["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
 
@@ -399,8 +407,6 @@ document.body.addEventListener("click",()=>{
   document.documentElement.style.setProperty("--neon2",colors[(cIndex+2)%colors.length]);
 
 });
-
-/* MATRIX */
 
 const canvas=document.getElementById("matrix");
 
@@ -418,7 +424,7 @@ const columns=canvas.width/fontSize;
 
 const drops=[];
 
-for(let x=0;x<columns;x++)drops[x]=1;
+for(let x=0;x<columns;x++) drops[x]=1;
 
 function draw(){
 
@@ -436,7 +442,7 @@ function draw(){
 
     ctx.fillText(text,i*fontSize,drops[i]*fontSize);
 
-    if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
+    if(drops[i]*fontSize>canvas.height&&Math.random()>0.975) drops[i]=0;
 
     drops[i]++;
 
@@ -448,5 +454,3 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
- 
-
