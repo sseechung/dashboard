@@ -240,31 +240,21 @@ canvas{
 
 }
 
-/* STACKED ABOVE MAIN BUTTON */
+/* TOP ROW (UP) */
 
-.menu.active .btn1{
+.menu.top.active .btn1{ opacity:1; transform:translateY(-60px); }
 
-  opacity:1;
+.menu.top.active .btn2{ opacity:1; transform:translateY(-115px); }
 
-  transform:translateY(-60px);
+.menu.top.active .btn3{ opacity:1; transform:translateY(-170px); }
 
-}
+/* BOTTOM ROW (DOWN) */
 
-.menu.active .btn2{
+.menu.bottom.active .btn1{ opacity:1; transform:translateY(60px); }
 
-  opacity:1;
+.menu.bottom.active .btn2{ opacity:1; transform:translateY(115px); }
 
-  transform:translateY(-115px);
-
-}
-
-.menu.active .btn3{
-
-  opacity:1;
-
-  transform:translateY(-170px);
-
-}
+.menu.bottom.active .btn3{ opacity:1; transform:translateY(170px); }
 
 @media(max-width:768px){
 
@@ -324,7 +314,9 @@ for(let i=0;i<8;i++){
 
   const menu=document.createElement("div");
 
-  menu.className="menu";
+  // Top 4 = fly up, Bottom 4 = fly down
+
+  menu.className = i < 4 ? "menu top" : "menu bottom";
 
   menu.innerHTML=`
 <button class="main-btn">${names[i]}</button>
