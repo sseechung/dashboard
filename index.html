@@ -52,6 +52,20 @@ canvas{
 
   cursor:pointer;
 
+  transition:0.3s;
+
+}
+
+/* ACTIVE GLOW */
+
+.menu.active{
+
+  box-shadow:0 0 15px #00ff99, 0 0 30px #00ff99;
+
+  background:#00ff99;
+
+  color:black;
+
 }
 
 /* TOP MENUS */
@@ -74,7 +88,7 @@ canvas{
 
 #menu8{bottom:100px;left:70%;}
 
-/* FLY GROUP BASE */
+/* FLY GROUP */
 
 .fly-group{
 
@@ -114,8 +128,6 @@ canvas{
 
 }
 
-/* OPEN STATE */
-
 .fly-group.open{
 
   pointer-events:auto;
@@ -128,7 +140,7 @@ canvas{
 
 }
 
-/* TOP MENUS → SLIDE UP */
+/* TOP GROUP → UP */
 
 .top-group .fly-btn:nth-child(1){transform:translateY(-60px);}
 
@@ -136,7 +148,7 @@ canvas{
 
 .top-group .fly-btn:nth-child(3){transform:translateY(-180px);}
 
-/* BOTTOM MENUS → SLIDE DOWN */
+/* BOTTOM GROUP → DOWN */
 
 .bottom-group .fly-btn:nth-child(1){transform:translateY(60px);}
 
@@ -147,16 +159,20 @@ canvas{
 </head>
 <body>
 <canvas id="matrix"></canvas>
-<!-- ===== MENUS ===== -->
-<button class="menu" id="menu1" onclick="toggle('group1')">SEARCH</button>
-<button class="menu" id="menu2" onclick="toggle('group2')">SOCIAL</button>
-<button class="menu" id="menu3" onclick="toggle('group3')">DEV</button>
-<button class="menu" id="menu4" onclick="toggle('group4')">MEDIA</button>
-<button class="menu" id="menu5" onclick="toggle('group5')">CAR</button>
-<button class="menu" id="menu6" onclick="toggle('group6')">TOOLS</button>
-<button class="menu" id="menu7" onclick="toggle('group7')">SHOP</button>
-<button class="menu" id="menu8" onclick="toggle('group8')">BANK</button>
-<!-- ===== TOP GROUPS (Fly UP) ===== -->
+<!-- OPEN SOUND -->
+<audio id="menuSound">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4e7d8dba0e.mp3?filename=matrix-entrance-110624.mp3" type="audio/mpeg">
+</audio>
+<!-- MENUS -->
+<button class="menu" id="menu1" onclick="toggleMenu(this,'group1')">SEARCH</button>
+<button class="menu" id="menu2" onclick="toggleMenu(this,'group2')">SOCIAL</button>
+<button class="menu" id="menu3" onclick="toggleMenu(this,'group3')">DEV</button>
+<button class="menu" id="menu4" onclick="toggleMenu(this,'group4')">MEDIA</button>
+<button class="menu" id="menu5" onclick="toggleMenu(this,'group5')">CAR</button>
+<button class="menu" id="menu6" onclick="toggleMenu(this,'group6')">TOOLS</button>
+<button class="menu" id="menu7" onclick="toggleMenu(this,'group7')">SHOP</button>
+<button class="menu" id="menu8" onclick="toggleMenu(this,'group8')">BANK</button>
+<!-- TOP GROUPS -->
 <div class="fly-group top-group" id="group1" style="top:100px; left:10%;">
 <button class="fly-btn" onclick="openLink('https://google.com')">Google</button>
 <button class="fly-btn" onclick="openLink('https://bing.com')">Bing</button>
@@ -177,7 +193,7 @@ canvas{
 <button class="fly-btn" onclick="openLink('https://netflix.com')">Netflix</button>
 <button class="fly-btn" onclick="openLink('https://spotify.com')">Spotify</button>
 </div>
-<!-- ===== BOTTOM GROUPS (Fly DOWN) ===== -->
+<!-- BOTTOM GROUPS -->
 <div class="fly-group bottom-group" id="group5" style="bottom:100px; left:10%;">
 <button class="fly-btn" onclick="openLink('https://lexus.com')">Lexus</button>
 <button class="fly-btn" onclick="openLink('https://dmv.ca.gov')">CA DMV</button>
@@ -200,15 +216,33 @@ canvas{
 </div>
 <script>
 
-/* TOGGLE */
+/* TOGGLE WITH GLOW + SOUND */
 
-function toggle(id){
+function toggleMenu(button,id){
 
-  document.getElementById(id).classList.toggle("open");
+  const group=document.getElementById(id);
+
+  const sound=document.getElementById("menuSound");
+
+  group.classList.toggle("open");
+
+  if(group.classList.contains("open")){
+
+    button.classList.add("active");
+
+    sound.currentTime=0;
+
+    sound.play();
+
+  }else{
+
+    button.classList.remove("active");
+
+  }
 
 }
 
-/* OPEN LINK */
+/* OPEN LINKS */
 
 function openLink(url){
 
@@ -216,7 +250,7 @@ function openLink(url){
 
 }
 
-/* MATRIX EFFECT */
+/* MATRIX */
 
 const canvas=document.getElementById("matrix");
 
@@ -264,6 +298,4 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
-Google
-Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.
  
