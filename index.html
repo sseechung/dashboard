@@ -46,6 +46,8 @@ canvas{
 
 }
 
+/* BOOT */
+
 #boot{
 
   position:fixed;
@@ -81,6 +83,8 @@ canvas{
   100%{opacity:0;visibility:hidden}
 
 }
+
+/* LOGIN */
 
 #login{
 
@@ -140,6 +144,8 @@ canvas{
 
 }
 
+/* TITLE */
+
 .title{
 
   position:fixed;
@@ -157,6 +163,8 @@ canvas{
   text-shadow:0 0 20px var(--neon);
 
 }
+
+/* GRID */
 
 .dashboard{
 
@@ -266,9 +274,7 @@ canvas{
 <div class="dashboard" id="dashboard"></div>
 <script>
 
-/* ===== RELIABLE AUDIO SYSTEM ===== */
-
-let audioUnlocked = false;
+/* ===== EDGE SAFE SOUND SYSTEM ===== */
 
 const tickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-ticking-clock-1059.mp3");
 
@@ -278,31 +284,15 @@ const matrixSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-digit
 
 const explosionSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3");
 
-tickSound.loop = true;
-
 matrixSound.loop = true;
 
-[tickSound, clickSound, matrixSound, explosionSound].forEach(sound=>{
+tickSound.loop = true;
 
-  sound.preload="auto";
+/* Start ticking on first user interaction */
 
-});
+document.addEventListener("pointerdown", function startTick(){
 
-document.addEventListener("click", function unlock(){
-
-  if(audioUnlocked) return;
-
-  audioUnlocked = true;
-
-}, { once:true });
-
-function playTick(){
-
-  if(!audioUnlocked) return;
-
-  tickSound.currentTime=0;
-
-  tickSound.volume=0.5;
+  tickSound.volume = 0.5;
 
   tickSound.play().catch(()=>{});
 
@@ -310,47 +300,19 @@ function playTick(){
 
     tickSound.pause();
 
-    tickSound.currentTime=0;
+    tickSound.currentTime = 0;
 
   },3000);
 
-}
+}, { once:true });
 
 function playClick(){
 
-  if(!audioUnlocked) return;
-
-  clickSound.currentTime=0;
+  clickSound.currentTime = 0;
 
   clickSound.play().catch(()=>{});
 
 }
-
-function playExplosion(){
-
-  if(!audioUnlocked) return;
-
-  explosionSound.currentTime=0;
-
-  explosionSound.play().catch(()=>{});
-
-}
-
-function startMatrix(){
-
-  if(!audioUnlocked) return;
-
-  matrixSound.volume=0.3;
-
-  matrixSound.play().catch(()=>{});
-
-}
-
-document.addEventListener("pointerdown", function(){
-
-  playTick();
-
-}, { once:true });
 
 /* MENU DATA */
 
@@ -440,17 +402,21 @@ for(let i=0;i<8;i++){
 
 }
 
+/* LOGIN */
+
 document.getElementById("loginBtn").addEventListener("click",function(){
 
   playClick();
 
   if(document.getElementById("pass").value.trim()==="stanley"){
 
-    playExplosion();
+    explosionSound.play().catch(()=>{});
 
     document.getElementById("login").style.display="none";
 
-    startMatrix();
+    matrixSound.volume=0.3;
+
+    matrixSound.play().catch(()=>{});
 
   } else {
 
