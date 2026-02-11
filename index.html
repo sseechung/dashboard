@@ -206,8 +206,6 @@ canvas{
 
   box-shadow:0 0 20px var(--neon);
 
-  transition:0.3s;
-
 }
 
 .sub-btn{
@@ -230,27 +228,29 @@ canvas{
 
   opacity:0;
 
-  transform:translateY(0);
-
-  transition:0.4s ease;
+  transition:0.3s ease;
 
 }
 
-/* TOP 4 FLY UP */
+/* TOP 4 fly UP */
 
-.menu.top.active .btn1{ opacity:1; transform:translateY(-60px); }
+.menu.top .sub-btn{ bottom:160px; }
 
-.menu.top.active .btn2{ opacity:1; transform:translateY(-115px); }
+.menu.top.active .btn1{ opacity:1; transform:translateY(-10px); }
 
-.menu.top.active .btn3{ opacity:1; transform:translateY(-170px); }
+.menu.top.active .btn2{ opacity:1; transform:translateY(-60px); }
 
-/* BOTTOM 4 FLY DOWN */
+.menu.top.active .btn3{ opacity:1; transform:translateY(-110px); }
 
-.menu.bottom.active .btn1{ opacity:1; transform:translateY(60px); }
+/* BOTTOM 4 fly DOWN */
 
-.menu.bottom.active .btn2{ opacity:1; transform:translateY(115px); }
+.menu.bottom .sub-btn{ top:160px; }
 
-.menu.bottom.active .btn3{ opacity:1; transform:translateY(170px); }
+.menu.bottom.active .btn1{ opacity:1; transform:translateY(10px); }
+
+.menu.bottom.active .btn2{ opacity:1; transform:translateY(60px); }
+
+.menu.bottom.active .btn3{ opacity:1; transform:translateY(110px); }
 
 @media(max-width:768px){
 
@@ -271,7 +271,7 @@ canvas{
 <div>ACCESS TERMINAL</div>
 <input type="password" id="pass" placeholder="Enter Passcode">
 <br>
-<button type="button" onclick="login()">ENTER</button>
+<button type="button" id="loginBtn">ENTER</button>
 </div>
 </div>
 <div class="title">STANLEY</div>
@@ -302,11 +302,13 @@ const links=[
 
 const dashboard=document.getElementById("dashboard");
 
+/* BUILD MENUS */
+
 for(let i=0;i<8;i++){
 
   const menu=document.createElement("div");
 
-  menu.className = i < 4 ? "menu top" : "menu bottom";
+  menu.className=i<4?"menu top":"menu bottom";
 
   const link1=links[i*3];
 
@@ -330,41 +332,37 @@ for(let i=0;i<8;i++){
 
   const btn3=menu.querySelector(".btn3");
 
-  mainBtn.addEventListener("click",(e)=>{
+  /* MAIN BUTTON ONLY TOGGLE */
+
+  mainBtn.addEventListener("click",function(e){
 
     e.stopPropagation();
-
-    playClick();
 
     menu.classList.toggle("active");
 
   });
 
-  btn1.addEventListener("click",(e)=>{
+  /* SUB BUTTONS OPEN LINKS */
+
+  btn1.addEventListener("click",function(e){
 
     e.stopPropagation();
-
-    playClick();
 
     window.open(link1,"_blank");
 
   });
 
-  btn2.addEventListener("click",(e)=>{
+  btn2.addEventListener("click",function(e){
 
     e.stopPropagation();
-
-    playClick();
 
     window.open(link2,"_blank");
 
   });
 
-  btn3.addEventListener("click",(e)=>{
+  btn3.addEventListener("click",function(e){
 
     e.stopPropagation();
-
-    playClick();
 
     window.open(link3,"_blank");
 
@@ -374,7 +372,9 @@ for(let i=0;i<8;i++){
 
 }
 
-function login(){
+/* LOGIN */
+
+document.getElementById("loginBtn").addEventListener("click",function(){
 
   if(document.getElementById("pass").value==="stanley"){
 
@@ -382,23 +382,15 @@ function login(){
 
   }
 
-}
+});
 
-const clickSound=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
-
-function playClick(){
-
-  clickSound.currentTime=0;
-
-  clickSound.play();
-
-}
+/* NEON CHANGE */
 
 const colors=["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
 
 let cIndex=0;
 
-document.body.addEventListener("click",()=>{
+document.body.addEventListener("click",function(){
 
   cIndex=(cIndex+1)%colors.length;
 
@@ -407,6 +399,8 @@ document.body.addEventListener("click",()=>{
   document.documentElement.style.setProperty("--neon2",colors[(cIndex+2)%colors.length]);
 
 });
+
+/* MATRIX */
 
 const canvas=document.getElementById("matrix");
 
