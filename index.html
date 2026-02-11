@@ -175,41 +175,41 @@ canvas {
 </head>
 <body>
 <canvas id="matrix"></canvas>
-<div class="title"> S.T.A.N.L.E.Y </div>
+<div class="title">STANLEY</div>
 <div class="dashboard">
 <!-- 8 MENUS (24 UNIQUE LINKS) -->
 <div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">G.A.4</button>
+<button class="main-btn" onclick="toggleMenu(this)">DEV</button>
 <button class="sub-btn btn1" onclick="openLink('https://github.com')">GitHub</button>
 <button class="sub-btn btn2" onclick="openLink('https://gitlab.com')">GitLab</button>
 <button class="sub-btn btn3" onclick="openLink('https://bitbucket.org')">Bitbucket</button>
 </div>
 <div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">F.I.N.D</button>
+<button class="main-btn" onclick="toggleMenu(this)">SEARCH</button>
 <button class="sub-btn btn1" onclick="openLink('https://google.com')">Google</button>
 <button class="sub-btn btn2" onclick="openLink('https://bing.com')">Bing</button>
 <button class="sub-btn btn3" onclick="openLink('https://duckduckgo.com')">Duck</button>
 </div>
 <div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">TESLA</button>
+<button class="main-btn" onclick="toggleMenu(this)">SOCIAL</button>
 <button class="sub-btn btn1" onclick="openLink('https://facebook.com')">Facebook</button>
 <button class="sub-btn btn2" onclick="openLink('https://instagram.com')">Instagram</button>
 <button class="sub-btn btn3" onclick="openLink('https://x.com')">X</button>
 </div>
 <div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">QUALITY</button>
+<button class="main-btn" onclick="toggleMenu(this)">VIDEO</button>
 <button class="sub-btn btn1" onclick="openLink('https://youtube.com')">YouTube</button>
 <button class="sub-btn btn2" onclick="openLink('https://vimeo.com')">Vimeo</button>
 <button class="sub-btn btn3" onclick="openLink('https://twitch.tv')">Twitch</button>
 </div>
 <div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">N.C.</button>
+<button class="main-btn" onclick="toggleMenu(this)">AI</button>
 <button class="sub-btn btn1" onclick="openLink('https://chat.openai.com')">ChatGPT</button>
 <button class="sub-btn btn2" onclick="openLink('https://claude.ai')">Claude</button>
 <button class="sub-btn btn3" onclick="openLink('https://gemini.google.com')">Gemini</button>
 </div>
 <div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">SERVICE</button>
+<button class="main-btn" onclick="toggleMenu(this)">CLOUD</button>
 <button class="sub-btn btn1" onclick="openLink('https://aws.amazon.com')">AWS</button>
 <button class="sub-btn btn2" onclick="openLink('https://azure.microsoft.com')">Azure</button>
 <button class="sub-btn btn3" onclick="openLink('https://cloud.google.com')">GCP</button>
@@ -250,21 +250,15 @@ function openLink(url){
 const colors = ["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
 
 let index = 0;
-
 function changeNeon() {
 
   index = (index + 1) % colors.length;
-
   document.documentElement.style.setProperty("--neon", colors[index]);
-
   document.documentElement.style.setProperty("--neon2", colors[(index+2)%colors.length]);
-
 }
 
 document.body.addEventListener("click", function(e){
-
   if(!e.target.classList.contains("main-btn") &&
-
      !e.target.classList.contains("sub-btn")) {
 
     changeNeon();
@@ -276,21 +270,13 @@ document.body.addEventListener("click", function(e){
 /* 3D TILT */
 
 document.querySelectorAll(".main-btn").forEach(btn => {
-
   btn.addEventListener("mousemove", e => {
-
     const rect = btn.getBoundingClientRect();
-
     const x = e.clientX - rect.left;
-
     const y = e.clientY - rect.top;
-
     const centerX = rect.width / 2;
-
     const centerY = rect.height / 2;
-
     const rotateX = -(y - centerY) / 10;
-
     const rotateY = (x - centerX) / 10;
 
     btn.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -298,7 +284,6 @@ document.querySelectorAll(".main-btn").forEach(btn => {
   });
 
   btn.addEventListener("mouseleave", () => {
-
     btn.style.transform = "rotateX(0) rotateY(0)";
 
   });
@@ -308,23 +293,17 @@ document.querySelectorAll(".main-btn").forEach(btn => {
 /* SOUND */
 
 const clickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
-
 const hoverSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-fast-small-sweep-transition-166.mp3");
 
 function playClick(){
-
   clickSound.currentTime = 0;
-
   clickSound.play();
 
 }
 
 document.querySelectorAll(".main-btn, .sub-btn").forEach(btn=>{
-
   btn.addEventListener("mouseenter", ()=>{
-
     hoverSound.currentTime = 0;
-
     hoverSound.play();
 
   });
@@ -334,39 +313,25 @@ document.querySelectorAll(".main-btn, .sub-btn").forEach(btn=>{
 /* MATRIX */
 
 const canvas = document.getElementById("matrix");
-
 const ctx = canvas.getContext("2d");
 
 canvas.height = window.innerHeight;
-
 canvas.width = window.innerWidth;
 
 const letters = "01";
-
 const fontSize = 14;
-
 const columns = canvas.width / fontSize;
-
 const drops = [];
-
 for(let x = 0; x < columns; x++) drops[x] = 1;
-
 function draw(){
 
   ctx.fillStyle = "rgba(0,0,0,0.05)";
-
   ctx.fillRect(0,0,canvas.width,canvas.height);
-
   ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--neon");
-
   ctx.font = fontSize + "px monospace";
-
   for(let i = 0; i < drops.length; i++){
-
     const text = letters.charAt(Math.floor(Math.random()*letters.length));
-
     ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-
     if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
 
       drops[i] = 0;
@@ -381,6 +346,3 @@ setInterval(draw, 33);
 </script>
 </body>
 </html>
- 
-
-
