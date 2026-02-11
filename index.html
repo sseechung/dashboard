@@ -3,286 +3,286 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stanley Cyber Console</title>
+<title>Stanley Cyber Dashboard</title>
 <style>
 
-:root {
+:root{
 
-  --neon: #00ff99;
+  --neon:#00ff99;
 
-  --neon2: #ffff00;
-
-}
-
-body {
-
-  margin: 0;
-
-  overflow: hidden;
-
-  background: black;
-
-  font-family: Arial, sans-serif;
+  --neon2:#ffff00;
 
 }
 
-/* MATRIX */
+body{
 
-canvas {
+  margin:0;
 
-  position: fixed;
+  overflow:hidden;
 
-  top: 0;
+  background:black;
 
-  left: 0;
-
-  z-index: -2;
+  font-family:Arial;
 
 }
 
-/* BOOT SCREEN */
+canvas{
 
-#boot {
+  position:fixed;
 
-  position: fixed;
+  top:0;
 
-  inset: 0;
+  left:0;
 
-  background: black;
-
-  color: var(--neon);
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  font-size: 22px;
-
-  letter-spacing: 4px;
-
-  z-index: 10;
-
-  animation: bootFade 4s forwards;
+  z-index:-2;
 
 }
 
-@keyframes bootFade {
+/* BOOT */
 
-  0% {opacity:1}
+#boot{
 
-  80% {opacity:1}
+  position:fixed;
 
-  100% {opacity:0; visibility:hidden;}
+  inset:0;
+
+  background:black;
+
+  color:var(--neon);
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  font-size:22px;
+
+  letter-spacing:4px;
+
+  z-index:100;
+
+  animation:bootfade 3s forwards;
+
+}
+
+@keyframes bootfade{
+
+  0%{opacity:1}
+
+  80%{opacity:1}
+
+  100%{opacity:0;visibility:hidden}
 
 }
 
 /* LOGIN */
 
-#login {
+#login{
 
-  position: fixed;
+  position:fixed;
 
-  inset: 0;
+  inset:0;
 
-  background: rgba(0,0,0,0.7);
+  backdrop-filter:blur(10px);
 
-  backdrop-filter: blur(10px);
+  background:rgba(0,0,0,0.8);
 
-  display: flex;
+  display:flex;
 
-  justify-content: center;
+  justify-content:center;
 
-  align-items: center;
+  align-items:center;
 
-  z-index: 9;
-
-}
-
-.login-box {
-
-  padding: 40px;
-
-  border: 2px solid var(--neon);
-
-  border-radius: 15px;
-
-  box-shadow: 0 0 20px var(--neon);
-
-  text-align: center;
+  z-index:90;
 
 }
 
-.login-box input {
+.login-box{
 
-  padding: 10px;
+  padding:40px;
 
-  margin-top: 10px;
+  border:2px solid var(--neon);
 
-  background: black;
-
-  border: 1px solid var(--neon);
-
-  color: var(--neon);
+  box-shadow:0 0 20px var(--neon);
 
 }
 
-.login-box button {
+.login-box input{
 
-  margin-top: 15px;
+  padding:10px;
 
-  padding: 10px 20px;
+  background:black;
 
-  background: black;
+  border:1px solid var(--neon);
 
-  border: 1px solid var(--neon);
+  color:var(--neon);
 
-  color: var(--neon);
+}
 
-  cursor: pointer;
+.login-box button{
+
+  margin-top:10px;
+
+  padding:10px 20px;
+
+  background:black;
+
+  border:1px solid var(--neon);
+
+  color:var(--neon);
+
+  cursor:pointer;
 
 }
 
 /* TITLE */
 
-.title {
+.title{
 
-  position: absolute;
+  position:absolute;
 
-  top: 20px;
+  top:20px;
 
-  width: 100%;
+  width:100%;
 
-  text-align: center;
+  text-align:center;
 
-  font-size: 40px;
+  font-size:38px;
 
-  letter-spacing: 8px;
+  color:white;
 
-  color: white;
-
-  text-shadow: 0 0 20px var(--neon);
+  text-shadow:0 0 20px var(--neon);
 
 }
 
 /* GRID */
 
-.dashboard {
+.dashboard{
 
-  position: absolute;
+  position:absolute;
 
-  top: 55%;
+  top:60%;
 
-  left: 50%;
+  left:50%;
 
-  transform: translate(-50%, -50%);
+  transform:translate(-50%,-50%);
 
-  display: grid;
+  display:grid;
 
-  grid-template-columns: repeat(4, 140px);
+  grid-template-columns:repeat(4,160px);
 
-  gap: 60px;
+  gap:90px;
 
 }
 
-.menu {
+.menu{
 
-  position: relative;
+  position:relative;
 
-  perspective: 1000px;
+  width:160px;
+
+  height:160px;
 
 }
 
 /* MAIN BUTTON */
 
-.main-btn {
+.main-btn{
 
-  width: 140px;
+  width:160px;
 
-  height: 140px;
+  height:160px;
 
-  border-radius: 20px;
+  border-radius:15px;
 
-  border: 2px solid var(--neon);
+  border:2px solid var(--neon);
 
-  background: rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.08);
 
-  backdrop-filter: blur(15px);
+  backdrop-filter:blur(15px);
 
-  color: var(--neon);
+  color:var(--neon);
 
-  cursor: pointer;
+  cursor:pointer;
 
-  box-shadow: 0 0 20px var(--neon);
+  box-shadow:0 0 20px var(--neon);
 
-  transition: 0.6s ease, transform 0.2s ease;
-
-  overflow: hidden;
+  transition:0.3s ease;
 
 }
 
-/* GLASS SHINE */
+/* ACTIVE GLOW */
 
-.main-btn::before {
+.menu.active .main-btn{
 
-  content:"";
+  box-shadow:
+
+    0 0 20px var(--neon),
+
+    0 0 40px var(--neon),
+
+    0 0 60px var(--neon);
+
+  transform:scale(1.05);
+
+}
+
+/* SUB BUTTONS */
+
+.sub-btn{
 
   position:absolute;
 
-  top:-100%;
+  left:0;
 
-  left:-100%;
+  width:160px;
 
-  width:200%;
+  height:45px;
 
-  height:200%;
+  border-radius:8px;
 
-  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.4), transparent 70%);
+  border:2px solid var(--neon2);
 
-  transform: rotate(25deg);
+  background:rgba(255,255,255,0.1);
 
-  animation: shine 4s infinite;
+  color:var(--neon2);
 
-}
+  opacity:0;
 
-@keyframes shine {
-
-  0% {transform: translateX(-100%) rotate(25deg);}
-
-  100% {transform: translateX(100%) rotate(25deg);}
+  transition:0.3s ease;
 
 }
 
-/* RADIAL FLY OUT */
+/* TOP 4 fly UP */
 
-.sub-btn {
+.menu.top .sub-btn{ bottom:160px; }
 
-  position: absolute;
+.menu.top.active .btn1{ opacity:1; transform:translateY(-10px); }
 
-  width: 70px;
+.menu.top.active .btn2{ opacity:1; transform:translateY(-60px); }
 
-  height: 70px;
+.menu.top.active .btn3{ opacity:1; transform:translateY(-110px); }
 
-  border-radius: 50%;
+/* BOTTOM 4 fly DOWN */
 
-  border: 2px solid var(--neon2);
+.menu.bottom .sub-btn{ top:160px; }
 
-  background: rgba(255,255,255,0.1);
+.menu.bottom.active .btn1{ opacity:1; transform:translateY(10px); }
 
-  color: var(--neon2);
+.menu.bottom.active .btn2{ opacity:1; transform:translateY(60px); }
 
-  opacity: 0;
+.menu.bottom.active .btn3{ opacity:1; transform:translateY(110px); }
 
-  transition: 0.5s ease;
+@media(max-width:768px){
+
+  .dashboard{
+
+    grid-template-columns:repeat(2,160px);
+
+  }
 
 }
-
-.menu.active .btn1 { transform: rotate(0deg) translate(150px) rotate(0deg); opacity:1;}
-
-.menu.active .btn2 { transform: rotate(120deg) translate(150px) rotate(-120deg); opacity:1;}
-
-.menu.active .btn3 { transform: rotate(240deg) translate(150px) rotate(-240deg); opacity:1;}
 </style>
 </head>
 <body>
@@ -293,14 +293,34 @@ canvas {
 <div>ACCESS TERMINAL</div>
 <input type="password" id="pass" placeholder="Enter Passcode">
 <br>
-<button onclick="login()">ENTER</button>
+<button type="button" id="loginBtn">ENTER</button>
 </div>
 </div>
 <div class="title">STANLEY</div>
-<div class="dashboard">
+<div class="dashboard" id="dashboard"></div>
 <script>
 
 const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
+
+const subNames=[
+
+  ["GitHub","GitLab","Bitbucket"],
+
+  ["Google","Bing","DuckDuckGo"],
+
+  ["Facebook","Instagram","X"],
+
+  ["YouTube","Vimeo","Twitch"],
+
+  ["ChatGPT","Claude","Gemini"],
+
+  ["AWS","Azure","GCP"],
+
+  ["Spotify","Netflix","Hulu"],
+
+  ["Canva","Figma","Vercel"]
+
+];
 
 const links=[
 
@@ -322,26 +342,81 @@ const links=[
 
 ];
 
-let index=0;
+const dashboard=document.getElementById("dashboard");
 
 for(let i=0;i<8;i++){
 
-  document.write(`
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">${names[i]}</button>
-<button class="sub-btn btn1" onclick="openLink('${links[index++]}')">1</button>
-<button class="sub-btn btn2" onclick="openLink('${links[index++]}')">2</button>
-<button class="sub-btn btn3" onclick="openLink('${links[index++]}')">3</button>
-</div>`);
+  const menu=document.createElement("div");
+
+  menu.className=i<4?"menu top":"menu bottom";
+
+  const link1=links[i*3];
+
+  const link2=links[i*3+1];
+
+  const link3=links[i*3+2];
+
+  menu.innerHTML=`
+<button type="button" class="main-btn">${names[i]}</button>
+<button type="button" class="sub-btn btn1">${subNames[i][0]}</button>
+<button type="button" class="sub-btn btn2">${subNames[i][1]}</button>
+<button type="button" class="sub-btn btn3">${subNames[i][2]}</button>
+
+  `;
+
+  const mainBtn=menu.querySelector(".main-btn");
+
+  const btn1=menu.querySelector(".btn1");
+
+  const btn2=menu.querySelector(".btn2");
+
+  const btn3=menu.querySelector(".btn3");
+
+  mainBtn.addEventListener("click",function(e){
+
+    e.stopPropagation();
+
+    document.querySelectorAll(".menu").forEach(m=>{
+
+      if(m!==menu) m.classList.remove("active");
+
+    });
+
+    menu.classList.toggle("active");
+
+  });
+
+  btn1.addEventListener("click",function(e){
+
+    e.stopPropagation();
+
+    window.open(link1,"_blank");
+
+  });
+
+  btn2.addEventListener("click",function(e){
+
+    e.stopPropagation();
+
+    window.open(link2,"_blank");
+
+  });
+
+  btn3.addEventListener("click",function(e){
+
+    e.stopPropagation();
+
+    window.open(link3,"_blank");
+
+  });
+
+  dashboard.appendChild(menu);
 
 }
-</script>
-</div>
-<script>
 
 /* LOGIN */
 
-function login(){
+document.getElementById("loginBtn").addEventListener("click",function(){
 
   if(document.getElementById("pass").value==="stanley"){
 
@@ -349,51 +424,21 @@ function login(){
 
   }
 
-}
+});
 
-/* MENU */
-
-function toggleMenu(btn){
-
-  playClick();
-
-  btn.parentElement.classList.toggle("active");
-
-}
-
-function openLink(url){
-
-  playClick();
-
-  window.open(url,"_blank");
-
-}
-
-/* SOUND */
-
-const clickSound=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
-
-function playClick(){ clickSound.currentTime=0; clickSound.play(); }
-
-/* NEON */
+/* NEON CHANGE */
 
 const colors=["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
 
 let cIndex=0;
 
-document.body.addEventListener("click",e=>{
+document.body.addEventListener("click",function(){
 
-  if(!e.target.classList.contains("main-btn") &&
+  cIndex=(cIndex+1)%colors.length;
 
-     !e.target.classList.contains("sub-btn")){
+  document.documentElement.style.setProperty("--neon",colors[cIndex]);
 
-    cIndex=(cIndex+1)%colors.length;
-
-    document.documentElement.style.setProperty("--neon",colors[cIndex]);
-
-    document.documentElement.style.setProperty("--neon2",colors[(cIndex+2)%colors.length]);
-
-  }
+  document.documentElement.style.setProperty("--neon2",colors[(cIndex+2)%colors.length]);
 
 });
 
@@ -415,29 +460,29 @@ const columns=canvas.width/fontSize;
 
 const drops=[];
 
-for(let x=0;x<columns;x++)drops[x]=1;
+for(let x=0;x<columns;x++) drops[x]=1;
 
 function draw(){
 
-ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillStyle="rgba(0,0,0,0.05)";
 
-ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
-ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--neon");
+  ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--neon");
 
-ctx.font=fontSize+"px monospace";
+  ctx.font=fontSize+"px monospace";
 
-for(let i=0;i<drops.length;i++){
+  for(let i=0;i<drops.length;i++){
 
-const text=letters[Math.floor(Math.random()*letters.length)];
+    const text=letters[Math.floor(Math.random()*letters.length)];
 
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
 
-if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
+    if(drops[i]*fontSize>canvas.height&&Math.random()>0.975) drops[i]=0;
 
-drops[i]++;
+    drops[i]++;
 
-}
+  }
 
 }
 
@@ -445,6 +490,4 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
-GitHub · Change is constant. GitHub keeps you ahead.
-Join the world's most widely adopted, AI-powered developer platform where millions of developers, businesses, and the largest open source community build software that advances humanity.
  
