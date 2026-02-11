@@ -205,10 +205,13 @@ canvas{
   transition:0.5s;
 
 }
-
 .sub-btn{
 
   position:absolute;
+
+  top:50%;
+
+  left:50%;
 
   width:70px;
 
@@ -224,17 +227,38 @@ canvas{
 
   opacity:0;
 
-  transition:0.4s;
+  transform:translate(-50%,-50%) rotate(0deg) translate(0px);
+
+  transition:0.4s ease;
 
 }
 
-/* RADIAL */
+/* PERFECT RADIAL POSITIONING */
 
-.menu.active .btn1{ transform:rotate(0deg) translate(140px); opacity:1;}
+.menu.active .btn1{
 
-.menu.active .btn2{ transform:rotate(120deg) translate(140px); opacity:1;}
+  opacity:1;
 
-.menu.active .btn3{ transform:rotate(240deg) translate(140px); opacity:1;}
+  transform:translate(-50%,-50%) rotate(0deg) translate(140px) rotate(0deg);
+
+}
+
+.menu.active .btn2{
+
+  opacity:1;
+
+  transform:translate(-50%,-50%) rotate(120deg) translate(140px) rotate(-120deg);
+
+}
+
+.menu.active .btn3{
+
+  opacity:1;
+
+  transform:translate(-50%,-50%) rotate(240deg) translate(140px) rotate(-240deg);
+
+}
+ 
 
 /* WINDOWS */
 
@@ -542,3 +566,4 @@ setInterval(draw,33);
 </html>
 Example Domain
  
+
