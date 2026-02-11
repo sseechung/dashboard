@@ -142,15 +142,15 @@ canvas{
 
 .title{
 
-  position:fixed;
+  position:absolute;
 
-  top:20px;
+  top:30px;
 
-  width:100%;
+  left:50%;
 
-  text-align:center;
+  transform:translate(-50%);
 
-  font-size:38px;
+  font-size:48px;
 
   color:white;
 
@@ -160,12 +160,22 @@ canvas{
 
 .dashboard{
 
+  position:absolute;
+
+  top:50%;
+
+  left:50%;
+
+  transform:translate(-50%, -50%);
+
   display:grid;
 
   grid-template-columns:repeat(4,160px);
 
   gap:90px;
 
+}
+ 
 }
 
 .menu{
@@ -551,3 +561,4 @@ setInterval(draw,33);
 GitHub · Change is constant. GitHub keeps you ahead.
 Join the world's most widely adopted, AI-powered developer platform where millions of developers, businesses, and the largest open source community build software that advances humanity.
  
+
