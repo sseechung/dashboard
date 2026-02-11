@@ -3,339 +3,542 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stanley Cyber Console</title>
+<title>Stanley Cyber OS</title>
 <style>
 
 :root {
 
   --neon: #00ff99;
+
   --neon2: #ffff00;
 
 }
-body {
 
-  margin: 0;
-  overflow: hidden;
-  background: black;
-  font-family: Arial, sans-serif;
+body{
+
+  margin:0;
+
+  overflow:hidden;
+
+  background:black;
+
+  font-family:Arial;
 
 }
 
-canvas {
+canvas{
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+  position:fixed;
+
+  top:0;
+
+  left:0;
+
+  z-index:-2;
+
+}
+
+/* BOOT */
+
+#boot{
+
+  position:fixed;
+
+  inset:0;
+
+  background:black;
+
+  color:var(--neon);
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  font-size:22px;
+
+  letter-spacing:4px;
+
+  z-index:100;
+
+  animation:bootfade 3s forwards;
+
+}
+
+@keyframes bootfade{
+
+  0%{opacity:1}
+
+  80%{opacity:1}
+
+  100%{opacity:0;visibility:hidden}
+
+}
+
+/* LOGIN */
+
+#login{
+
+  position:fixed;
+
+  inset:0;
+
+  backdrop-filter:blur(10px);
+
+  background:rgba(0,0,0,0.8);
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  z-index:90;
+
+}
+
+.login-box{
+
+  padding:40px;
+
+  border:2px solid var(--neon);
+
+  box-shadow:0 0 20px var(--neon);
+
+}
+
+.login-box input{
+
+  padding:10px;
+
+  background:black;
+
+  border:1px solid var(--neon);
+
+  color:var(--neon);
+
+}
+
+.login-box button{
+
+  margin-top:10px;
+
+  padding:10px 20px;
+
+  background:black;
+
+  border:1px solid var(--neon);
+
+  color:var(--neon);
+
+  cursor:pointer;
 
 }
 
 /* TITLE */
 
-.title {
+.title{
 
-  position: absolute;
+  position:absolute;
 
-  top: 20px;
+  top:20px;
 
-  width: 100%;
+  width:100%;
 
-  text-align: center;
+  text-align:center;
 
-  font-size: 42px;
+  font-size:38px;
 
-  letter-spacing: 8px;
+  color:white;
 
-  color: white;
-
-  transition: 0.6s ease;
-
-  text-shadow:
-
-    0 0 10px var(--neon),
-
-    0 0 25px var(--neon),
-
-    0 0 50px var(--neon);
+  text-shadow:0 0 20px var(--neon);
 
 }
 
-/* GRID */
+/* DASHBOARD */
 
-.dashboard {
+.dashboard{
 
-  position: absolute;
+  position:absolute;
 
-  top: 55%;
+  top:55%;
 
-  left: 50%;
+  left:50%;
 
-  transform: translate(-50%, -50%);
+  transform:translate(-50%,-50%);
 
-  display: grid;
+  display:grid;
 
-  grid-template-columns: repeat(4, 140px);
+  grid-template-columns:repeat(4,140px);
 
-  gap: 60px;
-
-}
-
-.menu {
-
-  position: relative;
-
-  perspective: 1000px;
+  gap:60px;
 
 }
 
-/* MAIN BUTTON */
+.menu{
 
-.main-btn {
-
-  width: 140px;
-
-  height: 140px;
-
-  border-radius: 20px;
-
-  border: 2px solid var(--neon);
-
-  background: rgba(255,255,255,0.08);
-
-  backdrop-filter: blur(15px);
-
-  color: var(--neon);
-
-  cursor: pointer;
-
-  box-shadow: 0 0 20px var(--neon);
-
-  transition: 0.6s ease, transform 0.2s ease;
-
-  transform-style: preserve-3d;
+  position:relative;
 
 }
 
-.main-btn:hover {
+.main-btn{
 
-  box-shadow: 0 0 45px var(--neon);
+  width:140px;
 
-}
+  height:140px;
 
-/* SUB BUTTON */
+  border-radius:20px;
 
-.sub-btn {
+  border:2px solid var(--neon);
 
-  position: absolute;
+  background:rgba(255,255,255,0.08);
 
-  width: 85px;
+  backdrop-filter:blur(15px);
 
-  height: 85px;
+  color:var(--neon);
 
-  border-radius: 15px;
+  cursor:pointer;
 
-  border: 2px solid var(--neon2);
+  box-shadow:0 0 20px var(--neon);
 
-  background: rgba(255,255,255,0.1);
-
-  backdrop-filter: blur(10px);
-
-  color: var(--neon2);
-
-  cursor: pointer;
-
-  transition: 0.6s ease;
-
-  opacity: 0;
+  transition:0.5s;
 
 }
 
-/* FLY OUT */
+.sub-btn{
 
-.menu.active .btn1 { transform: translate(-160px, -110px); opacity: 1; }
+  position:absolute;
 
-.menu.active .btn2 { transform: translate(160px, -110px); opacity: 1; }
+  width:70px;
 
-.menu.active .btn3 { transform: translate(0px, -170px); opacity: 1; }
+  height:70px;
 
-@media(max-width:768px){
+  border-radius:50%;
 
-  .dashboard { grid-template-columns: repeat(2, 140px); }
+  border:2px solid var(--neon2);
+
+  background:rgba(255,255,255,0.1);
+
+  color:var(--neon2);
+
+  opacity:0;
+
+  transition:0.4s;
+
+}
+
+/* RADIAL */
+
+.menu.active .btn1{ transform:rotate(0deg) translate(140px); opacity:1;}
+
+.menu.active .btn2{ transform:rotate(120deg) translate(140px); opacity:1;}
+
+.menu.active .btn3{ transform:rotate(240deg) translate(140px); opacity:1;}
+
+/* WINDOWS */
+
+.window{
+
+  position:absolute;
+
+  width:500px;
+
+  height:350px;
+
+  background:rgba(0,0,0,0.8);
+
+  backdrop-filter:blur(10px);
+
+  border:2px solid var(--neon);
+
+  box-shadow:0 0 20px var(--neon);
+
+  display:none;
+
+  z-index:50;
+
+  resize:both;
+
+  overflow:hidden;
+
+}
+
+.titlebar{
+
+  height:30px;
+
+  background:rgba(255,255,255,0.1);
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  padding:0 10px;
+
+  cursor:move;
+
+  color:var(--neon);
+
+}
+
+.window iframe{
+
+  width:100%;
+
+  height:calc(100% - 30px);
+
+  border:none;
+
+}
+
+.loader{
+
+  position:absolute;
+
+  inset:30px 0 0 0;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  color:var(--neon);
+
+  font-size:14px;
+
+  background:black;
 
 }
 </style>
 </head>
 <body>
 <canvas id="matrix"></canvas>
+<div id="boot">SYSTEM INITIALIZING...</div>
+<div id="login">
+<div class="login-box">
+<div>ACCESS TERMINAL</div>
+<input type="password" id="pass" placeholder="Enter Passcode">
+<br>
+<button onclick="login()">ENTER</button>
+</div>
+</div>
 <div class="title">STANLEY</div>
 <div class="dashboard">
-<!-- 8 MENUS (24 UNIQUE LINKS) -->
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">DEV</button>
-<button class="sub-btn btn1" onclick="openLink('https://github.com')">GitHub</button>
-<button class="sub-btn btn2" onclick="openLink('https://gitlab.com')">GitLab</button>
-<button class="sub-btn btn3" onclick="openLink('https://bitbucket.org')">Bitbucket</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">SEARCH</button>
-<button class="sub-btn btn1" onclick="openLink('https://google.com')">Google</button>
-<button class="sub-btn btn2" onclick="openLink('https://bing.com')">Bing</button>
-<button class="sub-btn btn3" onclick="openLink('https://duckduckgo.com')">Duck</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">SOCIAL</button>
-<button class="sub-btn btn1" onclick="openLink('https://facebook.com')">Facebook</button>
-<button class="sub-btn btn2" onclick="openLink('https://instagram.com')">Instagram</button>
-<button class="sub-btn btn3" onclick="openLink('https://x.com')">X</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">VIDEO</button>
-<button class="sub-btn btn1" onclick="openLink('https://youtube.com')">YouTube</button>
-<button class="sub-btn btn2" onclick="openLink('https://vimeo.com')">Vimeo</button>
-<button class="sub-btn btn3" onclick="openLink('https://twitch.tv')">Twitch</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">AI</button>
-<button class="sub-btn btn1" onclick="openLink('https://chat.openai.com')">ChatGPT</button>
-<button class="sub-btn btn2" onclick="openLink('https://claude.ai')">Claude</button>
-<button class="sub-btn btn3" onclick="openLink('https://gemini.google.com')">Gemini</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">CLOUD</button>
-<button class="sub-btn btn1" onclick="openLink('https://aws.amazon.com')">AWS</button>
-<button class="sub-btn btn2" onclick="openLink('https://azure.microsoft.com')">Azure</button>
-<button class="sub-btn btn3" onclick="openLink('https://cloud.google.com')">GCP</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">MEDIA</button>
-<button class="sub-btn btn1" onclick="openLink('https://spotify.com')">Spotify</button>
-<button class="sub-btn btn2" onclick="openLink('https://netflix.com')">Netflix</button>
-<button class="sub-btn btn3" onclick="openLink('https://hulu.com')">Hulu</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">TOOLS</button>
-<button class="sub-btn btn1" onclick="openLink('https://canva.com')">Canva</button>
-<button class="sub-btn btn2" onclick="openLink('https://figma.com')">Figma</button>
-<button class="sub-btn btn3" onclick="openLink('https://vercel.com')">Vercel</button>
-</div>
-</div>
 <script>
 
-function toggleMenu(button) {
+const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
 
-  playClick();
+const links=[
 
-  button.parentElement.classList.toggle("active");
+"https://example.com","https://example.org","https://example.net",
+
+"https://wikipedia.org","https://openai.com","https://github.com/explore",
+
+"https://news.ycombinator.com","https://reddit.com","https://producthunt.com",
+
+"https://developer.mozilla.org","https://css-tricks.com","https://stackoverflow.com",
+
+"https://chat.openai.com","https://claude.ai","https://gemini.google.com",
+
+"https://aws.amazon.com","https://azure.microsoft.com","https://cloud.google.com",
+
+"https://spotify.com","https://netflix.com","https://hulu.com",
+
+"https://canva.com","https://figma.com","https://vercel.com"
+
+];
+
+let index=0;
+
+for(let i=0;i<8;i++){
+
+document.write(`
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">${names[i]}</button>
+<button class="sub-btn btn1" onclick="openLink('${links[index++]}')">1</button>
+<button class="sub-btn btn2" onclick="openLink('${links[index++]}')">2</button>
+<button class="sub-btn btn3" onclick="openLink('${links[index++]}')">3</button>
+</div>
+
+`);
 
 }
+</script>
+</div>
+<!-- 4 WINDOWS -->
+<div class="window" id="win1"><div class="titlebar">Window 1 <span onclick="closeWin('win1')">✖</span></div><div class="loader">Loading...</div><iframe></iframe></div>
+<div class="window" id="win2"><div class="titlebar">Window 2 <span onclick="closeWin('win2')">✖</span></div><div class="loader">Loading...</div><iframe></iframe></div>
+<div class="window" id="win3"><div class="titlebar">Window 3 <span onclick="closeWin('win3')">✖</span></div><div class="loader">Loading...</div><iframe></iframe></div>
+<div class="window" id="win4"><div class="titlebar">Window 4 <span onclick="closeWin('win4')">✖</span></div><div class="loader">Loading...</div><iframe></iframe></div>
+<script>
+
+/* LOGIN */
+
+function login(){
+
+if(document.getElementById("pass").value==="stanley"){
+
+document.getElementById("login").style.display="none";
+
+}
+
+}
+
+/* MENU */
+
+function toggleMenu(btn){
+
+btn.parentElement.classList.toggle("active");
+
+}
+
+/* WINDOWS */
+
+let wIndex=1;
 
 function openLink(url){
 
-  playClick();
+let win=document.getElementById("win"+wIndex);
 
-  window.open(url, "_blank");
+win.style.display="block";
+
+let frame=win.querySelector("iframe");
+
+let loader=win.querySelector(".loader");
+
+loader.style.display="flex";
+
+frame.style.display="none";
+
+frame.src=url;
+
+frame.onload=function(){
+
+loader.style.display="none";
+
+frame.style.display="block";
+
+};
+
+wIndex++;
+
+if(wIndex>4)wIndex=1;
 
 }
 
-/* SMOOTH NEON COLOR */
+function closeWin(id){
 
-const colors = ["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
+document.getElementById(id).style.display="none";
 
-let index = 0;
-function changeNeon() {
-
-  index = (index + 1) % colors.length;
-  document.documentElement.style.setProperty("--neon", colors[index]);
-  document.documentElement.style.setProperty("--neon2", colors[(index+2)%colors.length]);
 }
 
-document.body.addEventListener("click", function(e){
-  if(!e.target.classList.contains("main-btn") &&
-     !e.target.classList.contains("sub-btn")) {
+/* DRAG */
 
-    changeNeon();
+document.querySelectorAll(".window").forEach(win=>{
 
-  }
+let header=win.querySelector(".titlebar");
+
+let offsetX=0,offsetY=0,isDown=false;
+
+header.addEventListener("mousedown",e=>{
+
+isDown=true;
+
+offsetX=e.clientX-win.offsetLeft;
+
+offsetY=e.clientY-win.offsetTop;
 
 });
 
-/* 3D TILT */
+document.addEventListener("mouseup",()=>isDown=false);
 
-document.querySelectorAll(".main-btn").forEach(btn => {
-  btn.addEventListener("mousemove", e => {
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = -(y - centerY) / 10;
-    const rotateY = (x - centerX) / 10;
+document.addEventListener("mousemove",e=>{
 
-    btn.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+if(isDown){
 
-  });
+win.style.left=(e.clientX-offsetX)+"px";
 
-  btn.addEventListener("mouseleave", () => {
-    btn.style.transform = "rotateX(0) rotateY(0)";
-
-  });
-
-});
-
-/* SOUND */
-
-const clickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
-const hoverSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-fast-small-sweep-transition-166.mp3");
-
-function playClick(){
-  clickSound.currentTime = 0;
-  clickSound.play();
+win.style.top=(e.clientY-offsetY)+"px";
 
 }
 
-document.querySelectorAll(".main-btn, .sub-btn").forEach(btn=>{
-  btn.addEventListener("mouseenter", ()=>{
-    hoverSound.currentTime = 0;
-    hoverSound.play();
+});
 
-  });
+});
+
+/* NEON CHANGE */
+
+const colors=["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
+
+let cIndex=0;
+
+document.body.addEventListener("click",e=>{
+
+if(!e.target.classList.contains("main-btn") &&
+
+!e.target.classList.contains("sub-btn")){
+
+cIndex=(cIndex+1)%colors.length;
+
+document.documentElement.style.setProperty("--neon",colors[cIndex]);
+
+document.documentElement.style.setProperty("--neon2",colors[(cIndex+2)%colors.length]);
+
+}
 
 });
 
 /* MATRIX */
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("matrix");
 
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
+const ctx=canvas.getContext("2d");
 
-const letters = "01";
-const fontSize = 14;
-const columns = canvas.width / fontSize;
-const drops = [];
-for(let x = 0; x < columns; x++) drops[x] = 1;
+canvas.height=window.innerHeight;
+
+canvas.width=window.innerWidth;
+
+const letters="01";
+
+const fontSize=14;
+
+const columns=canvas.width/fontSize;
+
+const drops=[];
+
+for(let x=0;x<columns;x++)drops[x]=1;
+
 function draw(){
 
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--neon");
-  ctx.font = fontSize + "px monospace";
-  for(let i = 0; i < drops.length; i++){
-    const text = letters.charAt(Math.floor(Math.random()*letters.length));
-    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
+ctx.fillStyle="rgba(0,0,0,0.05)";
 
-      drops[i] = 0;
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    drops[i]++;
+ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--neon");
 
-  }
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const text=letters[Math.floor(Math.random()*letters.length)];
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
+
+drops[i]++;
 
 }
 
-setInterval(draw, 33);
+}
+
+setInterval(draw,33);
 </script>
 </body>
 </html>
-
+Example Domain
+ 
