@@ -24,6 +24,14 @@ body{
 
   font-family:Arial;
 
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  height:100vh;
+
 }
 
 canvas{
@@ -140,7 +148,7 @@ canvas{
 
 .title{
 
-  position:absolute;
+  position:fixed;
 
   top:20px;
 
@@ -159,14 +167,6 @@ canvas{
 /* GRID */
 
 .dashboard{
-
-  position:absolute;
-
-  top:60%;
-
-  left:50%;
-
-  transform:translate(-50%,-50%);
 
   display:grid;
 
@@ -254,7 +254,7 @@ canvas{
 
 }
 
-/* TOP 4 fly UP */
+/* TOP ROW fly UP */
 
 .menu.top .sub-btn{ bottom:160px; }
 
@@ -264,7 +264,7 @@ canvas{
 
 .menu.top.active .btn3{ opacity:1; transform:translateY(-110px); }
 
-/* BOTTOM 4 fly DOWN */
+/* BOTTOM ROW fly DOWN */
 
 .menu.bottom .sub-btn{ top:160px; }
 
@@ -366,12 +366,6 @@ for(let i=0;i<8;i++){
 
   const mainBtn=menu.querySelector(".main-btn");
 
-  const btn1=menu.querySelector(".btn1");
-
-  const btn2=menu.querySelector(".btn2");
-
-  const btn3=menu.querySelector(".btn3");
-
   mainBtn.addEventListener("click",function(e){
 
     e.stopPropagation();
@@ -386,29 +380,11 @@ for(let i=0;i<8;i++){
 
   });
 
-  btn1.addEventListener("click",function(e){
+  menu.querySelector(".btn1").addEventListener("click",e=>{e.stopPropagation();window.open(link1,"_blank");});
 
-    e.stopPropagation();
+  menu.querySelector(".btn2").addEventListener("click",e=>{e.stopPropagation();window.open(link2,"_blank");});
 
-    window.open(link1,"_blank");
-
-  });
-
-  btn2.addEventListener("click",function(e){
-
-    e.stopPropagation();
-
-    window.open(link2,"_blank");
-
-  });
-
-  btn3.addEventListener("click",function(e){
-
-    e.stopPropagation();
-
-    window.open(link3,"_blank");
-
-  });
+  menu.querySelector(".btn3").addEventListener("click",e=>{e.stopPropagation();window.open(link3,"_blank");});
 
   dashboard.appendChild(menu);
 
@@ -423,22 +399,6 @@ document.getElementById("loginBtn").addEventListener("click",function(){
     document.getElementById("login").style.display="none";
 
   }
-
-});
-
-/* NEON CHANGE */
-
-const colors=["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
-
-let cIndex=0;
-
-document.body.addEventListener("click",function(){
-
-  cIndex=(cIndex+1)%colors.length;
-
-  document.documentElement.style.setProperty("--neon",colors[cIndex]);
-
-  document.documentElement.style.setProperty("--neon2",colors[(cIndex+2)%colors.length]);
 
 });
 
@@ -490,4 +450,3 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
- 
