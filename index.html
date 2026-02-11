@@ -208,7 +208,7 @@ canvas{
 
 }
 
-/* SUB BUTTON */
+/* SUB BUTTON (NO ROTATION) */
 
 .sub-btn{
 
@@ -232,19 +232,19 @@ canvas{
 
   opacity:0;
 
-  transform:translate(-50%,-50%) rotate(0deg) translate(0px);
+  transform:translate(-50%,-50%);
 
-  transition:0.5s ease;
+  transition:0.4s ease;
 
 }
 
-/* FAR RADIAL EXPLOSION */
+/* STRAIGHT FLY OUT */
 
 .menu.active .btn1{
 
   opacity:1;
 
-  transform:translate(-50%,-50%) rotate(0deg) translate(200px) rotate(0deg);
+  transform:translate(-50%,-50%) translateY(-180px);
 
 }
 
@@ -252,7 +252,7 @@ canvas{
 
   opacity:1;
 
-  transform:translate(-50%,-50%) rotate(120deg) translate(200px) rotate(-120deg);
+  transform:translate(-50%,-50%) translateX(-160px);
 
 }
 
@@ -260,7 +260,7 @@ canvas{
 
   opacity:1;
 
-  transform:translate(-50%,-50%) rotate(240deg) translate(200px) rotate(-240deg);
+  transform:translate(-50%,-50%) translateX(160px);
 
 }
 
@@ -445,6 +445,4 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
-GitHub · Change is constant. GitHub keeps you ahead.
-Join the world's most widely adopted, AI-powered developer platform where millions of developers, businesses, and the largest open source community build software that advances humanity.
  
