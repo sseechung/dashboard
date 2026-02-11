@@ -266,91 +266,129 @@ canvas{
 <div class="dashboard" id="dashboard"></div>
 <script>
 
-/* ===== RELIABLE AUDIO SYSTEM ===== */
+/* ===== PURE WEB AUDIO SYSTEM ===== */
 
-let audioUnlocked = false;
+let audioContext;
 
-const tickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-ticking-clock-1059.mp3");
+function initAudio(){
 
-const clickSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
+  if(!audioContext){
 
-const matrixSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-digital-ambient-1111.mp3");
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-const explosionSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3");
+  }
 
-tickSound.loop = true;
+}
 
-matrixSound.loop = true;
-
-[tickSound, clickSound, matrixSound, explosionSound].forEach(sound=>{
-
-  sound.preload="auto";
-
-});
-
-document.addEventListener("click", function unlock(){
-
-  if(audioUnlocked) return;
-
-  audioUnlocked = true;
-
-}, { once:true });
+/* TICK */
 
 function playTick(){
 
-  if(!audioUnlocked) return;
+  initAudio();
 
-  tickSound.currentTime=0;
+  let osc = audioContext.createOscillator();
 
-  tickSound.volume=0.5;
+  let gain = audioContext.createGain();
 
-  tickSound.play().catch(()=>{});
+  osc.type = "square";
 
-  setTimeout(()=>{
+  osc.frequency.value = 8;
 
-    tickSound.pause();
+  gain.gain.value = 0.1;
 
-    tickSound.currentTime=0;
+  osc.connect(gain);
 
-  },3000);
+  gain.connect(audioContext.destination);
+
+  osc.start();
+
+  setTimeout(()=> osc.stop(), 3000);
 
 }
+
+/* CLICK */
 
 function playClick(){
 
-  if(!audioUnlocked) return;
+  initAudio();
 
-  clickSound.currentTime=0;
+  let osc = audioContext.createOscillator();
 
-  clickSound.play().catch(()=>{});
+  let gain = audioContext.createGain();
+
+  osc.type = "triangle";
+
+  osc.frequency.value = 600;
+
+  gain.gain.value = 0.2;
+
+  osc.connect(gain);
+
+  gain.connect(audioContext.destination);
+
+  osc.start();
+
+  osc.stop(audioContext.currentTime + 0.05);
 
 }
+
+/* EXPLOSION */
 
 function playExplosion(){
 
-  if(!audioUnlocked) return;
+  initAudio();
 
-  explosionSound.currentTime=0;
+  let osc = audioContext.createOscillator();
 
-  explosionSound.play().catch(()=>{});
+  let gain = audioContext.createGain();
+
+  osc.type = "sawtooth";
+
+  osc.frequency.setValueAtTime(200, audioContext.currentTime);
+
+  osc.frequency.exponentialRampToValueAtTime(20, audioContext.currentTime + 0.5);
+
+  gain.gain.setValueAtTime(0.4, audioContext.currentTime);
+
+  gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+  osc.connect(gain);
+
+  gain.connect(audioContext.destination);
+
+  osc.start();
+
+  osc.stop(audioContext.currentTime + 0.5);
 
 }
+
+/* MATRIX HUM */
 
 function startMatrix(){
 
-  if(!audioUnlocked) return;
+  initAudio();
 
-  matrixSound.volume=0.3;
+  let osc = audioContext.createOscillator();
 
-  matrixSound.play().catch(()=>{});
+  let gain = audioContext.createGain();
+
+  osc.type = "sine";
+
+  osc.frequency.value = 60;
+
+  gain.gain.value = 0.05;
+
+  osc.connect(gain);
+
+  gain.connect(audioContext.destination);
+
+  osc.start();
 
 }
 
-document.addEventListener("pointerdown", function(){
+/* Start tick on first interaction */
 
-  playTick();
-
-}, { once:true });
+document.addEventListener("pointerdown", playTick, { once:true });
 
 /* MENU DATA */
 
@@ -440,6 +478,8 @@ for(let i=0;i<8;i++){
 
 }
 
+/* LOGIN */
+
 document.getElementById("loginBtn").addEventListener("click",function(){
 
   playClick();
@@ -508,4 +548,6 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
+GitHub · Change is constant. GitHub keeps you ahead.
+Join the world's most widely adopted, AI-powered developer platform where millions of developers, businesses, and the largest open source community build software that advances humanity.
  
