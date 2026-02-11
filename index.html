@@ -3,256 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+<title>Stanley Matrix Console</title>
 <style>
 
+:root {
+
+  --neon: #00ff99;
+  --neon2: yellow;
+}
 body {
+
   margin: 0;
-  background: black;
-  color: #00ff99;
-  font-family: monospace;
   overflow: hidden;
-
-}
-/* MATRIX */
-#matrix {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none !important;
-
-}
-
-/* LOADER */
-#loader {
-  position: fixed;
-  inset: 0;
+  font-family: Arial, sans-serif;
   background: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
+}
+canvas {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 
 }
 
-.loader-box {
-  width: 320px;
-  padding: 30px;
-  text-align: center;
-  border-radius: 14px;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0,255,153,0.6);
-  box-shadow: 0 0 25px rgba(0,255,153,0.6);
+/* GLOWING TITLE */
 
-}
+.title {
 
-.loader-title {
-
-  margin-bottom: 20px;
-  letter-spacing: 3px;
-  font-size: 14px;
-
-}
-
-.progress-bar {
-
+  position: absolute;
+  top: 40px;
   width: 100%;
-  height: 10px;
-  border: 1px solid #00ff99;
-  border-radius: 6px;
-  overflow: hidden;
+  text-align: center;
+  font-size: 48px;
+  letter-spacing: 8px;
+  color: white;
+  text-shadow:
 
-}
-
-.progress {
-
-  height: 100%;
-
-  width: 0%;
-
-  background: #00ff99;
-
-  animation: load 3s linear forwards;
-
-}
-
-@keyframes load {
-
-  from { width: 0%; }
-
-  to { width: 100%; }
+    0 0 10px var(--neon),
+    0 0 20px var(--neon),
+    0 0 40px var(--neon);
 
 }
 
 /* DASHBOARD */
 
-#terminal {
+.dashboard {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(2, 150px);
+  gap: 80px;
 
-  display: none;
+}
+
+.menu {
 
   position: relative;
 
-  z-index: 5;
-
-  padding: 40px;
-
-  text-align: center;
-
 }
 
-.title {
-  margin-bottom: 40px;
-  letter-spacing: 4px;
-  color: #ffffff; /* WHITE */
+/* MAIN BUTTON */
 
-}
+.main-btn {
 
-.button-grid {
-
-  display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 20px;
-
-  justify-items: center;
-
-}
-
-.btn {
-
-  width: 220px;
-
-  height: 52px;
-
-  border-radius: 10px;
-
-  border: 2px solid #ff3333;
-
-  color: #ff3333;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-weight: bold;
-
-  letter-spacing: 1.5px;
-
+  width: 150px;
+  height: 150px;
+  border-radius: 25px;
+  border: 2px solid var(--neon);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  color: var(--neon);
+  font-size: 18px;
   cursor: pointer;
-
-  box-shadow: 0 0 15px rgba(255,51,51,0.6);
-
-  animation: pulseRed 2s infinite;
-
-  pointer-events: auto;
+  box-shadow: 0 0 20px var(--neon);
+  transition: 0.3s;
 
 }
 
-.btn:hover {
+.main-btn:hover {
 
-  background: #ff3333;
-
-  color: black;
-
-  box-shadow: 0 0 30px rgba(255,51,51,1);
-
-  animation: none;
+  box-shadow: 0 0 50px var(--neon);
 
 }
 
-@keyframes pulseRed {
+/* SUB BUTTONS */
 
-  0% { box-shadow: 0 0 10px rgba(255,51,51,0.4); }
+.sub-btn {
 
-  50% { box-shadow: 0 0 22px rgba(255,51,51,0.9); }
-
-  100% { box-shadow: 0 0 10px rgba(255,51,51,0.4); }
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 20px;
+  border: 2px solid var(--neon2);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  color: var(--neon2);
+  cursor: pointer;
+  transition: 0.4s ease;
+  opacity: 0;
 
 }
 
-@media (max-width: 600px) {
+/* FLY OUT */
 
-  .button-grid { grid-template-columns: 1fr; }
-
-  .btn { width: 90%; height: 58px; font-size: 18px; }
-
-}
+.menu.active .btn1 { transform: translate(-180px, -130px); opacity: 1; }
+.menu.active .btn2 { transform: translate(180px, -130px); opacity: 1; }
+.menu.active .btn3 { transform: translate(0px, -200px); opacity: 1; }
 </style>
 </head>
 <body>
 <canvas id="matrix"></canvas>
-<audio id="bootSound" preload="auto">
-<source src="https://assets.mixkit.co/sfx/preview/mixkit-tech-start-221.mp3" type="audio/mpeg">
-</audio>
-<div id="loader">
-<div class="loader-box">
-<div class="loader-title" id="loaderText">INITIALIZING SYSTEM</div>
-<div class="progress-bar"><div class="progress"></div></div>
+<div class="title">STANLEY</div>
+<div class="dashboard">
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">DEV</button>
+<button class="sub-btn btn1" onclick="openLink('https://github.com')">GitHub</button>
+<button class="sub-btn btn2" onclick="openLink('https://codepen.io')">CodePen</button>
+<button class="sub-btn btn3" onclick="openLink('https://stackoverflow.com')">Stack</button>
 </div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">SEARCH</button>
+<button class="sub-btn btn1" onclick="openLink('https://google.com')">Google</button>
+<button class="sub-btn btn2" onclick="openLink('https://bing.com')">Bing</button>
+<button class="sub-btn btn3" onclick="openLink('https://duckduckgo.com')">Duck</button>
 </div>
-<div id="terminal">
-<h1 class="title"> STANLEY </h1>
-<div class="button-grid">
-<div class="btn" onclick="window.open('https://asrs-dashboard.tesla.com/')">[1] A S R S </div>
-<div class="btn" onclick="window.open('https://github.com')">[2] GITHUB</div>
-<div class="btn" onclick="window.open('https://tesla.com')">[3] TESLA</div>
-<div class="btn" onclick="window.open('https://apple.com')">[4] APPLE</div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">SOCIAL</button>
+<button class="sub-btn btn1" onclick="openLink('https://youtube.com')">YouTube</button>
+<button class="sub-btn btn2" onclick="openLink('https://x.com')">X</button>
+<button class="sub-btn btn3" onclick="openLink('https://facebook.com')">FB</button>
+</div>
+<div class="menu">
+<button class="main-btn" onclick="toggleMenu(this)">TOOLS</button>
+<button class="sub-btn btn1" onclick="openLink('https://chat.openai.com')">ChatGPT</button>
+<button class="sub-btn btn2" onclick="openLink('https://canva.com')">Canva</button>
+<button class="sub-btn btn3" onclick="openLink('https://vercel.com')">Vercel</button>
 </div>
 </div>
 <script>
 
-  
+function toggleMenu(button) {
+
+  button.parentElement.classList.toggle("active");
+
+}
+
+function openLink(url){
+
+  window.open(url, "_blank");
+
+}
+
+/* NEON COLOR CYCLE */
+
+const colors = [
+
+  "#00ff99",
+
+  "#00ffff",
+
+  "#ff00ff",
+
+  "#ff6600",
+
+  "#ff0000",
+
+  "#00ff00"
+
+];
+
+let index = 0;
+
+document.body.addEventListener("click", function(e){
+
+  if(!e.target.classList.contains("main-btn") &&
+
+     !e.target.classList.contains("sub-btn")) {
+
+    index = (index + 1) % colors.length;
+
+    document.documentElement.style.setProperty("--neon", colors[index]);
+
+    document.documentElement.style.setProperty("--neon2", colors[(index+2)%colors.length]);
+
+  }
+
+});
+
 /* MATRIX */
 
 const canvas = document.getElementById("matrix");
 
 const ctx = canvas.getContext("2d");
 
-function resizeMatrix() {
+canvas.height = window.innerHeight;
 
-  canvas.width = window.innerWidth;
+canvas.width = window.innerWidth;
 
-  canvas.height = window.innerHeight;
-
-}
-
-resizeMatrix();
-
-window.addEventListener("resize", resizeMatrix);
-
-const letters = "01アカサタナハマヤラワ0123456789";
+const letters = "01";
 
 const fontSize = 14;
 
-let columns = Math.floor(canvas.width / fontSize);
+const columns = canvas.width / fontSize;
 
-let drops = Array.from({ length: columns }, () => 0);
+const drops = [];
 
-function drawMatrix() {
+for(let x = 0; x < columns; x++)
+
+  drops[x] = 1;
+
+function draw(){
 
   ctx.fillStyle = "rgba(0,0,0,0.05)";
 
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  ctx.fillStyle = "#00ff99";
+  ctx.fillStyle = colors[index];
 
   ctx.font = fontSize + "px monospace";
 
-  for (let i = 0; i < drops.length; i++) {
+  for(let i = 0; i < drops.length; i++){
 
-    const text = letters[Math.floor(Math.random() * letters.length)];
+    const text = letters.charAt(Math.floor(Math.random()*letters.length));
 
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
 
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
 
       drops[i] = 0;
-
-    }
 
     drops[i]++;
 
@@ -260,102 +241,10 @@ function drawMatrix() {
 
 }
 
-setInterval(drawMatrix, 55);
-
-/* BOOT SOUND */
-
-const bootSound = document.getElementById("bootSound");
-
-let soundPlayed = false;
-
-function playBootSound() {
-
-  if (soundPlayed) return;
-
-  bootSound.volume = 0;
-
-  bootSound.play().catch(() => {});
-
-  soundPlayed = true;
-
-  let v = 0;
-
-  const fade = setInterval(() => {
-
-    v += 0.05;
-
-    bootSound.volume = Math.min(v, 0.5);
-
-    if (v >= 0.5) clearInterval(fade);
-
-  }, 60);
-
-}
-
-/* LOADER */
-
-const messages = ["INITIALIZING SYSTEM","LOADING MODULES","SYNCING INTERFACE","READY"];
-
-let msgIndex = 0;
-
-const loaderText = document.getElementById("loaderText");
-
-setInterval(() => {
-
-  loaderText.innerText = messages[msgIndex++ % messages.length];
-
-}, 700);
-
-window.onload = () => {
-
-  playBootSound();
-
-  setTimeout(() => {
-
-    const loader = document.getElementById("loader");
-
-    loader.style.opacity = "0";
-
-    loader.style.pointerEvents = "none";
-
-    setTimeout(() => loader.remove(), 500);
-
-    document.getElementById("terminal").style.display = "block";
-
-  }, 3000);
-
-};
-
-document.addEventListener("click", playBootSound, { once: true });
-
-document.addEventListener("touchstart", playBootSound, { once: true });
-
-/* SHORTCUTS */
-
-const LINKS = {
-
-  1: "https://asrs-dashboard.tesla.com/",
-
-  2: "https://github.com",
-
-  3: "https://tesla.com",
-
-  4: "https://apple.com"
-
-};
-
-document.addEventListener("keydown", e => {
-
-  if (LINKS[e.key]) window.open(LINKS[e.key], "_blank");
-
-});
+setInterval(draw, 33);
 </script>
 </body>
 </html>
+GitHub · Change is constant. GitHub keeps you ahead.
+Join the world's most widely adopted, AI-powered developer platform where millions of developers, businesses, and the largest open source community build software that advances humanity.
  
-
-
-
-
-
-
