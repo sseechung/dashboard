@@ -38,7 +38,7 @@ canvas{
 
 }
 
-/* BOOT SCREEN */
+/* BOOT */
 
 #boot{
 
@@ -156,13 +156,13 @@ canvas{
 
 }
 
-/* DASHBOARD GRID */
+/* GRID */
 
 .dashboard{
 
   position:absolute;
 
-  top:55%;
+  top:60%;
 
   left:50%;
 
@@ -170,9 +170,9 @@ canvas{
 
   display:grid;
 
-  grid-template-columns:repeat(4,140px);
+  grid-template-columns:repeat(4,160px);
 
-  gap:70px;
+  gap:90px;
 
 }
 
@@ -180,17 +180,21 @@ canvas{
 
   position:relative;
 
+  width:160px;
+
+  height:160px;
+
 }
 
 /* MAIN BUTTON */
 
 .main-btn{
 
-  width:140px;
+  width:160px;
 
-  height:140px;
+  height:160px;
 
-  border-radius:20px;
+  border-radius:15px;
 
   border:2px solid var(--neon);
 
@@ -204,25 +208,23 @@ canvas{
 
   box-shadow:0 0 20px var(--neon);
 
-  transition:0.4s;
+  transition:0.3s;
 
 }
 
-/* SUB BUTTON */
+/* RECTANGLE SUB BUTTONS */
 
 .sub-btn{
 
   position:absolute;
 
-  top:50%;
+  left:0;
 
-  left:50%;
+  width:160px;
 
-  width:70px;
+  height:45px;
 
-  height:70px;
-
-  border-radius:50%;
+  border-radius:8px;
 
   border:2px solid var(--neon2);
 
@@ -232,19 +234,19 @@ canvas{
 
   opacity:0;
 
-  transform:translate(-50%,-50%);
+  transform:translateY(0);
 
   transition:0.4s ease;
 
 }
 
-/* STRAIGHT FLY OUT */
+/* STACKED ABOVE MAIN BUTTON */
 
 .menu.active .btn1{
 
   opacity:1;
 
-  transform:translate(-50%,-50%) translateY(-180px);
+  transform:translateY(-60px);
 
 }
 
@@ -252,7 +254,7 @@ canvas{
 
   opacity:1;
 
-  transform:translate(-50%,-50%) translateX(-160px);
+  transform:translateY(-115px);
 
 }
 
@@ -260,7 +262,7 @@ canvas{
 
   opacity:1;
 
-  transform:translate(-50%,-50%) translateX(160px);
+  transform:translateY(-170px);
 
 }
 
@@ -268,7 +270,7 @@ canvas{
 
   .dashboard{
 
-    grid-template-columns:repeat(2,140px);
+    grid-template-columns:repeat(2,160px);
 
   }
 
@@ -290,7 +292,7 @@ canvas{
 <div class="dashboard" id="dashboard"></div>
 <script>
 
-/* MENU DATA */
+/* DATA */
 
 const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
 
@@ -314,11 +316,9 @@ const links=[
 
 ];
 
-/* BUILD DASHBOARD CLEANLY (NO document.write) */
-
 const dashboard=document.getElementById("dashboard");
 
-let index=0;
+let linkIndex=0;
 
 for(let i=0;i<8;i++){
 
@@ -328,9 +328,9 @@ for(let i=0;i<8;i++){
 
   menu.innerHTML=`
 <button class="main-btn">${names[i]}</button>
-<button class="sub-btn btn1">1</button>
-<button class="sub-btn btn2">2</button>
-<button class="sub-btn btn3">3</button>
+<button class="sub-btn btn1">Link 1</button>
+<button class="sub-btn btn2">Link 2</button>
+<button class="sub-btn btn3">Link 3</button>
 
   `;
 
@@ -350,13 +350,15 @@ for(let i=0;i<8;i++){
 
   subs.forEach(btn=>{
 
+    const url=links[linkIndex++];
+
     btn.addEventListener("click",(e)=>{
 
       e.stopPropagation();
 
       playClick();
 
-      window.open(links[index++],"_blank");
+      window.open(url,"_blank");
 
     });
 
@@ -378,7 +380,7 @@ function login(){
 
 }
 
-/* CLICK SOUND */
+/* SOUND */
 
 const clickSound=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-interface-click-1126.mp3");
 
@@ -454,3 +456,4 @@ setInterval(draw,33);
 </script>
 </body>
 </html>
+ 
