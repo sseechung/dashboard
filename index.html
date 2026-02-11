@@ -9,53 +9,80 @@
 :root {
 
   --neon: #00ff99;
+
   --neon2: yellow;
+
 }
+
 body {
 
   margin: 0;
+
   overflow: hidden;
+
   font-family: Arial, sans-serif;
+
   background: black;
+
 }
+
 canvas {
 
   position: fixed;
+
   top: 0;
+
   left: 0;
+
   z-index: -1;
 
 }
 
-/* GLOWING TITLE */
+/* TITLE */
 
 .title {
 
   position: absolute;
-  top: 40px;
+
+  top: 30px;
+
   width: 100%;
+
   text-align: center;
-  font-size: 48px;
-  letter-spacing: 8px;
+
+  font-size: 42px;
+
+  letter-spacing: 10px;
+
   color: white;
+
   text-shadow:
 
     0 0 10px var(--neon),
+
     0 0 20px var(--neon),
+
     0 0 40px var(--neon);
 
 }
 
-/* DASHBOARD */
+/* GRID */
 
 .dashboard {
+
   position: absolute;
+
   top: 55%;
+
   left: 50%;
+
   transform: translate(-50%, -50%);
+
   display: grid;
-  grid-template-columns: repeat(2, 150px);
-  gap: 80px;
+
+  grid-template-columns: repeat(4, 130px);
+
+  gap: 60px;
 
 }
 
@@ -69,79 +96,102 @@ canvas {
 
 .main-btn {
 
-  width: 150px;
-  height: 150px;
-  border-radius: 25px;
+  width: 130px;
+
+  height: 130px;
+
+  border-radius: 20px;
+
   border: 2px solid var(--neon);
+
   background: rgba(255,255,255,0.08);
+
   backdrop-filter: blur(15px);
+
   color: var(--neon);
-  font-size: 18px;
+
   cursor: pointer;
+
+  font-size: 14px;
+
   box-shadow: 0 0 20px var(--neon);
+
   transition: 0.3s;
 
 }
 
 .main-btn:hover {
 
-  box-shadow: 0 0 50px var(--neon);
+  box-shadow: 0 0 45px var(--neon);
 
 }
 
-/* SUB BUTTONS */
+/* SUB BUTTON */
 
 .sub-btn {
 
   position: absolute;
-  width: 90px;
-  height: 90px;
-  border-radius: 20px;
+
+  width: 80px;
+
+  height: 80px;
+
+  border-radius: 15px;
+
   border: 2px solid var(--neon2);
+
   background: rgba(255,255,255,0.1);
+
   backdrop-filter: blur(10px);
+
   color: var(--neon2);
+
   cursor: pointer;
+
   transition: 0.4s ease;
+
   opacity: 0;
 
 }
 
-/* FLY OUT */
+/* FLY OUT POSITIONS */
 
-.menu.active .btn1 { transform: translate(-180px, -130px); opacity: 1; }
-.menu.active .btn2 { transform: translate(180px, -130px); opacity: 1; }
-.menu.active .btn3 { transform: translate(0px, -200px); opacity: 1; }
+.menu.active .btn1 { transform: translate(-150px, -110px); opacity: 1; }
+
+.menu.active .btn2 { transform: translate(150px, -110px); opacity: 1; }
+
+.menu.active .btn3 { transform: translate(0px, -170px); opacity: 1; }
+
+@media(max-width:768px){
+
+  .dashboard {
+
+    grid-template-columns: repeat(2, 130px);
+
+  }
+
+}
 </style>
 </head>
 <body>
 <canvas id="matrix"></canvas>
 <div class="title">STANLEY</div>
 <div class="dashboard">
+<!-- 8 MENUS -->
+<script>
+
+    const menuNames = ["DEV","SEARCH","SOCIAL","TOOLS","MEDIA","AI","CLOUD","SYSTEM"];
+
+    document.write(menuNames.map(name => `
 <div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">DEV</button>
-<button class="sub-btn btn1" onclick="openLink('https://github.com')">GitHub</button>
-<button class="sub-btn btn2" onclick="openLink('https://codepen.io')">CodePen</button>
-<button class="sub-btn btn3" onclick="openLink('https://stackoverflow.com')">Stack</button>
+<button class="main-btn" onclick="toggleMenu(this)">${name}</button>
+<button class="sub-btn btn1" onclick="openLink('https://github.com')">Link1</button>
+<button class="sub-btn btn2" onclick="openLink('https://google.com')">Link2</button>
+<button class="sub-btn btn3" onclick="openLink('https://youtube.com')">Link3</button>
 </div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">SEARCH</button>
-<button class="sub-btn btn1" onclick="openLink('https://google.com')">Google</button>
-<button class="sub-btn btn2" onclick="openLink('https://bing.com')">Bing</button>
-<button class="sub-btn btn3" onclick="openLink('https://duckduckgo.com')">Duck</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">SOCIAL</button>
-<button class="sub-btn btn1" onclick="openLink('https://youtube.com')">YouTube</button>
-<button class="sub-btn btn2" onclick="openLink('https://x.com')">X</button>
-<button class="sub-btn btn3" onclick="openLink('https://facebook.com')">FB</button>
-</div>
-<div class="menu">
-<button class="main-btn" onclick="toggleMenu(this)">TOOLS</button>
-<button class="sub-btn btn1" onclick="openLink('https://chat.openai.com')">ChatGPT</button>
-<button class="sub-btn btn2" onclick="openLink('https://canva.com')">Canva</button>
-<button class="sub-btn btn3" onclick="openLink('https://vercel.com')">Vercel</button>
-</div>
+
+    `).join(""));
+</script>
 </div>
 <script>
 
@@ -157,23 +207,9 @@ function openLink(url){
 
 }
 
-/* NEON COLOR CYCLE */
+/* NEON TAP CHANGE */
 
-const colors = [
-
-  "#00ff99",
-
-  "#00ffff",
-
-  "#ff00ff",
-
-  "#ff6600",
-
-  "#ff0000",
-
-  "#00ff00"
-
-];
+const colors = ["#00ff99","#00ffff","#ff00ff","#ff6600","#ff0000","#00ff00"];
 
 let index = 0;
 
@@ -211,9 +247,7 @@ const columns = canvas.width / fontSize;
 
 const drops = [];
 
-for(let x = 0; x < columns; x++)
-
-  drops[x] = 1;
+for(let x = 0; x < columns; x++) drops[x] = 1;
 
 function draw(){
 
