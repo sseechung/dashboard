@@ -151,17 +151,24 @@ canvas{
   text-shadow:0 0 20px var(--neon);
 
 }
-
 .dashboard{
-  position:absolute;
-  top:55%;
-  left:50%;
-  transform:translate(-50%, -50%);
+
   display:grid;
+
   grid-template-columns:repeat(4,160px);
+
   gap:90px;
-  animation:fadeIn 1.2s ease forwards;
-  opacity:0;
+
+}
+
+@keyframes bootfade{
+
+  0%{opacity:1}
+
+  80%{opacity:1}
+
+  100%{opacity:0;visibility:hidden}
+
 
 }
  
@@ -565,6 +572,7 @@ setInterval(draw,33);
 </body>
 </html>
  
+
 
 
 
