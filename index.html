@@ -22,7 +22,7 @@ body{
 
   background:black;
 
-  font-family:Arial;
+  font-family:Verdana;
 
   display:flex;
 
@@ -82,6 +82,19 @@ canvas{
 
 }
 
+#loadingBar{
+  width:300px;
+  height:25px;
+  boarder:2px solid #00ffff;
+  margin:20px 0;
+}
+
+#progress{
+  width:0%;
+  height:100;
+  background:#00ffff;
+}
+  
 #login{
 
   position:fixed;
@@ -254,6 +267,14 @@ canvas{
 <body>
 <canvas id="matrix"></canvas>
 <div id="boot">SYSTEM INITIALIZING...</div>
+
+<div id="loadingBar">
+  <div id="progress"> </div>
+  </div>
+<p id="statusText">F.U.C.K. ...</p>
+
+  
+  
 <div id="login">
 <div class="login-box">
 <div>ACCESS TERMINAL</div>
@@ -262,7 +283,7 @@ canvas{
 <button type="button" id="loginBtn">ENTER</button>
 </div>
 </div>
-<div class="title">STANLEY</div>
+<div class="title">S T A N L E Y</div>
 <div class="dashboard" id="dashboard"></div>
 <script>
 
@@ -362,6 +383,21 @@ function playExplosion(){
 
 }
 
+  /* LOADING BAR */
+  let progress = 0;
+  let interval = setInterval(function(){
+    if(progress >= 100){
+      clearInterval(interval);
+      document.getElementById("statusText").innerText = "SYSTEM READY";
+      document.getElementById("passwordSection").style.display = "block";
+    } else {
+      progress++;
+      document.getElementById("progress").style.width = progress + "%";
+    }
+  }, 30);
+
+
+      
 /* MATRIX HUM */
 
 function startMatrix(){
@@ -549,3 +585,4 @@ setInterval(draw,33);
 </body>
 </html>
  
+
