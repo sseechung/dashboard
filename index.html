@@ -88,12 +88,6 @@ canvas{
   boarder:2px solid #00ffff;
   margin:20px 0;
 }
-
-#progress{
-  width:0%;
-  height:100;
-  background:#00ffff;
-}
   
 #login{
 
@@ -268,9 +262,7 @@ canvas{
 <canvas id="matrix"></canvas>
 <div id="boot">SYSTEM INITIALIZING...</div>
 
-<div id="loadingBar">
-  <div id="progress"> </div>
-  </div>
+<div id="loadingBar"> </div>
 <p id="statusText">F.U.C.K. ...</p>
 
   
@@ -384,19 +376,7 @@ function playExplosion(){
 }
 
   /* LOADING BAR */
-  let progress = 0;
-  let interval = setInterval(function(){
-    if(progress >= 100){
-      clearInterval(interval);
-      document.getElementById("statusText").innerText = "SYSTEM READY";
-      
-    } else {
-      progress++;
-      document.getElementById("progress").style.width = progress + "%";
-    }
-  }, 30);
-
-
+ 
       
 /* MATRIX HUM */
 
@@ -428,7 +408,7 @@ document.addEventListener("pointerdown", playTick, { once:true });
 
 /* MENU DATA */
 
-const names=["DEV","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
+const names=[" G.A 4 ","SEARCH","SOCIAL","VIDEO","AI","CLOUD","MEDIA","TOOLS"];
 
 const subNames=[
 
@@ -585,5 +565,6 @@ setInterval(draw,33);
 </body>
 </html>
  
+
 
 
