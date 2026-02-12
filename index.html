@@ -389,7 +389,7 @@ function playExplosion(){
     if(progress >= 100){
       clearInterval(interval);
       document.getElementById("statusText").innerText = "SYSTEM READY";
-      document.getElementById("passwordSection").style.display = "block";
+      
     } else {
       progress++;
       document.getElementById("progress").style.width = progress + "%";
@@ -585,4 +585,5 @@ setInterval(draw,33);
 </body>
 </html>
  
+
 
